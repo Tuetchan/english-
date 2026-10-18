@@ -15,6 +15,9 @@
       --teal-border: #5eead4;
       --green-ok: #16a34a;
       --green-dark: #15803d;
+      --orange-ai: #f97316;
+      --orange-dark: #c2410c;
+      --red-err: #ef4444;
       --amber-star: #eab308;
       --text-main: #0f172a;
       --text-muted: #64748b;
@@ -471,7 +474,7 @@
       box-shadow: 0 4px 0 var(--teal-dark);
     }
 
-    /* ================= MÀN HÌNH BÀI TẬP 3 SAO — NO-SCROLL (10% / 45% / 45%) ================= */
+    /* ================= MÀN HÌNH BÀI TẬP 3 SAO — NO-SCROLL ================= */
     .exercise-screen {
       width: 100%;
       height: 100dvh;
@@ -479,13 +482,14 @@
       display: flex;
       flex-direction: column;
       background: #f8fafc;
+      position: relative;
     }
 
     /* 1. Thanh Top Bar (10% chiều cao) */
     .ex-top-bar {
       height: 10dvh;
-      min-height: 52px;
-      max-height: 64px;
+      min-height: 50px;
+      max-height: 60px;
       background: #ffffff;
       border-bottom: 1.5px solid #e2e8f0;
       padding: 0 10px;
@@ -494,6 +498,7 @@
       justify-content: space-between;
       gap: 8px;
       flex-shrink: 0;
+      z-index: 25;
     }
     .btn-back-map {
       background: #f1f5f9;
@@ -516,6 +521,7 @@
       font-size: 11px;
       font-weight: 900;
       color: var(--teal-dark);
+      white-space: nowrap;
     }
     .ex-progress-bar {
       width: 100%;
@@ -530,7 +536,7 @@
       border-radius: 999px;
       transition: width 0.25s ease;
     }
-    .ex-star-Creation {
+    .ex-star-group {
       display: flex;
       gap: 4px;
     }
@@ -554,7 +560,7 @@
       color: #854d0e;
     }
 
-    /* 2. Khu vực Đề bài (45% chiều cao - Ở giữa) */
+    /* 2. Khu vực Đề bài cho Sao 1 & Sao 3 (45% chiều cao) */
     .ex-prompt-zone {
       height: 45dvh;
       padding: 12px 14px;
@@ -633,7 +639,7 @@
       box-shadow: 0 3px 0 #cbd5e1;
     }
 
-    /* 3. Khu vực Trả lời (45% chiều cao - Nửa dưới màn hình) */
+    /* 3. Khu vực Trả lời cho Sao 1 & Sao 3 (45% chiều cao) */
     .ex-answer-zone {
       height: 45dvh;
       padding: 14px;
@@ -645,7 +651,7 @@
       flex-shrink: 0;
     }
 
-    /* Sao 1: 2 Nút bấm đại diện 2 nhóm âm cực to */
+    /* Sao 1: 2 Nút bấm đại diện 2 nhóm âm */
     .s1-two-buttons {
       display: flex;
       flex-direction: column;
@@ -691,64 +697,310 @@
       box-shadow: 0 5px 0 #dc2626 !important;
     }
 
-    /* Sao 2: 2 Thẻ bài to (Trái - Phải) Minimal Pairs 1v1 */
-    .s2-pair-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      height: 100%;
-      align-items: stretch;
+    /* ================= ⭐⭐ SAO 2: ĐẤU TRƯỜNG ÂM THANH (BẠN vs AI) ================= */
+    .arena-wrapper {
+      height: 90dvh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(180deg, #f0fdfa 0%, #f8fafc 100%);
+      overflow: hidden;
+      position: relative;
     }
-    .pair-card-btn {
-      border-radius: 20px;
-      border: 2.5px solid #cbd5e1;
-      background: #f8fafc;
-      padding: 12px 8px;
+
+    /* Thanh tỉ số & đồng hồ + thanh kéo co */
+    .arena-hud {
+      background: #ffffff;
+      border-bottom: 1.5px solid #e2e8f0;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .hud-score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .fighter-box {
+      flex: 1;
+      padding: 6px 8px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .fighter-box.you {
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      color: #14532d;
+      text-align: left;
+    }
+    .fighter-box.ai {
+      background: #fff7ed;
+      border: 1.5px solid #fdba74;
+      color: #7c2d12;
+      text-align: right;
+    }
+    .f-name {
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .f-score {
+      font-size: 17px;
+      font-weight: 900;
+    }
+    .timer-center-box {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 6px 11px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 900;
+      white-space: nowrap;
+      box-shadow: 0 3px 0 #334155;
+    }
+    .timer-center-box.urgent {
+      background: #dc2626;
+      animation: pulseMic 0.7s infinite;
+    }
+
+    /* Thanh kéo co (Tug-of-war bar) */
+    .tug-bar-outer {
+      width: 100%;
+      height: 11px;
+      background: #fed7aa;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+      border: 1.5px solid #cbd5e1;
+      display: flex;
+    }
+    .tug-fill-you {
+      height: 100%;
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+      transition: width 0.25s ease;
+    }
+    .tug-fill-ai {
+      flex: 1;
+      height: 100%;
+      background: linear-gradient(90deg, #fb923c, #ea580c);
+    }
+    .tug-center-pin {
+      position: absolute;
+      top: -2px;
+      bottom: -2px;
+      width: 4px;
+      background: #0f172a;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+
+    /* Thanh thông báo trạng thái trận đấu / Choáng */
+    .arena-status-strip {
+      min-height: 28px;
+      padding: 4px 10px;
+      background: #ccfbf1;
+      color: var(--teal-dark);
+      font-size: 12px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      flex-shrink: 0;
+      transition: background-color 0.15s;
+    }
+    .arena-status-strip.stun-alert {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* Khu vực Bàn Cờ Chữ 12 Thẻ (Grid 3 cột x 4 hàng) */
+    .arena-grid-12 {
+      flex: 1;
+      padding: 8px 10px 10px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 8px;
+      position: relative;
+    }
+    .arena-grid-12.stun-locked {
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .arena-word-card {
+      background: #ffffff;
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      box-shadow: 0 6px 0 #cbd5e1;
-      min-height: 160px;
+      padding: 6px 4px;
+      box-shadow: 0 4px 0 #cbd5e1;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.12s, background-color 0.15s, border-color 0.15s;
     }
-    .pair-card-btn .p-emo {
-      font-size: 44px;
+    .arena-word-card .card-speaker-mini {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: 1px solid #99f6e4;
+      background: #f0fdfa;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3;
+      padding: 0;
     }
-    .pair-card-btn .p-word {
-      font-size: 24px;
+    .arena-word-card .card-emo {
+      font-size: 27px;
+      line-height: 1.05;
+      margin-bottom: 2px;
+    }
+    .arena-word-card .card-word {
+      font-size: 15px;
       font-weight: 900;
       color: var(--text-main);
+      line-height: 1.1;
     }
-    .pair-card-btn .p-ipa {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--teal-dark);
-      background: #ccfbf1;
-      padding: 3px 10px;
+    .arena-word-card .card-ipa-pop {
+      font-size: 12px;
+      font-weight: 900;
+      margin-top: 2px;
+      padding: 1px 6px;
       border-radius: 999px;
-    }
-    .pair-card-btn .p-vi {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-muted);
-    }
-    .pair-card-btn.correct-hit {
-      background: var(--green-ok) !important;
-      border-color: var(--green-dark) !important;
-      color: #ffffff !important;
-      box-shadow: 0 6px 0 var(--green-dark) !important;
-    }
-    .pair-card-btn.correct-hit .p-word,
-    .pair-card-btn.correct-hit .p-vi {
-      color: #ffffff !important;
-    }
-    .pair-card-btn.wrong-hit {
-      background: #fee2e2 !important;
-      border-color: #ef4444 !important;
+      display: none;
     }
 
-    /* Sao 3: Bước A (Ghép chữ Phonics) & Bước B (Thử thách Micro) */
+    /* Khi người chơi bắt ĐÚNG: Sáng màu Xanh lá */
+    .arena-word-card.player-captured {
+      background: #16a34a !important;
+      border-color: #14532d !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 0 #14532d !important;
+      pointer-events: none;
+    }
+    .arena-word-card.player-captured .card-word {
+      color: #ffffff !important;
+    }
+    .arena-word-card.player-captured .card-ipa-pop {
+      display: inline-block;
+      background: #dcfce7;
+      color: #14532d;
+    }
+
+    /* Khi AI tự động bắt: Sáng màu Cam */
+    .arena-word-card.ai-captured {
+      background: #f97316 !important;
+      border-color: #9a3412 !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 0 #9a3412 !important;
+      pointer-events: none;
+    }
+    .arena-word-card.ai-captured .card-word {
+      color: #ffffff !important;
+    }
+    .arena-word-card.ai-captured .card-ipa-pop {
+      display: inline-block;
+      background: #ffedd5;
+      color: #9a3412;
+    }
+
+    /* Khi người chơi chọn SAI: Rung màu Đỏ */
+    .arena-word-card.wrong-shake {
+      background: #fee2e2 !important;
+      border-color: #ef4444 !important;
+      box-shadow: 0 4px 0 #dc2626 !important;
+      animation: cardShake 0.35s ease;
+    }
+    @keyframes cardShake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    /* Popup Chọn Phe / Đếm ngược / Tổng kết trong Sân Đấu */
+    .arena-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(4px);
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    .arena-modal-card {
+      width: 100%;
+      max-width: 390px;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .team-pick-btn {
+      width: 100%;
+      padding: 14px 12px;
+      border-radius: 16px;
+      border: 2.5px solid #2dd4bf;
+      background: #f0fdfa;
+      color: var(--teal-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 5px 0 #14b8a6;
+    }
+    .team-pick-btn.alt {
+      border-color: #38bdf8;
+      background: #f0f9ff;
+      color: #0369a1;
+      box-shadow: 0 5px 0 #0284c7;
+    }
+    .team-pick-title {
+      font-size: 18px;
+      font-weight: 900;
+    }
+    .team-pick-samples {
+      font-size: 12.5px;
+      font-weight: 700;
+      opacity: 0.9;
+    }
+    .countdown-number {
+      font-size: 64px;
+      font-weight: 900;
+      color: var(--teal-main);
+      line-height: 1.1;
+      animation: popScale 0.5s ease;
+    }
+    @keyframes popScale {
+      0% { transform: scale(0.4); opacity: 0.2; }
+      80% { transform: scale(1.12); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    /* ================= ⭐⭐⭐ SAO 3: GHÉP CHỮ PHONICS & MICRO ================= */
     .phonics-slots-row {
       display: flex;
       gap: 8px;
@@ -1045,9 +1297,7 @@
   ];
 
   // =========================================================================
-  // 2. DỮ LIỆU 30 LEVEL (MỖI LEVEL 10 CÂU HỎI ĐỦ CẢ 3 SAO CHO HỌC SINH LỚP 5)
-  // Cấu trúc mỗi câu:
-  // [0:Từ, 1:IPA, 2:Emoji, 3:Nghĩa, 4:Nhóm(0|1), 5:Từ khuyết(Sao 1), 6:Mảnh Phonics(Sao 3), 7:Từ cặp(Sao 2), 8:IPA cặp, 9:Emoji cặp, 10:Nghĩa cặp]
+  // 2. DỮ LIỆU 30 LEVEL (MỖI LEVEL 10 CÂU HỎI ĐỦ CẢ 3 SAO)
   // =========================================================================
   const RAW_LEVELS = [
     {
@@ -1562,7 +1812,7 @@
   }));
 
   // =========================================================================
-  // 3. QUẢN LÝ TRẠNG THÁI, LƯU TIẾN ĐỘ & ÂM THANH KỶ LUẬT/KHEN NGỢI
+  // 3. QUẢN LÝ TRẠNG THÁI, LƯU TIẾN ĐỘ & ÂM THANH
   // =========================================================================
   let currentTab = 'map'; // 'map' | 'chart' | 'exercise'
   let chartSubMode = 'vowels'; // 'vowels' | 'consonants'
@@ -1642,9 +1892,9 @@
     } catch (e) {}
   }
 
-  // Hiệu ứng âm thanh Ting-Ting khi bé chọn đúng (Web Audio API)
+  // Hiệu ứng âm thanh Ting-Ting / Báo sai / AI bắt từ
   let audioCtx = null;
-  function playFeedbackSound(isSuccess) {
+  function playFeedbackSound(type) {
     try {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const now = audioCtx.currentTime;
@@ -1653,18 +1903,26 @@
       osc.connect(gain);
       gain.connect(audioCtx.destination);
 
-      if (isSuccess) {
+      if (type === true || type === 'win') {
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(587.33, now); // D5
-        osc.frequency.setValueAtTime(880, now + 0.11); // A5
-        gain.gain.setValueAtTime(0.18, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc.frequency.setValueAtTime(587.33, now);
+        osc.frequency.setValueAtTime(880, now + 0.1);
+        gain.gain.setValueAtTime(0.16, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
         osc.start(now);
-        osc.stop(now + 0.35);
+        osc.stop(now + 0.32);
+      } else if (type === 'ai') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.setValueAtTime(523.25, now + 0.08);
+        gain.gain.setValueAtTime(0.11, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+        osc.start(now);
+        osc.stop(now + 0.22);
       } else {
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(220, now);
-        osc.frequency.setValueAtTime(175, now + 0.12);
+        osc.frequency.setValueAtTime(165, now + 0.12);
         gain.gain.setValueAtTime(0.18, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
         osc.start(now);
@@ -1681,7 +1939,7 @@
     if (currentTab === 'map' && content) {
       lastMapScroll = content.scrollTop;
     }
-    stopActiveMicRecognition();
+    stopAllActiveTimers();
     currentTab = tab;
     document.getElementById('tab-btn-map').classList.toggle('active', tab === 'map');
     document.getElementById('tab-btn-chart').classList.toggle('active', tab === 'chart');
@@ -1845,21 +2103,43 @@
   }
 
   // =========================================================================
-  // 5. LOGIC 3 BÀI TẬP (3 SAO) QUY TẮC NO-SCROLL CHO HỌC SINH LỚP 5
+  // 5. LOGIC 3 BÀI TẬP (3 SAO) — QUY TẮC NO-SCROLL
   // =========================================================================
   let exQueue = [];
   let exIndex = 0;
   let isTransitioning = false;
 
-  // Trạng thái riêng cho Sao 2 (2 thẻ Trái - Phải)
-  let s2Cards = [];
+  // Trạng thái Sao 2: ĐẤU TRƯỜNG ÂM THANH (BẠN vs AI)
+  let arenaState = 'pick'; // 'pick' | 'countdown' | 'playing' | 'ended'
+  let playerTeam = 0; // 0 | 1
+  let aiTeam = 1; // 1 | 0
+  let playerScore = 0;
+  let aiScore = 0;
+  let arenaTimeLeft = 45;
+  let arenaBoard = []; // 12 ô trên bàn cờ 3x4
+  let arenaPoolG0 = [];
+  let arenaPoolG1 = [];
+  let isPlayerStunned = false;
+  let stunTimerId = null;
+  let arenaCountdownTimerId = null;
+  let arenaClockIntervalId = null;
+  let arenaAiIntervalId = null;
 
-  // Trạng thái riêng cho Sao 3 (Bước A: Ghép chữ Phonics -> Bước B: Đọc Micro)
+  // Trạng thái Sao 3: Bước A (Ghép chữ Phonics) -> Bước B (Đọc Micro)
   let s3SubStep = 'phonics'; // 'phonics' | 'mic'
   let s3Slots = [];
   let s3Pool = [];
   let activeRecognition = null;
   let isMicListening = false;
+
+  function stopAllActiveTimers() {
+    stopActiveMicRecognition();
+    if (stunTimerId) { clearTimeout(stunTimerId); stunTimerId = null; }
+    if (arenaCountdownTimerId) { clearInterval(arenaCountdownTimerId); arenaCountdownTimerId = null; }
+    if (arenaClockIntervalId) { clearInterval(arenaClockIntervalId); arenaClockIntervalId = null; }
+    if (arenaAiIntervalId) { clearInterval(arenaAiIntervalId); arenaAiIntervalId = null; }
+    isPlayerStunned = false;
+  }
 
   function openLevel(lvId) {
     if (!isLevelUnlocked(lvId)) {
@@ -1882,42 +2162,40 @@
   }
 
   function exitToMap() {
-    stopActiveMicRecognition();
+    stopAllActiveTimers();
     currentTab = 'map';
     renderApp();
   }
 
   function switchStarMode(mode) {
-    if (isTransitioning) return;
-    stopActiveMicRecognition();
+    stopAllActiveTimers();
     currentStarMode = mode;
     startStarExercise(mode);
     renderExerciseScreen();
   }
 
   function startStarExercise(mode) {
+    stopAllActiveTimers();
     const lv = LEVELS.find(x => x.id === currentLevelId);
     exQueue = shuffleArray(lv.items);
     exIndex = 0;
     isTransitioning = false;
-    prepareCurrentQuestion();
+
+    if (mode === 2) {
+      initArenaData(lv);
+    } else {
+      prepareCurrentQuestion();
+    }
   }
 
   function prepareCurrentQuestion() {
-    const lv = LEVELS.find(x => x.id === currentLevelId);
     const q = exQueue[exIndex];
     if (!q) return;
 
-    if (currentStarMode === 2) {
-      // Tạo 2 thẻ bài (Trái - Phải) gồm từ mục tiêu và từ cặp Minimal Pair
-      const cardA = { word: q.word, ipa: q.ipa, emo: q.emo, vi: q.vi, isCorrect: true };
-      const cardB = { word: q.pairWord, ipa: q.pairIpa, emo: q.pairEmo, vi: q.pairVi, isCorrect: false };
-      s2Cards = shuffleArray([cardA, cardB]);
-    } else if (currentStarMode === 3) {
+    if (currentStarMode === 3) {
       s3SubStep = 'phonics';
       s3Slots = q.phonics.map(() => null);
 
-      // Tạo các mảnh ghép chữ cái + mở ngoặc IPA nhỏ + 2 mảnh gây nhiễu
       const baseTiles = q.phonics.map(raw => {
         const sp = raw.split(' ');
         return { letter: sp[0], ipa: sp.slice(1).join(' ') };
@@ -1947,11 +2225,38 @@
     }
   }
 
-  // ------------------- VẼ KHUNG BÀI TẬP NO-SCROLL (10% / 45% / 45%) -------------------
+  // ------------------- VẼ MÀN HÌNH BÀI TẬP -------------------
   function renderExerciseScreen() {
     const content = document.getElementById('app-content');
     const lv = LEVELS.find(x => x.id === currentLevelId);
     const stars = progress[currentLevelId];
+
+    if (currentStarMode === 2) {
+      // Giao diện riêng cho ⭐⭐ SAO 2: ĐẤU TRƯỜNG ÂM THANH (BẠN vs AI)
+      content.innerHTML = `
+        <div class="exercise-screen">
+          <div class="ex-top-bar">
+            <button class="btn-back-map" onclick="exitToMap()">⬅ Bản đồ</button>
+            <div class="ex-progress-wrap">
+              <div class="ex-progress-text">⚔️ Đấu Trường Level ${lv.id} (${lv.icon})</div>
+              <div class="ex-progress-bar">
+                <div class="ex-progress-fill" style="width:100%;background:linear-gradient(90deg,#16a34a,#f97316);"></div>
+              </div>
+            </div>
+            <div class="ex-star-group">
+              <button class="ex-star-btn ${stars[0] ? 'done' : ''}" onclick="switchStarMode(1)">⭐ 1</button>
+              <button class="ex-star-btn active" onclick="switchStarMode(2)">⭐ 2</button>
+              <button class="ex-star-btn ${stars[2] ? 'done' : ''}" onclick="switchStarMode(3)">⭐ 3</button>
+            </div>
+          </div>
+          <div class="arena-wrapper" id="arena-wrapper"></div>
+        </div>
+      `;
+      renderStar2Arena(lv);
+      return;
+    }
+
+    // Giao diện cho ⭐ SAO 1 & ⭐⭐⭐ SAO 3 (10% / 45% / 45%)
     const q = exQueue[exIndex];
     const pct = Math.round(((exIndex + 1) / exQueue.length) * 100);
 
@@ -1966,7 +2271,7 @@
               <div class="ex-progress-fill" style="width:${pct}%"></div>
             </div>
           </div>
-          <div class="ex-star-Creation">
+          <div class="ex-star-group">
             <button class="ex-star-btn ${currentStarMode === 1 ? 'active' : (stars[0] ? 'done' : '')}" onclick="switchStarMode(1)">⭐ 1</button>
             <button class="ex-star-btn ${currentStarMode === 2 ? 'active' : (stars[1] ? 'done' : '')}" onclick="switchStarMode(2)">⭐ 2</button>
             <button class="ex-star-btn ${currentStarMode === 3 ? 'active' : (stars[2] ? 'done' : '')}" onclick="switchStarMode(3)">⭐ 3</button>
@@ -1982,8 +2287,7 @@
     `;
 
     if (currentStarMode === 1) renderStar1Content(lv, q);
-    else if (currentStarMode === 2) renderStar2Content(lv, q);
-    else renderStar3Content(lv, q);
+    else if (currentStarMode === 3) renderStar3Content(lv, q);
 
     setTimeout(() => speakWord(q.word, 0.85), 160);
   }
@@ -2032,7 +2336,6 @@
       isTransitioning = true;
       if (btn) btn.classList.add('correct-hit');
 
-      // Điền đầy đủ chữ vào chỗ trống và hiện phiên âm IPA
       const wordEl = document.getElementById('s1-masked-word');
       const ipaEl = document.getElementById('s1-ipa-reveal');
       if (wordEl) wordEl.innerHTML = `<span class="filled-highlight">${q.word}</span>`;
@@ -2053,67 +2356,433 @@
   }
 
   // =========================================================================
-  // ⭐⭐ SAO 2: NGHE & BẮT CẶP TỪ GẦN ÂM (MINIMAL PAIRS 1 ĐỐI 1: TRÁI - PHẢI)
+  // ⭐⭐ SAO 2: MINI-GAME "ĐẤU TRƯỜNG ÂM THANH (BẠN vs AI)"
   // =========================================================================
-  function renderStar2Content(lv, q) {
-    const promptZone = document.getElementById('ex-prompt-zone');
-    const answerZone = document.getElementById('ex-answer-zone');
+  function initArenaData(lv) {
+    arenaState = 'pick';
+    playerScore = 0;
+    aiScore = 0;
+    arenaTimeLeft = 45;
+    isPlayerStunned = false;
 
-    promptZone.innerHTML = `
-      <div class="ex-mode-title">⭐⭐ Sao 2: Nghe & Bắt cặp từ gần âm</div>
-      <div class="ex-emoji-pic" id="s2-prompt-emo">🎧</div>
-      <div class="ex-word-box">
-        <div class="ex-masked-word" id="s2-prompt-txt" style="font-size:21px;letter-spacing:0;">
-          Bé nghe được từ nào trong 2 thẻ dưới đây?
+    // Thu thập kho từ vựng của Phe 0 và Phe 1 trong Level hiện tại
+    const mapG0 = new Map();
+    const mapG1 = new Map();
+
+    lv.items.forEach(it => {
+      if (it.groupIdx === 0) {
+        mapG0.set(it.word, { word: it.word, ipa: it.ipa, emo: it.emo, groupIdx: 0 });
+        mapG1.set(it.pairWord, { word: it.pairWord, ipa: it.pairIpa, emo: it.pairEmo, groupIdx: 1 });
+      } else {
+        mapG1.set(it.word, { word: it.word, ipa: it.ipa, emo: it.emo, groupIdx: 1 });
+        mapG0.set(it.pairWord, { word: it.pairWord, ipa: it.pairIpa, emo: it.pairEmo, groupIdx: 0 });
+      }
+    });
+
+    arenaPoolG0 = Array.from(mapG0.values());
+    arenaPoolG1 = Array.from(mapG1.values());
+    buildInitialBoard12();
+  }
+
+  // Khởi tạo bàn cờ 12 thẻ (3 cột x 4 hàng) với tỉ lệ 50/50 (6 thẻ Phe 0 + 6 thẻ Phe 1)
+  function buildInitialBoard12() {
+    const cards = [];
+    for (let i = 0; i < 6; i++) {
+      const item0 = arenaPoolG0[i % arenaPoolG0.length];
+      cards.push({ ...item0, busy: false });
+      const item1 = arenaPoolG1[i % arenaPoolG1.length];
+      cards.push({ ...item1, busy: false });
+    }
+    arenaBoard = shuffleArray(cards);
+  }
+
+  // Lấy một thẻ mới thay thế vào ô vừa bị bắt, giữ cân bằng 50/50 trên bàn cờ
+  function spawnReplacementCard() {
+    let count0 = 0;
+    let count1 = 0;
+    arenaBoard.forEach(c => {
+      if (c && !c.busy) {
+        if (c.groupIdx === 0) count0++;
+        else count1++;
+      }
+    });
+
+    const targetGroup = count0 <= count1 ? 0 : 1;
+    const pool = targetGroup === 0 ? arenaPoolG0 : arenaPoolG1;
+    const picked = pool[Math.floor(Math.random() * pool.length)];
+    return { ...picked, busy: false };
+  }
+
+  function renderStar2Arena(lv) {
+    const wrap = document.getElementById('arena-wrapper');
+    if (!wrap) return;
+
+    const youLabel = playerTeam === 0 ? lv.g0 : lv.g1;
+    const aiLabel = aiTeam === 0 ? lv.g0 : lv.g1;
+    const samples0 = arenaPoolG0.slice(0, 3).map(x => x.word).join(', ');
+    const samples1 = arenaPoolG1.slice(0, 3).map(x => x.word).join(', ');
+
+    // Tính phần trăm thanh kéo co (Tug-of-war)
+    const diff = playerScore - aiScore;
+    const youPct = Math.max(12, Math.min(88, 50 + diff * 5));
+
+    let overlayHtml = '';
+    if (arenaState === 'pick') {
+      overlayHtml = `
+        <div class="arena-overlay" id="arena-overlay">
+          <div class="arena-modal-card">
+            <div style="font-size:12px;font-weight:900;color:#0d9488;text-transform:uppercase;">
+              ⚔️ ĐẤU TRƯỜNG ÂM THANH (BẠN vs AI)
+            </div>
+            <h3 style="font-size:20px;font-weight:900;color:#0f172a;">
+              Chọn Phe Âm Thanh Của Bé!
+            </h3>
+            <p style="font-size:12.5px;color:#64748b;font-weight:700;">
+              Bắt thật nhanh các từ thuộc phe của mình trước khi Máy AI bắt hết nhé! (45 giây · Ai đạt 15 điểm trước sẽ thắng)
+            </p>
+
+            <button class="team-pick-btn" onclick="selectArenaTeam(0)">
+              <span class="team-pick-title">🛡️ Đội ${lv.g0} ${lv.g0Sub}</span>
+              <span class="team-pick-samples">Từ mẫu: ${samples0}</span>
+            </button>
+
+            <button class="team-pick-btn alt" onclick="selectArenaTeam(1)">
+              <span class="team-pick-title">⚔️ Đội ${lv.g1} ${lv.g1Sub}</span>
+              <span class="team-pick-samples">Từ mẫu: ${samples1}</span>
+            </button>
+          </div>
         </div>
-        <div class="ex-ipa-reveal" id="s2-ipa-reveal">Chạm vào thẻ đúng nhé!</div>
-      </div>
-      <div class="pill-audio-row">
-        <button class="pill-btn" onclick="speakWord('${q.word}', 0.85)">🔊 Nghe chuẩn</button>
-        <button class="pill-btn slow" onclick="speakWord('${q.word}', 0.55)">🐢 Nghe chậm</button>
-      </div>
-    `;
+      `;
+    }
 
-    answerZone.innerHTML = `
-      <div class="s2-pair-cards">
-        ${s2Cards.map((c, idx) => `
-          <button class="pair-card-btn" id="s2-card-${idx}" onclick="pickStar2Card(${idx})">
-            <span class="p-emo">${c.emo}</span>
-            <span class="p-word">${c.word}</span>
-            <span class="p-ipa">${c.ipa}</span>
-            <span class="p-vi">${c.vi}</span>
-          </button>
-        `).join('')}
+    wrap.innerHTML = `
+      <!-- THANH TỈ SỐ & THỜI GIAN + THANH KÉO CO -->
+      <div class="arena-hud">
+        <div class="hud-score-row">
+          <div class="fighter-box you">
+            <div class="f-name" id="hud-you-name">👧 Bạn (${youLabel})</div>
+            <div class="f-score" id="hud-you-score">${playerScore} điểm</div>
+          </div>
+          <div class="timer-center-box" id="hud-timer">⏱️ ${arenaTimeLeft}s</div>
+          <div class="fighter-box ai">
+            <div class="f-name" id="hud-ai-name">🤖 Máy AI (${aiLabel})</div>
+            <div class="f-score" id="hud-ai-score">${aiScore} điểm</div>
+          </div>
+        </div>
+
+        <div class="tug-bar-outer">
+          <div class="tug-fill-you" id="tug-fill-you" style="width:${youPct}%"></div>
+          <div class="tug-fill-ai"></div>
+          <div class="tug-center-pin"></div>
+        </div>
+      </div>
+
+      <!-- DẢI THÔNG BÁO TRẠNG THÁI -->
+      <div class="arena-status-strip" id="arena-status-strip">
+        🎯 Tìm và chạm vào các từ thuộc <b>${youLabel}</b>! (Bấm 🔊 góc thẻ để nghe thử)
+      </div>
+
+      <!-- BÀN CỜ CHỮ 12 THẺ (GRID 3 CỘT x 4 HÀNG) -->
+      <div class="arena-grid-12" id="arena-grid-12">
+        ${arenaBoard.map((card, idx) => renderSingleArenaCardHTML(card, idx)).join('')}
+      </div>
+
+      ${overlayHtml}
+    `;
+  }
+
+  function renderSingleArenaCardHTML(card, idx) {
+    return `
+      <div class="arena-word-card" id="arena-card-${idx}" onclick="clickArenaCard(${idx})">
+        <button class="card-speaker-mini" onclick="previewArenaCardAudio(event, ${idx})" title="Nghe thử">🔊</button>
+        <div class="card-emo" id="arena-emo-${idx}">${card.emo}</div>
+        <div class="card-word" id="arena-word-${idx}">${card.word}</div>
+        <div class="card-ipa-pop" id="arena-ipa-${idx}">${card.ipa}</div>
       </div>
     `;
   }
 
-  function pickStar2Card(idx) {
-    if (isTransitioning) return;
-    const chosen = s2Cards[idx];
-    const q = exQueue[exIndex];
-    const cardEl = document.getElementById(`s2-card-${idx}`);
+  function updateSingleArenaCardDOM(idx) {
+    const card = arenaBoard[idx];
+    const cardEl = document.getElementById(`arena-card-${idx}`);
+    if (!card || !cardEl) return;
 
-    if (chosen.isCorrect) {
-      isTransitioning = true;
-      if (cardEl) cardEl.classList.add('correct-hit');
+    cardEl.className = 'arena-word-card';
+    document.getElementById(`arena-emo-${idx}`).textContent = card.emo;
+    document.getElementById(`arena-word-${idx}`).textContent = card.word;
+    document.getElementById(`arena-ipa-${idx}`).textContent = card.ipa;
+  }
 
-      document.getElementById('s2-prompt-emo').textContent = q.emo;
-      document.getElementById('s2-prompt-txt').textContent = `${q.word} (${q.vi})`;
-      document.getElementById('s2-ipa-reveal').textContent = `${q.ipa} ✓ Giỏi quá!`;
+  function previewArenaCardAudio(event, idx) {
+    event.stopPropagation();
+    const card = arenaBoard[idx];
+    if (!card) return;
+    speakWord(card.word, 0.85);
+  }
+
+  // Khi học sinh chọn Phe -> Đếm ngược 3, 2, 1... Bắt đầu!
+  function selectArenaTeam(chosenTeamIdx) {
+    const lv = LEVELS.find(x => x.id === currentLevelId);
+    playerTeam = chosenTeamIdx;
+    aiTeam = 1 - chosenTeamIdx;
+    arenaState = 'countdown';
+
+    const youLabel = playerTeam === 0 ? lv.g0 : lv.g1;
+    const aiLabel = aiTeam === 0 ? lv.g0 : lv.g1;
+
+    document.getElementById('hud-you-name').textContent = `👧 Bạn (${youLabel})`;
+    document.getElementById('hud-ai-name').textContent = `🤖 Máy AI (${aiLabel})`;
+    document.getElementById('arena-status-strip').innerHTML =
+      `🎯 Hãy bắt các từ thuộc <b>${youLabel}</b>! (Bấm 🔊 trên thẻ để nghe thử)`;
+
+    const overlay = document.getElementById('arena-overlay');
+    let count = 3;
+    overlay.innerHTML = `
+      <div class="arena-modal-card">
+        <div style="font-size:14px;font-weight:900;color:#0f766e;">
+          👧 Bạn: <b>${youLabel}</b> &nbsp;vs&nbsp; 🤖 AI: <b>${aiLabel}</b>
+        </div>
+        <div class="countdown-number" id="countdown-num">3</div>
+        <div style="font-size:13px;font-weight:800;color:#64748b;">Chuẩn bị tinh thần nhé...</div>
+      </div>
+    `;
+
+    playFeedbackSound(true);
+    arenaCountdownTimerId = setInterval(() => {
+      count--;
+      const numEl = document.getElementById('countdown-num');
+      if (count > 0) {
+        if (numEl) {
+          numEl.textContent = count;
+          numEl.style.animation = 'none';
+          void numEl.offsetWidth;
+          numEl.style.animation = 'popScale 0.5s ease';
+        }
+        playFeedbackSound(true);
+      } else if (count === 0) {
+        if (numEl) {
+          numEl.textContent = 'BẮT ĐẦU!';
+          numEl.style.fontSize = '38px';
+        }
+        playFeedbackSound('win');
+      } else {
+        clearInterval(arenaCountdownTimerId);
+        arenaCountdownTimerId = null;
+        if (overlay) overlay.remove();
+        startArenaBattle();
+      }
+    }, 750);
+  }
+
+  function startArenaBattle() {
+    arenaState = 'playing';
+    playerScore = 0;
+    aiScore = 0;
+    arenaTimeLeft = 45;
+    updateArenaHudDOM();
+
+    // Đồng hồ đếm ngược 45 giây
+    arenaClockIntervalId = setInterval(() => {
+      if (arenaState !== 'playing') return;
+      arenaTimeLeft--;
+      const timerEl = document.getElementById('hud-timer');
+      if (timerEl) {
+        timerEl.textContent = `⏱️ ${arenaTimeLeft}s`;
+        if (arenaTimeLeft <= 10) timerEl.classList.add('urgent');
+      }
+      if (arenaTimeLeft <= 0) {
+        finishArenaBattle();
+      }
+    }, 1000);
+
+    // Hành động tự động của AI cứ mỗi 3.5 giây
+    arenaAiIntervalId = setInterval(() => {
+      if (arenaState !== 'playing') return;
+      triggerAiMove();
+    }, 3500);
+  }
+
+  function updateArenaHudDOM() {
+    const youScoreEl = document.getElementById('hud-you-score');
+    const aiScoreEl = document.getElementById('hud-ai-score');
+    const tugYouEl = document.getElementById('tug-fill-you');
+
+    if (youScoreEl) youScoreEl.textContent = `${playerScore} điểm`;
+    if (aiScoreEl) aiScoreEl.textContent = `${aiScore} điểm`;
+
+    const diff = playerScore - aiScore;
+    const youPct = Math.max(10, Math.min(90, 50 + diff * 5));
+    if (tugYouEl) tugYouEl.style.width = `${youPct}%`;
+  }
+
+  // Khi Người chơi chạm vào 1 thẻ trên bàn cờ
+  function clickArenaCard(idx) {
+    if (arenaState !== 'playing' || isPlayerStunned) return;
+    const card = arenaBoard[idx];
+    if (!card || card.busy) return;
+
+    const lv = LEVELS.find(x => x.id === currentLevelId);
+    const cardEl = document.getElementById(`arena-card-${idx}`);
+    const statusStrip = document.getElementById('arena-status-strip');
+    const gridEl = document.getElementById('arena-grid-12');
+
+    if (card.groupIdx === playerTeam) {
+      // ĐÚNG âm của phe mình
+      card.busy = true;
+      playerScore++;
+      updateArenaHudDOM();
+
+      if (cardEl) cardEl.classList.add('player-captured');
+      if (statusStrip) {
+        statusStrip.classList.remove('stun-alert');
+        statusStrip.innerHTML = `✅ Tuyệt vời! <b>${card.word} ${card.ipa}</b> (+1 điểm cho Bạn)`;
+      }
 
       playFeedbackSound(true);
-      speakWord(q.word, 0.85);
+      speakWord(card.word, 0.85);
 
-      setTimeout(() => advanceToNextQuestion(), 1000);
+      if (playerScore >= 15) {
+        setTimeout(() => finishArenaBattle(), 650);
+        return;
+      }
+
+      setTimeout(() => {
+        if (arenaState !== 'playing') return;
+        arenaBoard[idx] = spawnReplacementCard();
+        updateSingleArenaCardDOM(idx);
+      }, 800);
+    } else {
+      // SAI (Chạm nhầm vào từ thuộc phe AI) -> Phạt choáng 1.5 giây
+      const aiSoundName = aiTeam === 0 ? lv.g0 : lv.g1;
+      isPlayerStunned = true;
+
+      if (cardEl) {
+        cardEl.classList.add('wrong-shake');
+        setTimeout(() => cardEl.classList.remove('wrong-shake'), 380);
+      }
+      if (gridEl) gridEl.classList.add('stun-locked');
+      if (statusStrip) {
+        statusStrip.classList.add('stun-alert');
+        statusStrip.innerHTML = `⚡ Nhầm rồi! <b>"${card.word}" (${card.ipa})</b> là ${aiSoundName}! (Choáng 1.5s)`;
+      }
+
+      playFeedbackSound(false);
+      speakWord(card.word, 0.75);
+
+      if (stunTimerId) clearTimeout(stunTimerId);
+      stunTimerId = setTimeout(() => {
+        isPlayerStunned = false;
+        if (gridEl) gridEl.classList.remove('stun-locked');
+        if (statusStrip && arenaState === 'playing') {
+          const youLabel = playerTeam === 0 ? lv.g0 : lv.g1;
+          statusStrip.classList.remove('stun-alert');
+          statusStrip.innerHTML = `🎯 Tiếp tục nào! Hãy bắt từ thuộc <b>${youLabel}</b>!`;
+        }
+      }, 1500);
+    }
+  }
+
+  // Hành động tự động của AI mỗi 3.5 giây
+  function triggerAiMove() {
+    if (arenaState !== 'playing') return;
+
+    // Tìm tất cả các thẻ thuộc phe AI hiện đang rảnh trên bàn cờ
+    const candidateIndices = [];
+    arenaBoard.forEach((c, i) => {
+      if (c && !c.busy && c.groupIdx === aiTeam) {
+        candidateIndices.push(i);
+      }
+    });
+
+    if (candidateIndices.length === 0) return;
+    const pickedIdx = candidateIndices[Math.floor(Math.random() * candidateIndices.length)];
+    const card = arenaBoard[pickedIdx];
+    card.busy = true;
+
+    aiScore++;
+    updateArenaHudDOM();
+
+    const cardEl = document.getElementById(`arena-card-${pickedIdx}`);
+    const statusStrip = document.getElementById('arena-status-strip');
+
+    if (cardEl) cardEl.classList.add('ai-captured');
+    if (statusStrip && !isPlayerStunned) {
+      statusStrip.innerHTML = `🤖 Máy AI vừa bắt <b>${card.word} ${card.ipa}</b> (+1 điểm cho AI)`;
+    }
+
+    playFeedbackSound('ai');
+    speakWord(card.word, 0.9);
+
+    if (aiScore >= 15) {
+      setTimeout(() => finishArenaBattle(), 650);
+      return;
+    }
+
+    setTimeout(() => {
+      if (arenaState !== 'playing') return;
+      arenaBoard[pickedIdx] = spawnReplacementCard();
+      updateSingleArenaCardDOM(pickedIdx);
+    }, 800);
+  }
+
+  // Kết thúc trận đấu & Hiện Bảng Tổng Kết
+  function finishArenaBattle() {
+    if (arenaState === 'ended') return;
+    arenaState = 'ended';
+    stopAllActiveTimers();
+
+    const isVictory = playerScore > aiScore;
+    if (isVictory) {
+      progress[currentLevelId][1] = true;
+      saveProgress();
+      playFeedbackSound('win');
     } else {
       playFeedbackSound(false);
-      if (cardEl) {
-        cardEl.classList.add('wrong-hit');
-        setTimeout(() => cardEl.classList.remove('wrong-hit'), 350);
-      }
-      speakWord(q.word, 0.65);
     }
+
+    const wrap = document.getElementById('arena-wrapper');
+    if (!wrap) return;
+
+    const resultOverlay = document.createElement('div');
+    resultOverlay.className = 'arena-overlay';
+    resultOverlay.innerHTML = `
+      <div class="arena-modal-card">
+        <div style="font-size:48px;line-height:1;">
+          ${isVictory ? '🏆' : '💪'}
+        </div>
+        <h3 style="font-size:21px;font-weight:900;color:${isVictory ? '#15803d' : '#b91c1c'};">
+          ${isVictory ? 'CHIẾN THẮNG TUYỆT VỜI!' : 'SUÝT THẮNG RỒI!'}
+        </h3>
+        <p style="font-size:13px;color:#475569;font-weight:700;">
+          ${isVictory
+            ? 'Bé đã đánh bại Máy AI và giành được Sao thứ 2 ⭐⭐!'
+            : 'Bé hãy nghe kỹ âm hoặc bấm nút 🔊 trên thẻ để thắng AI ở trận sau nhé!'}
+        </p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0;">
+          <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:14px;padding:10px;">
+            <div style="font-size:11.5px;font-weight:800;color:#166534;">👧 Điểm của Bạn</div>
+            <div style="font-size:26px;font-weight:900;color:#14532d;">${playerScore}</div>
+          </div>
+          <div style="background:#fff7ed;border:2px solid #fdba74;border-radius:14px;padding:10px;">
+            <div style="font-size:11.5px;font-weight:800;color:#9a3412;">🤖 Điểm Máy AI</div>
+            <div style="font-size:26px;font-weight:900;color:#7c2d12;">${aiScore}</div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:4px;">
+          <button class="pill-btn slow" onclick="switchStarMode(2)">
+            🔄 Đấu lại
+          </button>
+          ${isVictory ? `
+            <button class="pill-btn" onclick="switchStarMode(3)">
+              Qua Sao 3 ⭐⭐⭐ ➔
+            </button>
+          ` : ''}
+        </div>
+      </div>
+    `;
+    wrap.appendChild(resultOverlay);
   }
 
   // =========================================================================
@@ -2144,7 +2813,6 @@
     const answerZone = document.getElementById('ex-answer-zone');
     if (!slotsRow || !answerZone) return;
 
-    // Vẽ các ô trống ghép chữ
     slotsRow.innerHTML = s3Slots.map((slotObj, sIdx) => {
       if (slotObj) {
         const okCls = s3SubStep === 'mic' ? 'phonics-slot filled ok-green' : 'phonics-slot filled';
@@ -2168,7 +2836,6 @@
         </div>
       `;
     } else {
-      // Bước B: Hiện nút bấm Micro thật to
       answerZone.innerHTML = `
         <div class="mic-challenge-box">
           <div class="mic-status-txt" id="mic-status-txt">
@@ -2196,7 +2863,6 @@
     s3Slots[emptyIdx] = tile;
     updateStar3BottomZone();
 
-    // Kiểm tra khi đã điền đủ các mảnh chữ
     if (s3Slots.every(x => x !== null)) {
       const q = exQueue[exIndex];
       const expectedLetters = q.phonics.map(raw => raw.split(' ')[0]);
@@ -2338,7 +3004,7 @@
     setTimeout(() => advanceToNextQuestion(), 400);
   }
 
-  // ------------------- CHUYỂN CÂU TIẾP THEO HOẶC HOÀN THÀNH SAO -------------------
+  // ------------------- CHUYỂN CÂU TIẾP THEO (SAO 1 & SAO 3) -------------------
   function advanceToNextQuestion() {
     stopActiveMicRecognition();
     if (exIndex + 1 < exQueue.length) {
@@ -2347,7 +3013,6 @@
       prepareCurrentQuestion();
       renderExerciseScreen();
     } else {
-      // Hoàn thành 10/10 câu của Sao hiện tại
       progress[currentLevelId][currentStarMode - 1] = true;
       saveProgress();
       isTransitioning = false;
@@ -2357,7 +3022,6 @@
         startStarExercise(currentStarMode);
         renderExerciseScreen();
       } else {
-        // Đạt đủ 3 Sao -> Tự động quay ra Bản đồ học đúng tại vị trí Level vừa qua
         currentTab = 'map';
         renderApp();
       }
