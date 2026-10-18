@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>IPA English — Học Phát Âm Tiếng Anh Lớp 5</title>
+  <title>IPA English — Game Học Phát Âm Tiếng Anh Từ Gốc</title>
   <style>
     :root {
       --bg-outer: #0f172a;
       --bg-app: #f0fdfa;
-      --bg-card: #ffffff;
       --teal-main: #0d9488;
       --teal-dark: #115e59;
       --teal-light: #ccfbf1;
       --teal-border: #5eead4;
       --green-ok: #16a34a;
       --green-dark: #15803d;
-      --orange-ai: #f97316;
+      --orange-main: #f97316;
       --orange-dark: #c2410c;
+      --purple-ai: #9333ea;
+      --purple-dark: #6b21a8;
       --red-err: #ef4444;
-      --amber-star: #eab308;
       --text-main: #0f172a;
       --text-muted: #64748b;
     }
@@ -34,13 +34,13 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    button, .touch-card {
+    button, .touch-item {
       touch-action: manipulation;
       user-select: none;
-      transition: transform 0.1s ease, background-color 0.15s ease;
       cursor: pointer;
+      transition: transform 0.1s ease, background-color 0.15s ease;
     }
-    button:active, .touch-card:active {
+    button:active, .touch-item:active {
       transform: scale(0.95);
     }
 
@@ -54,7 +54,6 @@
       justify-content: center;
     }
 
-    /* Khung chuẩn Điện thoại dọc */
     .mobile-app {
       width: 100%;
       max-width: 480px;
@@ -64,12 +63,12 @@
       flex-direction: column;
       overflow: hidden;
       position: relative;
-      box-shadow: 0 0 35px rgba(0,0,0,0.45);
+      box-shadow: 0 0 40px rgba(0,0,0,0.5);
     }
 
-    /* ================= HEADER TRÊN CÙNG (CỐ ĐỊNH ~50PX) ================= */
+    /* ================= 1. HEADER CỐ ĐỊNH (~50PX) ================= */
     .app-header {
-      height: 52px;
+      height: 50px;
       background: #ffffff;
       border-bottom: 1.5px solid #e2e8f0;
       padding: 0 12px;
@@ -92,7 +91,7 @@
       color: #fff;
       font-weight: 900;
       font-size: 13px;
-      padding: 5px 8px;
+      padding: 4px 8px;
       border-radius: 9px;
       box-shadow: 0 2px 0 var(--teal-dark);
     }
@@ -106,7 +105,7 @@
       align-items: center;
       gap: 6px;
     }
-    .star-counter-pill {
+    .star-pill {
       background: #fef9c3;
       border: 1.5px solid #fde047;
       color: #854d0e;
@@ -115,7 +114,7 @@
       padding: 4px 10px;
       border-radius: 999px;
     }
-    .sync-mini-btn {
+    .sync-btn {
       background: #f0fdfa;
       border: 1.5px solid var(--teal-border);
       color: var(--teal-dark);
@@ -125,22 +124,22 @@
       border-radius: 9px;
     }
 
-    /* ================= KHUNG HIỂN THỊ CHÍNH ================= */
-    .app-content {
+    /* ================= VÙNG NỘI DUNG CHÍNH ================= */
+    .app-viewport {
       flex: 1;
       overflow-y: auto;
       overflow-x: hidden;
       -webkit-overflow-scrolling: touch;
       position: relative;
     }
-    .app-content.no-scroll {
+    .app-viewport.no-scroll {
       overflow: hidden !important;
       height: 100dvh;
     }
 
-    /* ================= BOTTOM NAVIGATION BAR (~60PX) ================= */
+    /* ================= 2. BOTTOM NAVIGATION BAR (~60PX) ================= */
     .bottom-nav {
-      height: 62px;
+      height: 60px;
       background: #ffffff;
       border-top: 1.5px solid #e2e8f0;
       display: grid;
@@ -153,7 +152,7 @@
     .bottom-nav.hidden {
       display: none !important;
     }
-    .nav-btn {
+    .nav-tab {
       border: 1.5px solid transparent;
       background: transparent;
       border-radius: 14px;
@@ -166,19 +165,19 @@
       font-weight: 800;
       gap: 2px;
     }
-    .nav-btn .ico {
-      font-size: 19px;
+    .nav-tab .ico {
+      font-size: 18px;
       line-height: 1;
     }
-    .nav-btn.active {
+    .nav-tab.active {
       background: #f0fdfa;
       border-color: var(--teal-border);
       color: var(--teal-dark);
     }
 
-    /* ================= TAB 1: BẢN ĐỒ HỌC (CANDY SAGA + MASCOT) ================= */
-    .map-toolbar {
-      background: rgba(255, 255, 255, 0.92);
+    /* ================= TAB 1: BẢN ĐỒ HỌC (4 CHẶNG, 14 LEVEL) ================= */
+    .map-subbar {
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(6px);
       padding: 8px 14px;
       border-bottom: 1px solid #e2e8f0;
@@ -189,25 +188,26 @@
       top: 0;
       z-index: 10;
     }
-    .saga-map-body {
-      padding: 16px 14px 50px;
+    .saga-map {
+      padding: 14px 14px 55px;
       background: linear-gradient(180deg, #f0fdfa 0%, #e0f2fe 100%);
       min-height: 100%;
     }
-    .stage-title-pill {
+    .stage-banner {
       text-align: center;
-      margin: 14px 0;
+      margin: 16px 0 12px;
     }
-    .stage-title-pill span {
+    .stage-banner span {
       display: inline-block;
       background: #ccfbf1;
       border: 1.5px solid #2dd4bf;
       color: var(--teal-dark);
       font-weight: 900;
-      font-size: 11.5px;
-      padding: 5px 14px;
+      font-size: 11px;
+      padding: 6px 14px;
       border-radius: 999px;
       text-transform: uppercase;
+      box-shadow: 0 2px 6px rgba(13,148,136,0.12);
     }
     .saga-row {
       display: flex;
@@ -218,15 +218,15 @@
     .saga-row.pos-left { justify-content: flex-start; padding-left: 12%; }
     .saga-row.pos-right { justify-content: flex-end; padding-right: 12%; }
 
-    .level-node-box {
+    .level-node {
       display: flex;
       flex-direction: column;
       align-items: center;
       position: relative;
     }
     .level-circle {
-      width: 92px;
-      height: 92px;
+      width: 96px;
+      height: 96px;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 25%, #2dd4bf, #0d9488 65%, #0f766e 100%);
       border: 4px solid #ffffff;
@@ -236,31 +236,32 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 4px;
+      padding: 5px;
     }
     .level-circle.locked {
       background: radial-gradient(circle at 30% 25%, #cbd5e1, #94a3b8 70%, #64748b 100%);
       box-shadow: 0 7px 0 #475569;
     }
-    .lv-top-txt {
-      font-size: 9.5px;
+    .lv-num {
+      font-size: 10px;
       font-weight: 900;
       opacity: 0.92;
     }
-    .lv-main-ipa {
-      font-size: 17px;
+    .lv-ipa {
+      font-size: 16px;
       font-weight: 900;
       line-height: 1.15;
-      margin: 1px 0;
+      margin: 2px 0;
+      text-align: center;
     }
-    .lv-sub-txt {
+    .lv-desc {
       font-size: 9px;
       font-weight: 700;
       text-align: center;
       line-height: 1.1;
       opacity: 0.95;
     }
-    .lv-stars-bar {
+    .lv-stars {
       margin-top: 6px;
       background: #ffffff;
       border: 1.5px solid #cbd5e1;
@@ -273,18 +274,17 @@
     .s-on { color: #eab308; }
     .s-off { color: #cbd5e1; }
 
-    /* Mascot đứng cạnh Level hiện tại */
-    .mascot-avatar {
+    .mascot-box {
       position: absolute;
-      right: -54px;
-      top: 6px;
+      right: -56px;
+      top: 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: mascotBounce 1.4s infinite ease-in-out;
+      animation: mascotFloat 1.4s infinite ease-in-out;
       pointer-events: none;
     }
-    .mascot-emoji {
+    .mascot-emo {
       font-size: 34px;
       filter: drop-shadow(0 4px 4px rgba(0,0,0,0.18));
     }
@@ -299,45 +299,34 @@
       white-space: nowrap;
       margin-top: -2px;
     }
-    @keyframes mascotBounce {
+    @keyframes mascotFloat {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-7px); }
     }
 
-    /* ================= TAB 2: BẢNG ÂM IPA & BOTTOM SHEET 60% ================= */
-    .chart-page {
-      padding: 12px 12px 36px;
+    /* ================= TAB 2: BẢNG ÂM IPA (3 MỤC) & BOTTOM SHEET 60% ================= */
+    .chart-wrap {
+      padding: 12px 12px 40px;
     }
-    .chart-switch-bar {
-      display: flex;
-      background: #e2e8f0;
-      padding: 4px;
+    .chart-guide-banner {
+      background: #ffffff;
+      border: 1.5px solid #99f6e4;
       border-radius: 12px;
-      gap: 4px;
-      margin-bottom: 12px;
-    }
-    .chart-switch-btn {
-      flex: 1;
-      border: none;
-      padding: 8px 0;
-      border-radius: 9px;
-      font-size: 12.5px;
+      padding: 8px 12px;
+      font-size: 12px;
       font-weight: 800;
-      background: transparent;
-      color: var(--text-muted);
+      color: var(--teal-dark);
+      text-align: center;
+      margin-bottom: 10px;
     }
-    .chart-switch-btn.active {
-      background: var(--teal-main);
-      color: #fff;
-    }
-    .kid-group-title {
-      font-size: 12.5px;
+    .ipa-sec-header {
+      font-size: 13px;
       font-weight: 900;
       color: var(--teal-dark);
       background: #ccfbf1;
-      padding: 6px 12px;
+      padding: 7px 12px;
       border-radius: 10px;
-      margin: 12px 0 8px;
+      margin: 14px 0 8px;
       border-left: 4px solid var(--teal-main);
     }
     .ipa-grid-4 {
@@ -345,12 +334,12 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 7px;
     }
-    .ipa-cell-btn {
+    .ipa-cell {
       background: #ffffff;
       border: 1.5px solid #cbd5e1;
       border-radius: 13px;
       padding: 8px 3px;
-      min-height: 70px;
+      min-height: 72px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -358,21 +347,21 @@
       gap: 2px;
       box-shadow: 0 3px 0 #e2e8f0;
     }
-    .ipa-cell-btn .c-sym {
+    .ipa-cell .c-sym {
       font-size: 17px;
       font-weight: 900;
       color: var(--teal-dark);
     }
-    .ipa-cell-btn .c-word {
+    .ipa-cell .c-word {
       font-size: 11px;
       font-weight: 700;
       color: var(--text-main);
     }
-    .ipa-cell-btn .c-emo {
+    .ipa-cell .c-emo {
       font-size: 15px;
     }
 
-    /* Bottom Sheet 60% chiều cao màn hình */
+    /* Bottom Sheet 60% */
     .sheet-backdrop {
       position: fixed;
       inset: 0;
@@ -391,23 +380,23 @@
       height: 60dvh;
       background: #ffffff;
       border-radius: 24px 24px 0 0;
-      padding: 16px 18px 24px;
+      padding: 16px 18px 22px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       box-shadow: 0 -10px 30px rgba(0,0,0,0.25);
-      animation: slideUpSheet 0.22s ease-out;
+      animation: slideUp 0.22s ease-out;
     }
-    @keyframes slideUpSheet {
+    @keyframes slideUp {
       from { transform: translateY(100%); }
       to { transform: translateY(0); }
     }
-    .sheet-top-bar {
+    .sheet-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .sheet-badge {
+    .sheet-tag {
       background: #ccfbf1;
       color: var(--teal-dark);
       font-size: 12px;
@@ -415,7 +404,7 @@
       padding: 4px 10px;
       border-radius: 999px;
     }
-    .sheet-close-btn {
+    .sheet-close {
       background: #f1f5f9;
       border: 1.5px solid #cbd5e1;
       color: var(--text-main);
@@ -431,19 +420,19 @@
       border-radius: 18px;
       padding: 12px;
     }
-    .sheet-big-sym {
+    .sheet-sym {
       font-size: 46px;
       font-weight: 900;
       color: var(--teal-dark);
       line-height: 1.1;
     }
-    .sheet-big-word {
+    .sheet-word {
       font-size: 20px;
       font-weight: 900;
       color: var(--text-main);
       margin-top: 4px;
     }
-    .sheet-mouth-box {
+    .sheet-mouth {
       background: #fefce8;
       border: 1.5px solid #fde047;
       border-radius: 16px;
@@ -474,19 +463,18 @@
       box-shadow: 0 4px 0 var(--teal-dark);
     }
 
-    /* ================= MÀN HÌNH BÀI TẬP 3 SAO — NO-SCROLL ================= */
-    .exercise-screen {
+    /* ================= MÀN HÌNH CHƠI GAME 3 SAO (100dvh NO-SCROLL) ================= */
+    .game-screen {
       width: 100%;
       height: 100dvh;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       background: #f8fafc;
-      position: relative;
     }
 
-    /* 1. Thanh Top Bar (10% chiều cao) */
-    .ex-top-bar {
+    /* Thanh Top Bar (10% chiều cao) */
+    .game-topbar {
       height: 10dvh;
       min-height: 50px;
       max-height: 60px;
@@ -500,7 +488,7 @@
       flex-shrink: 0;
       z-index: 25;
     }
-    .btn-back-map {
+    .btn-back {
       background: #f1f5f9;
       border: 1.5px solid #cbd5e1;
       color: var(--text-main);
@@ -510,37 +498,37 @@
       border-radius: 10px;
       white-space: nowrap;
     }
-    .ex-progress-wrap {
+    .top-prog-wrap {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 3px;
     }
-    .ex-progress-text {
+    .top-prog-txt {
       font-size: 11px;
       font-weight: 900;
       color: var(--teal-dark);
       white-space: nowrap;
     }
-    .ex-progress-bar {
+    .top-prog-bar {
       width: 100%;
       height: 8px;
       background: #e2e8f0;
       border-radius: 999px;
       overflow: hidden;
     }
-    .ex-progress-fill {
+    .top-prog-fill {
       height: 100%;
       background: var(--teal-main);
       border-radius: 999px;
       transition: width 0.25s ease;
     }
-    .ex-star-group {
+    .star-switch-group {
       display: flex;
       gap: 4px;
     }
-    .ex-star-btn {
+    .star-switch-btn {
       padding: 6px 8px;
       border-radius: 9px;
       border: 1.5px solid #cbd5e1;
@@ -549,157 +537,246 @@
       font-weight: 900;
       color: var(--text-muted);
     }
-    .ex-star-btn.active {
+    .star-switch-btn.active {
       background: var(--teal-main);
       border-color: var(--teal-dark);
       color: #ffffff;
     }
-    .ex-star-btn.done {
+    .star-switch-btn.done {
       background: #fef9c3;
       border-color: #eab308;
       color: #854d0e;
     }
 
-    /* 2. Khu vực Đề bài cho Sao 1 & Sao 3 (45% chiều cao) */
-    .ex-prompt-zone {
-      height: 45dvh;
-      padding: 12px 14px;
+    /* 90% chiều cao còn lại cho 3 Mini-game */
+    .game-stage-90 {
+      height: 90dvh;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      background: #f0fdfa;
-      border-bottom: 2px dashed #99f6e4;
-      text-align: center;
-      flex-shrink: 0;
     }
-    .ex-mode-title {
-      font-size: 11.5px;
+
+    /* =========================================================================
+       ⭐ SAO 1: GAME "QUÁI VẬT KÉN ĂN" (HUNGRY MONSTERS)
+       ========================================================================= */
+    .monster-game-wrap {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: radial-gradient(circle at 50% 25%, #ffffff 0%, #e0f2fe 100%);
+      padding: 10px 12px 14px;
+    }
+    .mg-header-banner {
+      text-align: center;
+      font-size: 12px;
       font-weight: 900;
       color: var(--teal-dark);
       background: #ccfbf1;
-      padding: 4px 12px;
+      border: 1.5px solid #5eead4;
+      padding: 5px 12px;
       border-radius: 999px;
-      text-transform: uppercase;
+      align-self: center;
     }
-    .ex-emoji-pic {
-      font-size: 56px;
-      line-height: 1.05;
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-    }
-    .ex-word-box {
+
+    /* Khu vực Đĩa Thức Ăn ở giữa màn hình */
+    .food-plate-area {
+      flex: 1;
       display: flex;
-      flex-direction: column;
+       flex-direction: column;
       align-items: center;
-      gap: 3px;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
     }
-    .ex-masked-word {
-      font-size: 32px;
+    .food-plate {
+      width: 92%;
+      max-width: 340px;
+      background: #ffffff;
+      border: 4px solid #cbd5e1;
+      border-bottom-width: 8px;
+      border-radius: 36px;
+      padding: 14px 16px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(15,23,42,0.1);
+      transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.1), opacity 0.4s ease, border-color 0.2s;
+      position: relative;
+    }
+    .food-plate.fly-left {
+      transform: translate(-110px, 165px) scale(0.25) rotate(-20deg) !important;
+      opacity: 0;
+    }
+    .food-plate.fly-right {
+      transform: translate(110px, 165px) scale(0.25) rotate(20deg) !important;
+      opacity: 0;
+    }
+    .food-plate.spit-shake {
+      border-color: #ef4444;
+      background: #fef2f2;
+      animation: plateSpit 0.45s ease;
+    }
+    @keyframes plateSpit {
+      0%, 100% { transform: translate(0, 0); }
+      20% { transform: translate(-12px, -10px) rotate(-6deg); }
+      40% { transform: translate(12px, -6px) rotate(6deg); }
+      60% { transform: translate(-8px, 4px); }
+    }
+    .plate-emo {
+      font-size: 54px;
+      line-height: 1.05;
+      filter: drop-shadow(0 4px 5px rgba(0,0,0,0.12));
+    }
+    .plate-vi {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #475569;
+      margin-top: 2px;
+    }
+    .plate-word {
+      font-size: 30px;
       font-weight: 900;
       letter-spacing: 2px;
       color: var(--text-main);
+      margin: 4px 0 2px;
     }
-    .ex-masked-word .filled-highlight {
+    .plate-word .filled-ok {
       color: var(--green-ok);
       text-decoration: underline;
     }
-    .ex-meaning-vi {
-      font-size: 15px;
-      font-weight: 800;
-      color: #475569;
-    }
-    .ex-ipa-reveal {
-      font-size: 17px;
+    .plate-ipa {
+      font-size: 16px;
       font-weight: 900;
       color: var(--teal-main);
       min-height: 22px;
     }
-    .pill-audio-row {
+    .plate-audio-row {
       display: flex;
-      gap: 10px;
-      width: 100%;
-      max-width: 340px;
-      justify-content: center;
+      gap: 8px;
+      width: 90%;
+      max-width: 310px;
     }
-    .pill-btn {
+    .pill-audio-btn {
       flex: 1;
-      padding: 9px 12px;
+      padding: 9px 10px;
       border-radius: 999px;
       border: none;
       background: var(--teal-main);
-      color: #ffffff;
-      font-size: 13px;
+      color: #fff;
+      font-size: 12.5px;
       font-weight: 800;
       box-shadow: 0 3px 0 var(--teal-dark);
     }
-    .pill-btn.slow {
+    .pill-audio-btn.slow {
       background: #ffffff;
       color: var(--text-main);
       border: 1.5px solid #cbd5e1;
       box-shadow: 0 3px 0 #cbd5e1;
     }
 
-    /* 3. Khu vực Trả lời cho Sao 1 & Sao 3 (45% chiều cao) */
-    .ex-answer-zone {
-      height: 45dvh;
-      padding: 14px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    /* Khu vực 2 Chú Quái Vật Đáng Yêu ở đáy màn hình */
+    .monsters-pit {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 12px;
-      background: #ffffff;
-      flex-shrink: 0;
+      padding-top: 6px;
+      position: relative;
     }
-
-    /* Sao 1: 2 Nút bấm đại diện 2 nhóm âm */
-    .s1-two-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      height: 100%;
-      justify-content: center;
-    }
-    .big-sound-btn {
-      width: 100%;
-      min-height: 76px;
-      border-radius: 18px;
-      border: 2.5px solid #99f6e4;
-      background: #f0fdfa;
-      color: var(--teal-dark);
-      font-size: 19px;
-      font-weight: 900;
-      padding: 12px 16px;
-      box-shadow: 0 5px 0 #5eead4;
+    .monster-card {
+      border-radius: 22px;
+      padding: 12px 8px 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 4px;
+      justify-content: space-between;
+      min-height: 165px;
+      position: relative;
+      transition: transform 0.2s ease;
     }
-    .big-sound-btn .sub-hint {
-      font-size: 13px;
+    .monster-card.left-green {
+      background: linear-gradient(180deg, #dcfce7 0%, #86efac 100%);
+      border: 3px solid #16a34a;
+      box-shadow: 0 6px 0 #15803d;
+      color: #14532d;
+    }
+    .monster-card.right-orange {
+      background: linear-gradient(180deg, #ffedd5 0%, #fdba74 100%);
+      border: 3px solid #f97316;
+      box-shadow: 0 6px 0 #c2410c;
+      color: #7c2d12;
+    }
+    .monster-card.happy-jump {
+      animation: monsterJump 0.5s ease 2;
+    }
+    .monster-card.yuck-shake {
+      animation: cardShake 0.4s ease;
+    }
+    @keyframes monsterJump {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-14px) scale(1.06); }
+    }
+    .monster-bubble {
+      position: absolute;
+      top: -34px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ffffff;
+      border: 2px solid #0f172a;
+      color: #0f172a;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 4px 9px;
+      border-radius: 12px;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      display: none;
+      z-index: 10;
+    }
+    .monster-bubble.show {
+      display: block;
+      animation: popScale 0.25s ease;
+    }
+    .monster-avatar {
+      font-size: 50px;
+      line-height: 1;
+      position: relative;
+      filter: drop-shadow(0 4px 4px rgba(0,0,0,0.12));
+    }
+    .monster-mouth-hole {
+      width: 34px;
+      height: 16px;
+      background: #450a0a;
+      border-radius: 0 0 18px 18px;
+      border: 2px solid #ffffff;
+      margin-top: -4px;
+    }
+    .monster-sign {
+      width: 100%;
+      background: rgba(255,255,255,0.92);
+      border-radius: 12px;
+      padding: 6px 4px;
+      text-align: center;
+      margin-top: 6px;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .sign-main {
+      font-size: 14px;
+      font-weight: 900;
+      display: block;
+    }
+    .sign-sub {
+      font-size: 11px;
       font-weight: 700;
-      color: #0f766e;
-    }
-    .big-sound-btn.correct-hit {
-      background: var(--green-ok) !important;
-      border-color: var(--green-dark) !important;
-      color: #ffffff !important;
-      box-shadow: 0 5px 0 var(--green-dark) !important;
-    }
-    .big-sound-btn.correct-hit .sub-hint {
-      color: #dcfce7 !important;
-    }
-    .big-sound-btn.wrong-hit {
-      background: #fee2e2 !important;
-      border-color: #ef4444 !important;
-      color: #991b1b !important;
-      box-shadow: 0 5px 0 #dc2626 !important;
+      opacity: 0.85;
+      display: block;
     }
 
-    /* ================= ⭐⭐ SAO 2: ĐẤU TRƯỜNG ÂM THANH (BẠN vs AI) ================= */
-    .arena-wrapper {
-      height: 90dvh;
+    /* =========================================================================
+       ⭐⭐ SAO 2: GAME "ĐẤU TRƯỜNG ÂM THANH — BẠN vs AI" (SPEED BATTLE)
+       ========================================================================= */
+    .arena-wrap {
+      height: 100%;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -707,91 +784,84 @@
       overflow: hidden;
       position: relative;
     }
-
-    /* Thanh tỉ số & đồng hồ + thanh kéo co */
     .arena-hud {
       background: #ffffff;
       border-bottom: 1.5px solid #e2e8f0;
-      padding: 8px 10px;
+      padding: 7px 10px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       flex-shrink: 0;
     }
-    .hud-score-row {
+    .hud-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 6px;
     }
-    .fighter-box {
+    .fighter-tag {
       flex: 1;
-      padding: 6px 8px;
-      border-radius: 12px;
+      padding: 5px 8px;
+      border-radius: 11px;
       display: flex;
       flex-direction: column;
-      gap: 1px;
     }
-    .fighter-box.you {
+    .fighter-tag.you {
       background: #f0fdf4;
       border: 1.5px solid #86efac;
       color: #14532d;
-      text-align: left;
     }
-    .fighter-box.ai {
-      background: #fff7ed;
-      border: 1.5px solid #fdba74;
-      color: #7c2d12;
+    .fighter-tag.ai {
+      background: #faf5ff;
+      border: 1.5px solid #d8b4fe;
+      color: #581c87;
       text-align: right;
     }
-    .f-name {
-      font-size: 11px;
+    .f-label {
+      font-size: 10.5px;
       font-weight: 900;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .f-score {
-      font-size: 17px;
+    .f-pts {
+      font-size: 16px;
       font-weight: 900;
     }
-    .timer-center-box {
+    .arena-clock {
       background: #0f172a;
-      color: #ffffff;
-      padding: 6px 11px;
-      border-radius: 12px;
-      font-size: 14px;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 11px;
+      font-size: 13.5px;
       font-weight: 900;
       white-space: nowrap;
-      box-shadow: 0 3px 0 #334155;
     }
-    .timer-center-box.urgent {
+    .arena-clock.urgent {
       background: #dc2626;
       animation: pulseMic 0.7s infinite;
     }
-
-    /* Thanh kéo co (Tug-of-war bar) */
-    .tug-bar-outer {
+    .tug-bar {
       width: 100%;
-      height: 11px;
-      background: #fed7aa;
+      height: 10px;
+      background: #e9d5ff;
       border-radius: 999px;
       overflow: hidden;
       position: relative;
       border: 1.5px solid #cbd5e1;
       display: flex;
     }
-    .tug-fill-you {
+    .tug-you {
       height: 100%;
       background: linear-gradient(90deg, #16a34a, #22c55e);
       transition: width 0.25s ease;
     }
-    .tug-fill-ai {
+    .tug-ai {
       flex: 1;
       height: 100%;
-      background: linear-gradient(90deg, #fb923c, #ea580c);
+      background: linear-gradient(90deg, #a855f7, #f97316);
     }
-    .tug-center-pin {
+    .tug-pin {
       position: absolute;
       top: -2px;
       bottom: -2px;
@@ -799,30 +869,26 @@
       background: #0f172a;
       left: 50%;
       transform: translateX(-50%);
-      border-radius: 2px;
     }
 
-    /* Thanh thông báo trạng thái trận đấu / Choáng */
-    .arena-status-strip {
-      min-height: 28px;
+    .arena-banner {
+      min-height: 27px;
       padding: 4px 10px;
       background: #ccfbf1;
       color: var(--teal-dark);
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       flex-shrink: 0;
-      transition: background-color 0.15s;
     }
-    .arena-status-strip.stun-alert {
+    .arena-banner.stun {
       background: #fee2e2;
       color: #991b1b;
     }
 
-    /* Khu vực Bàn Cờ Chữ 12 Thẻ (Grid 3 cột x 4 hàng) */
     .arena-grid-12 {
       flex: 1;
       padding: 8px 10px 10px;
@@ -830,14 +896,12 @@
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(4, 1fr);
       gap: 8px;
-      position: relative;
     }
-    .arena-grid-12.stun-locked {
-      opacity: 0.55;
+    .arena-grid-12.frozen {
+      opacity: 0.5;
       pointer-events: none;
     }
-
-    .arena-word-card {
+    .arena-card {
       background: #ffffff;
       border: 2px solid #cbd5e1;
       border-radius: 14px;
@@ -846,87 +910,71 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 6px 4px;
+      padding: 4px;
       box-shadow: 0 4px 0 #cbd5e1;
-      cursor: pointer;
-      overflow: hidden;
-      transition: transform 0.12s, background-color 0.15s, border-color 0.15s;
     }
-    .arena-word-card .card-speaker-mini {
+    .arena-card .mini-spk {
       position: absolute;
       top: 4px;
       right: 4px;
-      width: 25px;
-      height: 25px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       border: 1px solid #99f6e4;
       background: #f0fdfa;
-      font-size: 12px;
+      font-size: 11.5px;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 3;
-      padding: 0;
     }
-    .arena-word-card .card-emo {
-      font-size: 27px;
+    .arena-card .a-emo {
+      font-size: 26px;
       line-height: 1.05;
-      margin-bottom: 2px;
     }
-    .arena-word-card .card-word {
+    .arena-card .a-word {
       font-size: 15px;
       font-weight: 900;
       color: var(--text-main);
-      line-height: 1.1;
-    }
-    .arena-word-card .card-ipa-pop {
-      font-size: 12px;
-      font-weight: 900;
       margin-top: 2px;
+    }
+    .arena-card .a-ipa {
+      font-size: 11.5px;
+      font-weight: 900;
+      margin-top: 1px;
       padding: 1px 6px;
       border-radius: 999px;
       display: none;
     }
-
-    /* Khi người chơi bắt ĐÚNG: Sáng màu Xanh lá */
-    .arena-word-card.player-captured {
+    .arena-card.you-win {
       background: #16a34a !important;
       border-color: #14532d !important;
-      color: #ffffff !important;
+      color: #fff !important;
       box-shadow: 0 4px 0 #14532d !important;
       pointer-events: none;
     }
-    .arena-word-card.player-captured .card-word {
-      color: #ffffff !important;
-    }
-    .arena-word-card.player-captured .card-ipa-pop {
+    .arena-card.you-win .a-word { color: #fff !important; }
+    .arena-card.you-win .a-ipa {
       display: inline-block;
       background: #dcfce7;
       color: #14532d;
     }
-
-    /* Khi AI tự động bắt: Sáng màu Cam */
-    .arena-word-card.ai-captured {
-      background: #f97316 !important;
-      border-color: #9a3412 !important;
-      color: #ffffff !important;
-      box-shadow: 0 4px 0 #9a3412 !important;
+    .arena-card.ai-win {
+      background: linear-gradient(135deg, #9333ea, #f97316) !important;
+      border-color: #581c87 !important;
+      color: #fff !important;
+      box-shadow: 0 4px 0 #581c87 !important;
       pointer-events: none;
     }
-    .arena-word-card.ai-captured .card-word {
-      color: #ffffff !important;
-    }
-    .arena-word-card.ai-captured .card-ipa-pop {
+    .arena-card.ai-win .a-word { color: #fff !important; }
+    .arena-card.ai-win .a-ipa {
       display: inline-block;
-      background: #ffedd5;
-      color: #9a3412;
+      background: #f3e8ff;
+      color: #581c87;
     }
-
-    /* Khi người chơi chọn SAI: Rung màu Đỏ */
-    .arena-word-card.wrong-shake {
+    .arena-card.err-flash {
       background: #fee2e2 !important;
       border-color: #ef4444 !important;
-      box-shadow: 0 4px 0 #dc2626 !important;
       animation: cardShake 0.35s ease;
     }
     @keyframes cardShake {
@@ -935,11 +983,10 @@
       75% { transform: translateX(6px); }
     }
 
-    /* Popup Chọn Phe / Đếm ngược / Tổng kết trong Sân Đấu */
     .arena-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(15, 23, 42, 0.72);
+      background: rgba(15, 23, 42, 0.74);
       backdrop-filter: blur(4px);
       z-index: 30;
       display: flex;
@@ -947,7 +994,7 @@
       justify-content: center;
       padding: 16px;
     }
-    .arena-modal-card {
+    .arena-dialog {
       width: 100%;
       max-width: 390px;
       background: #ffffff;
@@ -959,7 +1006,7 @@
       flex-direction: column;
       gap: 12px;
     }
-    .team-pick-btn {
+    .faction-btn {
       width: 100%;
       padding: 14px 12px;
       border-radius: 16px;
@@ -972,74 +1019,178 @@
       gap: 4px;
       box-shadow: 0 5px 0 #14b8a6;
     }
-    .team-pick-btn.alt {
-      border-color: #38bdf8;
-      background: #f0f9ff;
-      color: #0369a1;
-      box-shadow: 0 5px 0 #0284c7;
+    .faction-btn.alt {
+      border-color: #fb923c;
+      background: #fff7ed;
+      color: #9a3412;
+      box-shadow: 0 5px 0 #ea580c;
     }
-    .team-pick-title {
-      font-size: 18px;
-      font-weight: 900;
-    }
-    .team-pick-samples {
-      font-size: 12.5px;
-      font-weight: 700;
-      opacity: 0.9;
-    }
-    .countdown-number {
-      font-size: 64px;
+    .countdown-big {
+      font-size: 62px;
       font-weight: 900;
       color: var(--teal-main);
-      line-height: 1.1;
-      animation: popScale 0.5s ease;
+      animation: popScale 0.45s ease;
     }
     @keyframes popScale {
       0% { transform: scale(0.4); opacity: 0.2; }
-      80% { transform: scale(1.12); opacity: 1; }
+      80% { transform: scale(1.1); opacity: 1; }
       100% { transform: scale(1); }
     }
 
-    /* ================= ⭐⭐⭐ SAO 3: GHÉP CHỮ PHONICS & MICRO ================= */
-    .phonics-slots-row {
+    /* =========================================================================
+       ⭐⭐⭐ SAO 3: GAME "THẦN CHÚ PHÁ KHIÊN" (PHONICS & VOICE ATTACK)
+       ========================================================================= */
+    .boss-game-wrap {
+      height: 100%;
       display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 48%, #f8fafc 48%, #ffffff 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Nửa trên: Quái vật Boss / Tảng Băng Khiên (48% chiều cao) */
+    .boss-arena-top {
+      height: 48%;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      color: #ffffff;
+      position: relative;
+    }
+    .boss-hp-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 8px;
+    }
+    .boss-name-tag {
+      font-size: 12px;
+      font-weight: 900;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+    .boss-hp-bar-outer {
+      flex: 1;
+      height: 12px;
+      background: #334155;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1.5px solid #64748b;
+    }
+    .boss-hp-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ef4444, #f97316);
+      transition: width 0.35s ease;
+    }
+    .boss-hp-txt {
+      font-size: 12px;
+      font-weight: 900;
+      color: #fca5a5;
+    }
+
+    .boss-shield-card {
+      width: 92%;
+      max-width: 340px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border: 2.5px solid #38bdf8;
+      border-radius: 22px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .boss-shield-card.hit-explosion {
+      border-color: #f97316;
+      background: rgba(239, 68, 68, 0.28);
+      animation: bossHitShake 0.45s ease;
+    }
+    @keyframes bossHitShake {
+      0%, 100% { transform: scale(1); }
+      25% { transform: scale(0.92) rotate(-4deg); }
+      50% { transform: scale(1.06) rotate(4deg); }
+    }
+    .shield-emo {
+      font-size: 48px;
+      line-height: 1;
+    }
+    .shield-info {
+      flex: 1;
+      text-align: left;
+    }
+    .shield-vi {
+      font-size: 16px;
+      font-weight: 900;
+      color: #ffffff;
+    }
+    .shield-ipa {
+      font-size: 14px;
+      font-weight: 800;
+      color: #7dd3fc;
+      margin-top: 2px;
+    }
+
+    /* Các ô nạp đạn chữ cái Phonics */
+    .spell-slots-row {
+      display: flex;
+      gap: 7px;
       justify-content: center;
       flex-wrap: wrap;
     }
-    .phonics-slot {
-      min-width: 58px;
-      height: 52px;
+    .spell-slot {
+      min-width: 54px;
+      height: 46px;
       padding: 0 12px;
       border-radius: 12px;
-      border: 2.5px dashed #2dd4bf;
-      background: #ffffff;
-      font-size: 22px;
+      border: 2px dashed #38bdf8;
+      background: rgba(15, 23, 42, 0.6);
+      color: #94a3b8;
+      font-size: 20px;
       font-weight: 900;
-      color: var(--teal-dark);
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .phonics-slot.filled {
+    .spell-slot.filled {
       border-style: solid;
+      border-color: #2dd4bf;
       background: var(--teal-main);
-      border-color: var(--teal-dark);
       color: #ffffff;
     }
-    .phonics-slot.ok-green {
-      background: var(--green-ok) !important;
-      border-color: var(--green-dark) !important;
+    .spell-slot.charged {
+      background: var(--orange-main) !important;
+      border-color: #fde047 !important;
+      box-shadow: 0 0 12px rgba(249, 115, 22, 0.6);
     }
 
-    .phonics-pool-grid {
+    /* Nửa dưới: Pha 1 (Ghép chữ) & Pha 2 (Hô thần chú Micro) (52% chiều cao) */
+    .boss-arena-bottom {
+      height: 52%;
+      padding: 12px 14px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+      position: relative;
+    }
+    .phonics-tiles-box {
       display: flex;
       flex-wrap: wrap;
       gap: 9px;
       justify-content: center;
       align-items: center;
+      margin: auto 0;
     }
-    .phonics-tile-btn {
+    .phonics-tile {
       min-height: 56px;
       padding: 8px 14px;
       border-radius: 14px;
@@ -1053,67 +1204,86 @@
       align-items: center;
       gap: 5px;
     }
-    .phonics-tile-btn .tile-ipa {
-      font-size: 13px;
+    .phonics-tile .t-ipa {
+      font-size: 12.5px;
       font-weight: 700;
       color: var(--teal-main);
     }
-    .phonics-tile-btn.used {
+    .phonics-tile.used {
       visibility: hidden;
       pointer-events: none;
     }
 
-    /* Bước B: Nút Micro thu âm */
-    .mic-challenge-box {
+    /* Nút Micro Khổng Lồ Pha 2 */
+    .spell-mic-zone {
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      height: 100%;
       text-align: center;
-      padding: 4px 0;
     }
-    .mic-big-btn {
-      width: 84px;
-      height: 84px;
-      border-radius: 50%;
-      border: 4px solid #99f6e4;
-      background: var(--teal-main);
+    .giant-mic-btn {
+      width: 92%;
+      max-width: 340px;
+      min-height: 74px;
+      border-radius: 22px;
+      border: 3px solid #fed7aa;
+      background: linear-gradient(135deg, #f97316, #ea580c);
       color: #ffffff;
-      font-size: 36px;
+      font-size: 18px;
+      font-weight: 900;
+      padding: 12px 16px;
+      box-shadow: 0 6px 0 #9a3412, 0 10px 24px rgba(249, 115, 22, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 6px 0 var(--teal-dark), 0 8px 20px rgba(13, 148, 136, 0.35);
+      gap: 10px;
     }
-    .mic-big-btn.listening {
-      background: #ef4444;
-      border-color: #fecaca;
+    .giant-mic-btn.listening {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
       box-shadow: 0 0 0 8px rgba(239, 68, 68, 0.25);
-      animation: pulseMic 1s infinite;
+      animation: pulseMic 0.9s infinite;
     }
-    .mic-big-btn.mic-success {
+    .giant-mic-btn.cast-ok {
       background: var(--green-ok);
       border-color: #bbf7d0;
       box-shadow: 0 6px 0 var(--green-dark);
     }
     @keyframes pulseMic {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+      50% { transform: scale(1.05); }
     }
-    .mic-status-txt {
-      font-size: 14px;
-      font-weight: 900;
-      color: var(--teal-dark);
-    }
-    .skip-mic-btn {
-      background: transparent;
-      border: 1px solid #cbd5e1;
-      color: var(--text-muted);
+    .normal-shot-btn {
+      background: #f1f5f9;
+      border: 1.5px solid #cbd5e1;
+      color: #475569;
       font-size: 12px;
-      font-weight: 700;
-      padding: 6px 12px;
-      border-radius: 8px;
+      font-weight: 800;
+      padding: 7px 14px;
+      border-radius: 10px;
+    }
+
+    /* Hiệu ứng Cầu lửa / Tia chớp bắn lên Khiên Boss */
+    .fireball-projectile {
+      position: absolute;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 44px;
+      pointer-events: none;
+      z-index: 40;
+      display: none;
+    }
+    .fireball-projectile.shoot {
+      display: block;
+      animation: shootUpBoss 0.55s ease-in forwards;
+    }
+    @keyframes shootUpBoss {
+      0% { transform: translate(-50%, 0) scale(0.7); opacity: 1; }
+      80% { transform: translate(-50%, -260px) scale(1.4); opacity: 1; }
+      100% { transform: translate(-50%, -290px) scale(2); opacity: 0; }
     }
 
     /* Modal Mã chuyển máy */
@@ -1151,28 +1321,28 @@
 <body>
 
 <div class="mobile-app">
-  <!-- HEADER TRÊN CÙNG (50PX) -->
+  <!-- HEADER TRÊN CÙNG (~50PX) -->
   <header class="app-header" id="app-header">
     <div class="logo-wrap">
       <div class="logo-badge">IPA</div>
       <div class="logo-text">IPA English</div>
     </div>
     <div class="header-right">
-      <div class="star-counter-pill" id="total-stars-pill">⭐ 0/90</div>
-      <button class="sync-mini-btn" onclick="openSyncModal()">📱 Mã chuyển máy</button>
+      <div class="star-pill" id="total-stars-pill">⭐ 0/42</div>
+      <button class="sync-btn" onclick="openSyncModal()">📱 Mã chuyển máy</button>
     </div>
   </header>
 
-  <!-- VÙNG NỘI DUNG CHÍNH -->
-  <main class="app-content" id="app-content"></main>
+  <!-- KHUNG NỘI DUNG CHÍNH -->
+  <main class="app-viewport" id="app-viewport"></main>
 
-  <!-- THANH ĐIỀU HƯỚNG DƯỚI ĐÁY (60PX) -->
+  <!-- THANH ĐIỀU HƯỚNG DƯỚI ĐÁY (~60PX) -->
   <nav class="bottom-nav" id="bottom-nav">
-    <button class="nav-btn active" id="tab-btn-map" onclick="switchTab('map')">
+    <button class="nav-tab active" id="nav-btn-map" onclick="switchMainTab('map')">
       <span class="ico">🗺️</span>
       <span>Bản đồ học</span>
     </button>
-    <button class="nav-btn" id="tab-btn-chart" onclick="switchTab('chart')">
+    <button class="nav-tab" id="nav-btn-chart" onclick="switchMainTab('chart')">
       <span class="ico">📖</span>
       <span>Bảng âm IPA</span>
     </button>
@@ -1180,26 +1350,26 @@
 </div>
 
 <!-- POPUP KHẨU HÌNH TRƯỢT TỪ ĐÁY (BOTTOM SHEET 60%) -->
-<div class="sheet-backdrop" id="ipa-bottom-sheet" onclick="closeIpaSheet(event)">
+<div class="sheet-backdrop" id="ipa-bottom-sheet" onclick="closeIpaSheet()">
   <div class="bottom-sheet" onclick="event.stopPropagation()">
-    <div class="sheet-top-bar">
-      <span class="sheet-badge" id="sheet-group-tag">Nguyên âm đơn</span>
-      <button class="sheet-close-btn" onclick="closeIpaSheet()">[X] Đóng</button>
+    <div class="sheet-top">
+      <span class="sheet-tag" id="sheet-group-tag">12 Nguyên âm đơn</span>
+      <button class="sheet-close" onclick="closeIpaSheet()">[X] Đóng</button>
     </div>
 
     <div class="sheet-hero">
-      <div class="sheet-big-sym" id="sheet-sym">/ɒ/</div>
-      <div class="sheet-big-word" id="sheet-word">hot /hɒt/ (Nóng) 🔥</div>
+      <div class="sheet-sym" id="sheet-sym">/iː/</div>
+      <div class="sheet-word" id="sheet-word">sheep /ʃiːp/ (Con cừu) 🐑</div>
     </div>
 
-    <div class="sheet-mouth-box">
-      <div class="sheet-mouth-emo" id="sheet-emo">👄</div>
+    <div class="sheet-mouth">
+      <div class="sheet-mouth-emo" id="sheet-emo">🐑</div>
       <div class="sheet-mouth-tip" id="sheet-tip">
-        Mẹo đọc cho bé: Hơi tròn môi, hạ hàm dưới và đọc chữ "o" thật ngắn, dứt khoát!
+        👄 Mẹo đọc: Kéo rộng 2 khóe miệng như đang cười tươi và ngân dài âm "i...i..."!
       </div>
     </div>
 
-    <button class="sheet-listen-btn" onclick="speakSheetWord()">
+    <button class="sheet-listen-btn" onclick="speakSheetSample()">
       🔊 Nghe phát âm chuẩn
     </button>
   </div>
@@ -1211,26 +1381,26 @@
     <h3 style="font-size:16px;font-weight:900;margin-bottom:4px;">📱 Mã chuyển máy</h3>
     <p style="font-size:12px;color:#64748b;">Copy mã này để chuyển số Sao sang điện thoại khác:</p>
     <input type="text" class="code-box" id="export-code-input" readonly onclick="this.select()">
-    <button class="pill-btn" style="width:100%;margin-bottom:12px;" onclick="copySyncCode()">📋 Copy Mã Tiến Độ</button>
+    <button class="pill-audio-btn" style="width:100%;margin-bottom:12px;" onclick="copySyncCode()">📋 Copy Mã Tiến Độ</button>
 
     <p style="font-size:12px;color:#64748b;">Hoặc dán mã từ máy khác vào đây:</p>
-    <input type="text" class="code-box" id="import-code-input" placeholder="Dán mã ENG-... vào đây">
+    <input type="text" class="code-box" id="import-code-input" placeholder="Dán mã IPA-... vào đây">
     <div style="display:flex;gap:8px;justify-content:flex-end;">
-      <button class="btn-back-map" onclick="closeSyncModal()">Đóng</button>
-      <button class="btn-back-map" style="background:#0d9488;color:#fff;border-color:#115e59;" onclick="applySyncCode()">Nạp mã</button>
+      <button class="btn-back" onclick="closeSyncModal()">Đóng</button>
+      <button class="btn-back" style="background:#0d9488;color:#fff;border-color:#115e59;" onclick="applySyncCode()">Nạp mã</button>
     </div>
   </div>
 </div>
 
 <script>
   // =========================================================================
-  // 1. DỮ LIỆU TAB 2: BẢNG 44 ÂM IPA KÈM EMOJI & MẸO ĐỌC CHO HỌC SINH LỚP 5
+  // 1. DỮ LIỆU TAB 2: BẢNG 44 ÂM IPA (CHIA ĐÚNG 3 MỤC CHO HỌC SINH LỚP 5)
   // =========================================================================
-  const IPA_VOWELS_GROUPS = [
+  const IPA_CHART_SECTIONS = [
     {
       title: '12 Nguyên âm đơn (Ngắn & Dài)',
       items: [
-        { sym: '/iː/', word: 'sheep', ipa: '/ʃiːp/', vi: 'Con cừu', emo: '🐑', tip: 'Kéo rộng hai khóe miệng như đang cười tươi 😁 và ngân dài âm "i...i...i"!' },
+        { sym: '/iː/', word: 'sheep', ipa: '/ʃiːp/', vi: 'Con cừu', emo: '🐑', tip: 'Kéo rộng hai khóe miệng như đang cười tươi 😁 và ngân dài âm "i...i..."!' },
         { sym: '/ɪ/', word: 'ship', ipa: '/ʃɪp/', vi: 'Con tàu', emo: '🚢', tip: 'Thả lỏng môi tự nhiên, đọc âm "i" thật ngắn và gọn trong 1 nhịp!' },
         { sym: '/ʊ/', word: 'book', ipa: '/bʊk/', vi: 'Quyển sách', emo: '📖', tip: 'Hơi chu môi nhẹ và đọc âm "u" ngắn gọn, dứt khoát!' },
         { sym: '/uː/', word: 'food', ipa: '/fuːd/', vi: 'Thức ăn', emo: '🍜', tip: 'Chu tròn nhỏ hai môi về phía trước 😗 và ngân dài âm "u...u..."!' },
@@ -1251,543 +1421,296 @@
         { sym: '/eɪ/', word: 'cake', ipa: '/keɪk/', vi: 'Bánh ngọt', emo: '🎂', tip: 'Bắt đầu bằng chữ "e" rồi khép miệng lướt lên chữ "i" (nghe như "ây")!' },
         { sym: '/ʊə/', word: 'tour', ipa: '/tʊə/', vi: 'Du lịch', emo: '🧳', tip: 'Chu môi đọc chữ "u" rồi lướt nhẹ sang chữ "ơ" (nghe như "ua")!' },
         { sym: '/ɔɪ/', word: 'boy', ipa: '/bɔɪ/', vi: 'Cậu bé', emo: '👦', tip: 'Tròn môi đọc chữ "o" rồi kéo miệng sang ngang đọc "i" (như "oi")!' },
-        { sym: '/əʊ/', word: 'go', ipa: '/gəʊ/', vi: 'Đi', emo: '🏃', tip: 'Mở miệng đọc "ơ" rồi thu tròn môi lại thành "u" (nghe như "âu")!' },
+        { sym: '/əʊ/', word: 'go', ipa: '/gəʊ/', vi: 'Đi', emo: '🟢', tip: 'Mở miệng đọc "ơ" rồi thu tròn môi lại thành "u" (nghe như "âu")!' },
         { sym: '/eə/', word: 'hair', ipa: '/heə/', vi: 'Mái tóc', emo: '💇', tip: 'Đọc chữ "e" rồi giữ miệng mở lướt nhẹ sang chữ "ơ" ("e-ơ")!' },
         { sym: '/aɪ/', word: 'bike', ipa: '/baɪk/', vi: 'Xe đạp', emo: '🚲', tip: 'Há miệng đọc chữ "a" rồi khép dần lên chữ "i" (nghe như "ai")!' },
         { sym: '/aʊ/', word: 'house', ipa: '/haʊs/', vi: 'Ngôi nhà', emo: '🏠', tip: 'Há rộng miệng đọc "a" rồi chu tròn môi sang "u" (nghe như "ao")!' }
       ]
-    }
-  ];
-
-  const IPA_CONSONANTS_GROUPS = [
-    {
-      title: '10 Phụ âm Bật hơi & Xát nhẹ (Vô thanh - Không rung cổ họng)',
-      items: [
-        { sym: '/p/', word: 'pen', ipa: '/pen/', vi: 'Cây bút', emo: '🖊️', tip: 'Mím 2 môi rồi bật mạnh luồng gió ra ngoài 💨, cổ họng không rung!' },
-        { sym: '/t/', word: 'tea', ipa: '/tiː/', vi: 'Trà xanh', emo: '🍵', tip: 'Đầu lưỡi chạm lợi hàm trên rồi bật hơi sắc nét ra ngoài!' },
-        { sym: '/k/', word: 'key', ipa: '/kiː/', vi: 'Chìa khóa', emo: '🔑', tip: 'Bật hơi mạnh từ trong cuống họng ra như tiếng ho nhẹ "kh"!' },
-        { sym: '/f/', word: 'fish', ipa: '/fɪʃ/', vi: 'Con cá', emo: '🐟', tip: 'Răng cửa trên chạm nhẹ môi dưới và thổi hơi êm ra ngoài!' },
-        { sym: '/θ/', word: 'think', ipa: '/θɪŋk/', vi: 'Suy nghĩ', emo: '🤔', tip: 'Đặt đầu lưỡi thò nhẹ giữa 2 hàm răng 👅 rồi thổi hơi ra!' },
-        { sym: '/s/', word: 'see', ipa: '/siː/', vi: 'Nhìn thấy', emo: '👀', tip: 'Khép nhẹ 2 hàm răng, xì luồng hơi nhỏ qua kẽ răng như tiếng rắn kêu "xì"!' },
-        { sym: '/ʃ/', word: 'she', ipa: '/ʃiː/', vi: 'Cô ấy', emo: '👧', tip: 'Chu tròn môi về phía trước và đẩy hơi như lúc ra hiệu giữ trật tự "Suỵt" 🤫!' },
-        { sym: '/tʃ/', word: 'chair', ipa: '/tʃeə/', vi: 'Cái ghế', emo: '🪑', tip: 'Chu môi và bật hơi mạnh âm "ch" dứt khoát như tiếng hắt xì!' },
-        { sym: '/h/', word: 'hat', ipa: '/hæt/', vi: 'Chiếc mũ', emo: '👒', tip: 'Há miệng thở nhẹ luồng hơi ấm ra ngoài như khi làm mờ mặt gương!' },
-        { sym: '/ŋ/', word: 'sing', ipa: '/sɪŋ/', vi: 'Ca hát', emo: '🎤', tip: 'Ngân âm "ng" vang lên ở trong khoang mũi!' }
-      ]
     },
     {
-      title: '14 Phụ âm Rung dây thanh (Hữu thanh - Chạm tay vào cổ thấy rung)',
+      title: '24 Phụ âm',
       items: [
+        { sym: '/p/', word: 'pen', ipa: '/pen/', vi: 'Cây bút', emo: '🖊️', tip: 'Mím 2 môi rồi bật mạnh luồng gió ra ngoài 💨, cổ họng không rung!' },
         { sym: '/b/', word: 'bag', ipa: '/bæg/', vi: 'Cặp sách', emo: '🎒', tip: 'Mím môi rồi mở ra đọc "b", đặt tay lên cổ họng sẽ thấy rung!' },
+        { sym: '/t/', word: 'tea', ipa: '/tiː/', vi: 'Trà xanh', emo: '🍵', tip: 'Đầu lưỡi chạm lợi hàm trên rồi bật hơi sắc nét ra ngoài!' },
         { sym: '/d/', word: 'dog', ipa: '/dɒg/', vi: 'Con chó', emo: '🐶', tip: 'Đầu lưỡi chạm lợi trên và bật âm "đ" làm rung cổ họng!' },
+        { sym: '/k/', word: 'key', ipa: '/kiː/', vi: 'Chìa khóa', emo: '🔑', tip: 'Bật hơi mạnh từ trong cuống họng ra như tiếng ho nhẹ "kh"!' },
         { sym: '/g/', word: 'go', ipa: '/gəʊ/', vi: 'Đi', emo: '🟢', tip: 'Phát âm "g" từ cuống lưỡi và làm rung dây thanh quản!' },
-        { sym: '/v/', word: 'van', ipa: '/væn/', vi: 'Xe tải nhỏ', emo: '🚐', tip: 'Răng trên chạm môi dưới giống âm /f/ nhưng làm rung môi và cổ họng!' },
+        { sym: '/f/', word: 'fish', ipa: '/fɪʃ/', vi: 'Con cá', emo: '🐟', tip: 'Răng cửa trên chạm nhẹ môi dưới và thổi hơi êm ra ngoài!' },
+        { sym: '/v/', word: 'five', ipa: '/faɪv/', vi: 'Số 5', emo: '5️⃣', tip: 'Răng trên chạm môi dưới giống âm /f/ nhưng làm rung môi và cổ họng!' },
+        { sym: '/θ/', word: 'three', ipa: '/θriː/', vi: 'Số 3', emo: '3️⃣', tip: 'Đặt đầu lưỡi thò nhẹ giữa 2 hàm răng 👅 rồi thổi hơi ra!' },
         { sym: '/ð/', word: 'this', ipa: '/ðɪs/', vi: 'Cái này', emo: '👉', tip: 'Đặt đầu lưỡi giữa 2 hàm răng và phát âm làm rung đầu lưỡi!' },
+        { sym: '/s/', word: 'see', ipa: '/siː/', vi: 'Nhìn thấy', emo: '👀', tip: 'Khép nhẹ 2 hàm răng, xì luồng hơi nhỏ qua kẽ răng như tiếng rắn kêu!' },
         { sym: '/z/', word: 'zoo', ipa: '/zuː/', vi: 'Sở thú', emo: '🦁', tip: 'Khép răng giống âm /s/ nhưng làm rung cổ họng kêu "z...z" như con ong 🐝!' },
+        { sym: '/ʃ/', word: 'she', ipa: '/ʃiː/', vi: 'Cô ấy', emo: '👧', tip: 'Chu tròn môi về phía trước và đẩy hơi như lúc ra hiệu giữ trật tự "Suỵt" 🤫!' },
         { sym: '/ʒ/', word: 'vision', ipa: '/ˈvɪʒən/', vi: 'Tầm nhìn', emo: '🔭', tip: 'Chu môi giống âm /ʃ/ nhưng làm rung cổ họng!' },
-        { sym: '/dʒ/', word: 'job', ipa: '/dʒɒb/', vi: 'Công việc', emo: '💼', tip: 'Chu môi bật âm "dʒ" mạnh và làm rung cổ họng!' },
-        { sym: '/m/', word: 'milk', ipa: '/mɪlk/', vi: 'Sữa tươi', emo: '🥛', tip: 'Mím hai môi và ngân âm "m" qua mũi!' },
+        { sym: '/tʃ/', word: 'chair', ipa: '/tʃeə/', vi: 'Cái ghế', emo: '🪑', tip: 'Chu môi và bật hơi mạnh âm "ch" dứt khoát như tiếng hắt xì!' },
+        { sym: '/dʒ/', word: 'jump', ipa: '/dʒʌmp/', vi: 'Nhảy lên', emo: '🦘', tip: 'Chu môi bật âm "dʒ" mạnh và làm rung cổ họng!' },
+        { sym: '/m/', word: 'map', ipa: '/mæp/', vi: 'Bản đồ', emo: '🗺️', tip: 'Mím hai môi và ngân âm "m" qua mũi!' },
         { sym: '/n/', word: 'nine', ipa: '/naɪn/', vi: 'Số 9', emo: '9️⃣', tip: 'Đầu lưỡi chạm lợi trên và ngân âm "n" qua mũi!' },
-        { sym: '/l/', word: 'leg', ipa: '/leg/', vi: 'Đôi chân', emo: '🦵', tip: 'Đầu lưỡi chạm mặt sau răng cửa trên và bật âm "l"!' },
+        { sym: '/ŋ/', word: 'sing', ipa: '/sɪŋ/', vi: 'Ca hát', emo: '🎤', tip: 'Ngân âm "ng" vang lên ở trong khoang mũi!' },
+        { sym: '/h/', word: 'hat', ipa: '/hæt/', vi: 'Chiếc mũ', emo: '👒', tip: 'Há miệng thở nhẹ luồng hơi ấm ra ngoài như khi làm mờ mặt gương!' },
+        { sym: '/l/', word: 'lion', ipa: '/ˈlaɪən/', vi: 'Sư tử', emo: '🦁', tip: 'Đầu lưỡi chạm mặt sau răng cửa trên và bật âm "l"!' },
         { sym: '/r/', word: 'red', ipa: '/red/', vi: 'Màu đỏ', emo: '🍎', tip: 'Hơi chu môi và cuộn tròn đầu lưỡi vào trong để đọc âm "r"!' },
-        { sym: '/w/', word: 'wet', ipa: '/wet/', vi: 'Ẩm ướt', emo: '💧', tip: 'Chu tròn chặt môi như huýt sáo rồi mở nhanh ra!' },
+        { sym: '/w/', word: 'water', ipa: '/ˈwɔːtə/', vi: 'Nước uống', emo: '💧', tip: 'Chu tròn chặt môi như huýt sáo rồi mở nhanh ra!' },
         { sym: '/j/', word: 'yes', ipa: '/jes/', vi: 'Đồng ý', emo: '👍', tip: 'Đọc lướt nhẹ âm "d/i" giống từ "dạ" nhẹ trong tiếng Việt!' }
       ]
     }
   ];
 
   // =========================================================================
-  // 2. DỮ LIỆU 30 LEVEL (MỖI LEVEL 10 CÂU HỎI ĐỦ CẢ 3 SAO)
+  // 2. LỘ TRÌNH 14 LEVEL QUA 4 CHẶNG TỪ DỄ ĐẾN KHÓ (THEO ĐẶC TẢ MỤC II)
+  // Mỗi Level gồm 10 từ chia đều cho 2 Phe (groupIdx 0 và groupIdx 1)
   // =========================================================================
-  const RAW_LEVELS = [
+  const RAW_14_LEVELS = [
+    // ---------------- CHẶNG 1: KHỞI ĐỘNG DỄ DÀNG (TỪ 3 CHỮ CÁI CVC) ----------------
     {
-      id: 1, stage: 1, icon: '/iː/ /ɪ/', label: 'Nguyên âm /iː/ & /ɪ/',
-      g0: 'Âm dài /iː/', g0Sub: '(Chữ ee / ea)', g1: 'Âm ngắn /ɪ/', g1Sub: '(Chữ i)',
+      id: 1, stage: 1, icon: '/æ/ & /e/', label: 'Từ CVC: /æ/ & /e/',
+      g0: 'Ăn âm /æ/', g0Sub: '(Chữ a — Há miệng to)',
+      g1: 'Ăn âm /e/', g1Sub: '(Chữ e — Mở miệng vừa)',
       items: [
-        ['sheep', '/ʃiːp/', '🐑', 'Con cừu', 0, 'sh _ _ p', ['sh (/ʃ/)','ee (/iː/)','p (/p/)'], 'ship', '/ʃɪp/', '🚢', 'Con tàu'],
-        ['ship', '/ʃɪp/', '🚢', 'Con tàu', 1, 'sh _ p', ['sh (/ʃ/)','i (/ɪ/)','p (/p/)'], 'sheep', '/ʃiːp/', '🐑', 'Con cừu'],
-        ['seat', '/siːt/', '💺', 'Chỗ ngồi', 0, 's _ _ t', ['s (/s/)','ea (/iː/)','t (/t/)'], 'sit', '/sɪt/', '🧘', 'Ngồi xuống'],
-        ['sit', '/sɪt/', '🧘', 'Ngồi xuống', 1, 's _ t', ['s (/s/)','i (/ɪ/)','t (/t/)'], 'seat', '/siːt/', '💺', 'Chỗ ngồi'],
-        ['green', '/griːn/', '🌿', 'Màu xanh lá', 0, 'gr _ _ n', ['gr (/gr/)','ee (/iː/)','n (/n/)'], 'grin', '/grɪn/', '😁', 'Cười toe'],
-        ['fish', '/fɪʃ/', '🐟', 'Con cá', 1, 'f _ sh', ['f (/f/)','i (/ɪ/)','sh (/ʃ/)'], 'feet', '/fiːt/', '🦶', 'Đôi bàn chân'],
-        ['meat', '/miːt/', '🥩', 'Miếng thịt', 0, 'm _ _ t', ['m (/m/)','ea (/iː/)','t (/t/)'], 'milk', '/mɪlk/', '🥛', 'Sữa tươi'],
-        ['milk', '/mɪlk/', '🥛', 'Sữa tươi', 1, 'm _ lk', ['m (/m/)','i (/ɪ/)','lk (/lk/)'], 'meat', '/miːt/', '🥩', 'Miếng thịt'],
-        ['tree', '/triː/', '🌳', 'Cái cây', 0, 'tr _ _', ['tr (/tr/)','ee (/iː/)'], 'six', '/sɪks/', '6️⃣', 'Số 6'],
-        ['six', '/sɪks/', '6️⃣', 'Số 6', 1, 's _ x', ['s (/s/)','i (/ɪ/)','x (/ks/)'], 'tree', '/triː/', '🌳', 'Cái cây']
+        ['cat', '/kæt/', '🐱', 'Con mèo', 0, 'c _ t', ['c (/k/)', 'a (/æ/)', 't (/t/)']],
+        ['bat', '/bæt/', '🦇', 'Con dơi', 0, 'b _ t', ['b (/b/)', 'a (/æ/)', 't (/t/)']],
+        ['map', '/mæp/', '🗺️', 'Bản đồ', 0, 'm _ p', ['m (/m/)', 'a (/æ/)', 'p (/p/)']],
+        ['hat', '/hæt/', '👒', 'Chiếc mũ', 0, 'h _ t', ['h (/h/)', 'a (/æ/)', 't (/t/)']],
+        ['bag', '/bæg/', '🎒', 'Cặp sách', 0, 'b _ g', ['b (/b/)', 'a (/æ/)', 'g (/g/)']],
+        ['bed', '/bed/', '🛏️', 'Cái giường', 1, 'b _ d', ['b (/b/)', 'e (/e/)', 'd (/d/)']],
+        ['pen', '/pen/', '🖊️', 'Cây bút mực', 1, 'p _ n', ['p (/p/)', 'e (/e/)', 'n (/n/)']],
+        ['ten', '/ten/', '🔟', 'Số 10', 1, 't _ n', ['t (/t/)', 'e (/e/)', 'n (/n/)']],
+        ['red', '/red/', '🍎', 'Màu đỏ', 1, 'r _ d', ['r (/r/)', 'e (/e/)', 'd (/d/)']],
+        ['net', '/net/', '🥅', 'Tấm lưới', 1, 'n _ t', ['n (/n/)', 'e (/e/)', 't (/t/)']]
       ]
     },
     {
-      id: 2, stage: 1, icon: '/uː/ /ʊ/', label: 'Nguyên âm /uː/ & /ʊ/',
-      g0: 'Âm dài /uː/', g0Sub: '(Ngân dài: oo / ue)', g1: 'Âm ngắn /ʊ/', g1Sub: '(Đọc ngắn: oo / u)',
+      id: 2, stage: 1, icon: '/ɪ/ & /ɒ/', label: 'Từ CVC: /ɪ/ & /ɒ/',
+      g0: 'Ăn âm /ɪ/', g0Sub: '(Chữ i — Đọc ngắn gọn)',
+      g1: 'Ăn âm /ɒ/', g1Sub: '(Chữ o — Tròn môi ngắn)',
       items: [
-        ['food', '/fuːd/', '🍜', 'Thức ăn', 0, 'f _ _ d', ['f (/f/)','oo (/uː/)','d (/d/)'], 'foot', '/fʊt/', '🦶', 'Bàn chân'],
-        ['foot', '/fʊt/', '🦶', 'Bàn chân', 1, 'f _ _ t', ['f (/f/)','oo (/ʊ/)','t (/t/)'], 'food', '/fuːd/', '🍜', 'Thức ăn'],
-        ['moon', '/muːn/', '🌙', 'Mặt trăng', 0, 'm _ _ n', ['m (/m/)','oo (/uː/)','n (/n/)'], 'book', '/bʊk/', '📖', 'Quyển sách'],
-        ['book', '/bʊk/', '📖', 'Quyển sách', 1, 'b _ _ k', ['b (/b/)','oo (/ʊ/)','k (/k/)'], 'boot', '/buːt/', '🥾', 'Đôi ủng'],
-        ['pool', '/puːl/', '🏊', 'Hồ bơi', 0, 'p _ _ l', ['p (/p/)','oo (/uː/)','l (/l/)'], 'pull', '/pʊl/', '🪢', 'Kéo dây'],
-        ['pull', '/pʊl/', '🪢', 'Kéo dây', 1, 'p _ ll', ['p (/p/)','u (/ʊ/)','ll (/l/)'], 'pool', '/puːl/', '🏊', 'Hồ bơi'],
-        ['blue', '/bluː/', '🔵', 'Màu xanh dương', 0, 'bl _ _', ['bl (/bl/)','ue (/uː/)'], 'look', '/lʊk/', '👀', 'Nhìn xem'],
-        ['look', '/lʊk/', '👀', 'Nhìn xem', 1, 'l _ _ k', ['l (/l/)','oo (/ʊ/)','k (/k/)'], 'moon', '/muːn/', '🌙', 'Mặt trăng'],
-        ['school', '/skuːl/', '🏫', 'Trường học', 0, 'sch _ _ l', ['sch (/sk/)','oo (/uː/)','l (/l/)'], 'cook', '/kʊk/', '👨‍🍳', 'Đầu bếp'],
-        ['cook', '/kʊk/', '👨‍🍳', 'Đầu bếp', 1, 'c _ _ k', ['c (/k/)','oo (/ʊ/)','k (/k/)'], 'school', '/skuːl/', '🏫', 'Trường học']
+        ['sit', '/sɪt/', '🧘', 'Ngồi xuống', 0, 's _ t', ['s (/s/)', 'i (/ɪ/)', 't (/t/)']],
+        ['pig', '/pɪg/', '🐷', 'Con lợn', 0, 'p _ g', ['p (/p/)', 'i (/ɪ/)', 'g (/g/)']],
+        ['six', '/sɪks/', '6️⃣', 'Số 6', 0, 's _ x', ['s (/s/)', 'i (/ɪ/)', 'x (/ks/)']],
+        ['lip', '/lɪp/', '👄', 'Đôi môi', 0, 'l _ p', ['l (/l/)', 'i (/ɪ/)', 'p (/p/)']],
+        ['big', '/bɪg/', '🐘', 'To lớn', 0, 'b _ g', ['b (/b/)', 'i (/ɪ/)', 'g (/g/)']],
+        ['hot', '/hɒt/', '🔥', 'Nóng', 1, 'h _ t', ['h (/h/)', 'o (/ɒ/)', 't (/t/)']],
+        ['dog', '/dɒg/', '🐶', 'Con chó', 1, 'd _ g', ['d (/d/)', 'o (/ɒ/)', 'g (/g/)']],
+        ['box', '/bɒks/', '📦', 'Cái hộp', 1, 'b _ x', ['b (/b/)', 'o (/ɒ/)', 'x (/ks/)']],
+        ['pot', '/pɒt/', '🍲', 'Cái nồi', 1, 'p _ t', ['p (/p/)', 'o (/ɒ/)', 't (/t/)']],
+        ['fox', '/fɒks/', '🦊', 'Con cáo', 1, 'f _ x', ['f (/f/)', 'o (/ɒ/)', 'x (/ks/)']]
       ]
     },
     {
-      id: 3, stage: 1, icon: '/e/ /æ/', label: 'Nguyên âm /e/ & /æ/',
-      g0: 'Âm vừa /e/', g0Sub: '(Chữ e / ea)', g1: 'Âm e bẹt /æ/', g1Sub: '(Há to: Chữ a)',
+      id: 3, stage: 1, icon: '/ʌ/ & /ʊ/', label: 'Từ CVC: /ʌ/ & /ʊ/',
+      g0: 'Ăn âm /ʌ/', g0Sub: '(Chữ u — Đọc như ă/ất)',
+      g1: 'Ăn âm /ʊ/', g1Sub: '(Chữ oo — Đọc u ngắn)',
       items: [
-        ['bed', '/bed/', '🛏️', 'Cái giường', 0, 'b _ d', ['b (/b/)','e (/e/)','d (/d/)'], 'bad', '/bæd/', '👎', 'Xấu / Tệ'],
-        ['bad', '/bæd/', '👎', 'Xấu / Tệ', 1, 'b _ d', ['b (/b/)','a (/æ/)','d (/d/)'], 'bed', '/bed/', '🛏️', 'Cái giường'],
-        ['pen', '/pen/', '🖊️', 'Cây bút mực', 0, 'p _ n', ['p (/p/)','e (/e/)','n (/n/)'], 'pan', '/pæn/', '🍳', 'Cái chảo'],
-        ['pan', '/pæn/', '🍳', 'Cái chảo', 1, 'p _ n', ['p (/p/)','a (/æ/)','n (/n/)'], 'pen', '/pen/', '🖊️', 'Cây bút mực'],
-        ['men', '/men/', '👬', 'Những người đàn ông', 0, 'm _ n', ['m (/m/)','e (/e/)','n (/n/)'], 'man', '/mæn/', '👨', 'Người đàn ông'],
-        ['man', '/mæn/', '👨', 'Người đàn ông', 1, 'm _ n', ['m (/m/)','a (/æ/)','n (/n/)'], 'men', '/men/', '👬', 'Những người đàn ông'],
-        ['cat', '/kæt/', '🐱', 'Con mèo', 1, 'c _ t', ['c (/k/)','a (/æ/)','t (/t/)'], 'red', '/red/', '🍎', 'Màu đỏ'],
-        ['red', '/red/', '🍎', 'Màu đỏ', 0, 'r _ d', ['r (/r/)','e (/e/)','d (/d/)'], 'cat', '/kæt/', '🐱', 'Con mèo'],
-        ['hat', '/hæt/', '👒', 'Chiếc mũ', 1, 'h _ t', ['h (/h/)','a (/æ/)','t (/t/)'], 'head', '/hed/', '🗣️', 'Cái đầu'],
-        ['head', '/hed/', '🗣️', 'Cái đầu', 0, 'h _ _ d', ['h (/h/)','ea (/e/)','d (/d/)'], 'hat', '/hæt/', '👒', 'Chiếc mũ']
-      ]
-    },
-    {
-      id: 4, stage: 1, icon: '/ɑː/ /ʌ/', label: 'Nguyên âm /ɑː/ & /ʌ/',
-      g0: 'Âm dài /ɑː/', g0Sub: '(Chữ ar)', g1: 'Âm ngắn /ʌ/', g1Sub: '(Chữ u)',
-      items: [
-        ['car', '/kɑː/', '🚗', 'Xe ô tô', 0, 'c _ _', ['c (/k/)','ar (/ɑː/)'], 'cup', '/kʌp/', '🥤', 'Cái cốc'],
-        ['cup', '/kʌp/', '🥤', 'Cái cốc', 1, 'c _ p', ['c (/k/)','u (/ʌ/)','p (/p/)'], 'car', '/kɑː/', '🚗', 'Xe ô tô'],
-        ['heart', '/hɑːt/', '❤️', 'Trái tim', 0, 'h _ _ _ t', ['h (/h/)','ear (/ɑː/)','t (/t/)'], 'hut', '/hʌt/', '🛖', 'Túp lều'],
-        ['hut', '/hʌt/', '🛖', 'Túp lều', 1, 'h _ t', ['h (/h/)','u (/ʌ/)','t (/t/)'], 'heart', '/hɑːt/', '❤️', 'Trái tim'],
-        ['star', '/stɑː/', '⭐', 'Ngôi sao', 0, 'st _ _', ['st (/st/)','ar (/ɑː/)'], 'sun', '/sʌn/', '☀️', 'Mặt trời'],
-        ['sun', '/sʌn/', '☀️', 'Mặt trời', 1, 's _ n', ['s (/s/)','u (/ʌ/)','n (/n/)'], 'star', '/stɑː/', '⭐', 'Ngôi sao'],
-        ['park', '/pɑːk/', '🏞️', 'Công viên', 0, 'p _ _ k', ['p (/p/)','ar (/ɑː/)','k (/k/)'], 'bus', '/bʌs/', '🚌', 'Xe buýt'],
-        ['bus', '/bʌs/', '🚌', 'Xe buýt', 1, 'b _ s', ['b (/b/)','u (/ʌ/)','s (/s/)'], 'park', '/pɑːk/', '🏞️', 'Công viên'],
-        ['dark', '/dɑːk/', '🌑', 'Bóng tối', 0, 'd _ _ k', ['d (/d/)','ar (/ɑː/)','k (/k/)'], 'duck', '/dʌk/', '🦆', 'Con vịt'],
-        ['duck', '/dʌk/', '🦆', 'Con vịt', 1, 'd _ ck', ['d (/d/)','u (/ʌ/)','ck (/k/)'], 'dark', '/dɑːk/', '🌑', 'Bóng tối']
-      ]
-    },
-    {
-      id: 5, stage: 1, icon: '/ɔː/ /ɒ/', label: 'Nguyên âm /ɔː/ & /ɒ/',
-      g0: 'Âm dài /ɔː/', g0Sub: '(Chữ or / al)', g1: 'Âm ngắn /ɒ/', g1Sub: '(Chữ o)',
-      items: [
-        ['door', '/dɔː/', '🚪', 'Cánh cửa', 0, 'd _ _ r', ['d (/d/)','oor (/ɔː/)'], 'dog', '/dɒg/', '🐶', 'Con chó'],
-        ['dog', '/dɒg/', '🐶', 'Con chó', 1, 'd _ g', ['d (/d/)','o (/ɒ/)','g (/g/)'], 'door', '/dɔː/', '🚪', 'Cánh cửa'],
-        ['ball', '/bɔːl/', '⚽', 'Quả bóng', 0, 'b _ ll', ['b (/b/)','a (/ɔː/)','ll (/l/)'], 'box', '/bɒks/', '📦', 'Cái hộp'],
-        ['box', '/bɒks/', '📦', 'Cái hộp', 1, 'b _ x', ['b (/b/)','o (/ɒ/)','x (/ks/)'], 'ball', '/bɔːl/', '⚽', 'Quả bóng'],
-        ['sport', '/spɔːt/', '🏅', 'Thể thao', 0, 'sp _ _ t', ['sp (/sp/)','or (/ɔː/)','t (/t/)'], 'shop', '/ʃɒp/', '🏪', 'Cửa hàng'],
-        ['shop', '/ʃɒp/', '🏪', 'Cửa hàng', 1, 'sh _ p', ['sh (/ʃ/)','o (/ɒ/)','p (/p/)'], 'sport', '/spɔːt/', '🏅', 'Thể thao'],
-        ['walk', '/wɔːk/', '🚶', 'Đi bộ', 0, 'w _ l k', ['w (/w/)','al (/ɔː/)','k (/k/)'], 'clock', '/klɒk/', '⏰', 'Đồng hồ'],
-        ['clock', '/klɒk/', '⏰', 'Đồng hồ', 1, 'cl _ ck', ['cl (/kl/)','o (/ɒ/)','ck (/k/)'], 'walk', '/wɔːk/', '🚶', 'Đi bộ'],
-        ['four', '/fɔː/', '4️⃣', 'Số 4', 0, 'f _ _ r', ['f (/f/)','our (/ɔː/)'], 'hot', '/hɒt/', '🔥', 'Nóng'],
-        ['hot', '/hɒt/', '🔥', 'Nóng', 1, 'h _ t', ['h (/h/)','o (/ɒ/)','t (/t/)'], 'four', '/fɔː/', '4️⃣', 'Số 4']
-      ]
-    },
-    {
-      id: 6, stage: 1, icon: '/ɜː/ /ə/', label: 'Nguyên âm /ɜː/ & /ə/',
-      g0: 'Âm dài /ɜː/', g0Sub: '(ir / ur / or)', g1: 'Âm lướt /ə/', g1Sub: '(Đuôi -er / -or)',
-      items: [
-        ['bird', '/bɜːd/', '🐦', 'Con chim', 0, 'b _ _ d', ['b (/b/)','ir (/ɜː/)','d (/d/)'], 'teacher', '/ˈtiːtʃə/', '👩‍🏫', 'Cô giáo'],
-        ['girl', '/gɜːl/', '👧', 'Cô gái', 0, 'g _ _ l', ['g (/g/)','ir (/ɜː/)','l (/l/)'], 'doctor', '/ˈdɒktə/', '🩺', 'Bác sĩ'],
-        ['shirt', '/ʃɜːt/', '👕', 'Áo sơ mi', 0, 'sh _ _ t', ['sh (/ʃ/)','ir (/ɜː/)','t (/t/)'], 'water', '/ˈwɔːtə/', '💧', 'Nước uống'],
-        ['nurse', '/nɜːs/', '👩‍⚕️', 'Y tá', 0, 'n _ _ se', ['n (/n/)','ur (/ɜː/)','se (/s/)'], 'sister', '/ˈsɪstə/', '👧', 'Chị/Em gái'],
-        ['work', '/wɜːk/', '💼', 'Làm việc', 0, 'w _ _ k', ['w (/w/)','or (/ɜː/)','k (/k/)'], 'sofa', '/ˈsəʊfə/', '🛋️', 'Ghế sô-pha'],
-        ['teacher', '/ˈtiːtʃə/', '👩‍🏫', 'Cô giáo', 1, 'teach _ _', ['teach (/tiːtʃ/)','er (/ə/)'], 'bird', '/bɜːd/', '🐦', 'Con chim'],
-        ['doctor', '/ˈdɒktə/', '🩺', 'Bác sĩ', 1, 'doct _ _', ['doc (/dɒk/)','tor (/tə/)'], 'girl', '/gɜːl/', '👧', 'Cô gái'],
-        ['water', '/ˈwɔːtə/', '💧', 'Nước uống', 1, 'wat _ _', ['wa (/wɔː/)','ter (/tə/)'], 'shirt', '/ʃɜːt/', '👕', 'Áo sơ mi'],
-        ['sister', '/ˈsɪstə/', '👧', 'Chị/Em gái', 1, 'sist _ _', ['sis (/sɪs/)','ter (/tə/)'], 'nurse', '/nɜːs/', '👩‍⚕️', 'Y tá'],
-        ['sofa', '/ˈsəʊfə/', '🛋️', 'Ghế sô-pha', 1, 'sof _', ['so (/səʊ/)','fa (/fə/)'], 'work', '/wɜːk/', '💼', 'Làm việc']
-      ]
-    },
-    {
-      id: 7, stage: 1, icon: '/eɪ/ /aɪ/', label: 'Nguyên âm đôi /eɪ/ & /aɪ/',
-      g0: 'Âm đôi /eɪ/', g0Sub: '(Đọc "ây": a_e / ai)', g1: 'Âm đôi /aɪ/', g1Sub: '(Đọc "ai": i_e / y)',
-      items: [
-        ['cake', '/keɪk/', '🎂', 'Bánh ngọt', 0, 'c _ k e', ['c (/k/)','a_e (/eɪ/)','k (/k/)'], 'bike', '/baɪk/', '🚲', 'Xe đạp'],
-        ['bike', '/baɪk/', '🚲', 'Xe đạp', 1, 'b _ k e', ['b (/b/)','i_e (/aɪ/)','k (/k/)'], 'cake', '/keɪk/', '🎂', 'Bánh ngọt'],
-        ['rain', '/reɪn/', '🌧️', 'Cơn mưa', 0, 'r _ _ n', ['r (/r/)','ai (/eɪ/)','n (/n/)'], 'time', '/taɪm/', '⌚', 'Thời gian'],
-        ['time', '/taɪm/', '⌚', 'Thời gian', 1, 't _ m e', ['t (/t/)','i_e (/aɪ/)','m (/m/)'], 'rain', '/reɪn/', '🌧️', 'Cơn mưa'],
-        ['day', '/deɪ/', '🌤️', 'Ban ngày', 0, 'd _ _', ['d (/d/)','ay (/eɪ/)'], 'sky', '/skaɪ/', '🌌', 'Bầu trời'],
-        ['sky', '/skaɪ/', '🌌', 'Bầu trời', 1, 'sk _', ['sk (/sk/)','y (/aɪ/)'], 'day', '/deɪ/', '🌤️', 'Ban ngày'],
-        ['late', '/leɪt/', '🏃', 'Trễ / Muộn', 0, 'l _ t e', ['l (/l/)','a_e (/eɪ/)','t (/t/)'], 'light', '/laɪt/', '💡', 'Ánh sáng'],
-        ['five', '/faɪv/', '5️⃣', 'Số 5', 1, 'f _ v e', ['f (/f/)','i_e (/aɪ/)','v (/v/)'], 'face', '/feɪs/', '😊', 'Khuôn mặt'],
-        ['plane', '/pleɪn/', '✈️', 'Máy bay', 0, 'pl _ n e', ['pl (/pl/)','a_e (/eɪ/)','n (/n/)'], 'kite', '/kaɪt/', '🪁', 'Cánh diều'],
-        ['kite', '/kaɪt/', '🪁', 'Cánh diều', 1, 'k _ t e', ['k (/k/)','i_e (/aɪ/)','t (/t/)'], 'plane', '/pleɪn/', '✈️', 'Máy bay']
-      ]
-    },
-    {
-      id: 8, stage: 1, icon: '/ɔɪ/ /aʊ/', label: 'Nguyên âm đôi /ɔɪ/ & /aʊ/',
-      g0: 'Âm đôi /ɔɪ/', g0Sub: '(Đọc "oi": oy / oi)', g1: 'Âm đôi /aʊ/', g1Sub: '(Đọc "ao": ou / ow)',
-      items: [
-        ['boy', '/bɔɪ/', '👦', 'Cậu bé', 0, 'b _ _', ['b (/b/)','oy (/ɔɪ/)'], 'cow', '/kaʊ/', '🐄', 'Bò sữa'],
-        ['toy', '/tɔɪ/', '🧸', 'Đồ chơi', 0, 't _ _', ['t (/t/)','oy (/ɔɪ/)'], 'town', '/taʊn/', '🏘️', 'Thị trấn'],
-        ['coin', '/kɔɪn/', '🪙', 'Đồng xu', 0, 'c _ _ n', ['c (/k/)','oi (/ɔɪ/)','n (/n/)'], 'cloud', '/klaʊd/', '☁️', 'Đám mây'],
-        ['voice', '/vɔɪs/', '🗣️', 'Giọng nói', 0, 'v _ _ ce', ['v (/v/)','oi (/ɔɪ/)','ce (/s/)'], 'house', '/haʊs/', '🏠', 'Ngôi nhà'],
-        ['noise', '/nɔɪz/', '📢', 'Tiếng ồn', 0, 'n _ _ se', ['n (/n/)','oi (/ɔɪ/)','se (/z/)'], 'mouse', '/maʊs/', '🐭', 'Con chuột'],
-        ['house', '/haʊs/', '🏠', 'Ngôi nhà', 1, 'h _ _ se', ['h (/h/)','ou (/aʊ/)','se (/s/)'], 'voice', '/vɔɪs/', '🗣️', 'Giọng nói'],
-        ['mouse', '/maʊs/', '🐭', 'Con chuột', 1, 'm _ _ se', ['m (/m/)','ou (/aʊ/)','se (/s/)'], 'noise', '/nɔɪz/', '📢', 'Tiếng ồn'],
-        ['cow', '/kaʊ/', '🐄', 'Bò sữa', 1, 'c _ _', ['c (/k/)','ow (/aʊ/)'], 'boy', '/bɔɪ/', '👦', 'Cậu bé'],
-        ['town', '/taʊn/', '🏘️', 'Thị trấn', 1, 't _ _ n', ['t (/t/)','ow (/aʊ/)','n (/n/)'], 'toy', '/tɔɪ/', '🧸', 'Đồ chơi'],
-        ['cloud', '/klaʊd/', '☁️', 'Đám mây', 1, 'cl _ _ d', ['cl (/kl/)','ou (/aʊ/)','d (/d/)'], 'coin', '/kɔɪn/', '🪙', 'Đồng xu']
-      ]
-    },
-    {
-      id: 9, stage: 1, icon: '/əʊ/ /eə/', label: 'Nguyên âm đôi /əʊ/ & /eə/',
-      g0: 'Âm đôi /əʊ/', g0Sub: '(Đọc "âu": o / oa / ow)', g1: 'Âm đôi /eə/', g1Sub: '(Đọc "e-ơ": air / ear)',
-      items: [
-        ['go', '/gəʊ/', '🟢', 'Đi', 0, 'g _', ['g (/g/)','o (/əʊ/)'], 'hair', '/heə/', '💇', 'Mái tóc'],
-        ['home', '/həʊm/', '🏡', 'Tổ ấm', 0, 'h _ m e', ['h (/h/)','o_e (/əʊ/)','m (/m/)'], 'chair', '/tʃeə/', '🪑', 'Cái ghế'],
-        ['boat', '/bəʊt/', '⛵', 'Con thuyền', 0, 'b _ _ t', ['b (/b/)','oa (/əʊ/)','t (/t/)'], 'bear', '/beə/', '🐻', 'Con gấu'],
-        ['snow', '/snəʊ/', '❄️', 'Tuyết rơi', 0, 'sn _ _', ['sn (/sn/)','ow (/əʊ/)'], 'care', '/keə/', '🤗', 'Quan tâm'],
-        ['road', '/rəʊd/', '🛣️', 'Con đường', 0, 'r _ _ d', ['r (/r/)','oa (/əʊ/)','d (/d/)'], 'pear', '/peə/', '🍐', 'Quả lê'],
-        ['hair', '/heə/', '💇', 'Mái tóc', 1, 'h _ _ _', ['h (/h/)','air (/eə/)'], 'home', '/həʊm/', '🏡', 'Tổ ấm'],
-        ['chair', '/tʃeə/', '🪑', 'Cái ghế', 1, 'ch _ _ _', ['ch (/tʃ/)','air (/eə/)'], 'snow', '/snəʊ/', '❄️', 'Tuyết rơi'],
-        ['bear', '/beə/', '🐻', 'Con gấu', 1, 'b _ _ _', ['b (/b/)','ear (/eə/)'], 'boat', '/bəʊt/', '⛵', 'Con thuyền'],
-        ['care', '/keə/', '🤗', 'Quan tâm', 1, 'c _ _ _', ['c (/k/)','are (/eə/)'], 'go', '/gəʊ/', '🟢', 'Đi'],
-        ['pear', '/peə/', '🍐', 'Quả lê', 1, 'p _ _ _', ['p (/p/)','ear (/eə/)'], 'road', '/rəʊd/', '🛣️', 'Con đường']
-      ]
-    },
-    {
-      id: 10, stage: 1, icon: '/ɪə/ /ʊə/', label: 'Nguyên âm đôi /ɪə/ & /ʊə/',
-      g0: 'Âm đôi /ɪə/', g0Sub: '(Đọc "ia": ear / eer)', g1: 'Âm đôi /ʊə/', g1Sub: '(Đọc "ua": our / ure)',
-      items: [
-        ['ear', '/ɪə/', '👂', 'Đôi tai', 0, '_ _ r', ['ear (/ɪə/)'], 'tour', '/tʊə/', '🧳', 'Chuyến du lịch'],
-        ['near', '/nɪə/', '📍', 'Ở gần', 0, 'n _ _ r', ['n (/n/)','ear (/ɪə/)'], 'sure', '/ʃʊə/', '👌', 'Chắc chắn'],
-        ['hear', '/hɪə/', '🎧', 'Lắng nghe', 0, 'h _ _ r', ['h (/h/)','ear (/ɪə/)'], 'poor', '/pʊə/', '🪙', 'Nghèo khó'],
-        ['clear', '/klɪə/', '✨', 'Rõ ràng', 0, 'cl _ _ r', ['cl (/kl/)','ear (/ɪə/)'], 'pure', '/pjʊə/', '💧', 'Tinh khiết'],
-        ['deer', '/dɪə/', '🦌', 'Con hươu', 0, 'd _ _ r', ['d (/d/)','eer (/ɪə/)'], 'cure', '/kjʊə/', '💊', 'Chữa lành'],
-        ['tour', '/tʊə/', '🧳', 'Chuyến du lịch', 1, 't _ _ r', ['t (/t/)','our (/ʊə/)'], 'ear', '/ɪə/', '👂', 'Đôi tai'],
-        ['sure', '/ʃʊə/', '👌', 'Chắc chắn', 1, 's _ _ e', ['s (/ʃ/)','ure (/ʊə/)'], 'near', '/nɪə/', '📍', 'Ở gần'],
-        ['poor', '/pʊə/', '🪙', 'Nghèo khó', 1, 'p _ _ r', ['p (/p/)','oor (/ʊə/)'], 'hear', '/hɪə/', '🎧', 'Lắng nghe'],
-        ['pure', '/pjʊə/', '💧', 'Tinh khiết', 1, 'p _ _ e', ['p (/pj/)','ure (/ʊə/)'], 'clear', '/klɪə/', '✨', 'Rõ ràng'],
-        ['cure', '/kjʊə/', '💊', 'Chữa lành', 1, 'c _ _ e', ['c (/kj/)','ure (/ʊə/)'], 'deer', '/dɪə/', '🦌', 'Con hươu']
+        ['cup', '/kʌp/', '🥤', 'Cái cốc', 0, 'c _ p', ['c (/k/)', 'u (/ʌ/)', 'p (/p/)']],
+        ['sun', '/sʌn/', '☀️', 'Mặt trời', 0, 's _ n', ['s (/s/)', 'u (/ʌ/)', 'n (/n/)']],
+        ['bus', '/bʌs/', '🚌', 'Xe buýt', 0, 'b _ s', ['b (/b/)', 'u (/ʌ/)', 's (/s/)']],
+        ['hut', '/hʌt/', '🛖', 'Túp lều', 0, 'h _ t', ['h (/h/)', 'u (/ʌ/)', 't (/t/)']],
+        ['duck', '/dʌk/', '🦆', 'Con vịt', 0, 'd _ ck', ['d (/d/)', 'u (/ʌ/)', 'ck (/k/)']],
+        ['book', '/bʊk/', '📖', 'Quyển sách', 1, 'b _ _ k', ['b (/b/)', 'oo (/ʊ/)', 'k (/k/)']],
+        ['cook', '/kʊk/', '👨‍🍳', 'Đầu bếp', 1, 'c _ _ k', ['c (/k/)', 'oo (/ʊ/)', 'k (/k/)']],
+        ['foot', '/fʊt/', '🦶', 'Bàn chân', 1, 'f _ _ t', ['f (/f/)', 'oo (/ʊ/)', 't (/t/)']],
+        ['look', '/lʊk/', '👀', 'Nhìn xem', 1, 'l _ _ k', ['l (/l/)', 'oo (/ʊ/)', 'k (/k/)']],
+        ['good', '/gʊd/', '👍', 'Tốt / Giỏi', 1, 'g _ _ d', ['g (/g/)', 'oo (/ʊ/)', 'd (/d/)']]
       ]
     },
 
-    // CHẶNG 2 (ẢI 11 - 20): 24 PHỤ ÂM IPA
+    // ---------------- CHẶNG 2: PHÂN BIỆT NGẮN - DÀI & NGUYÊN ÂM ĐÔI ----------------
     {
-      id: 11, stage: 2, icon: '/p/ /b/', label: 'Phụ âm môi /p/ & /b/',
-      g0: 'Âm bật hơi /p/', g0Sub: '(Chữ p - Vô thanh)', g1: 'Âm rung họng /b/', g1Sub: '(Chữ b - Hữu thanh)',
+      id: 4, stage: 2, icon: '/iː/ & /ɪ/', label: 'Ngắn & Dài: /iː/ - /ɪ/',
+      g0: 'Ăn âm /iː/', g0Sub: '(ee, ea — Ngân dài i...)',
+      g1: 'Ăn âm /ɪ/', g1Sub: '(Chữ i — Đọc ngắn gọn)',
       items: [
-        ['pig', '/pɪg/', '🐷', 'Con lợn', 0, '_ ig', ['p (/p/)','i (/ɪ/)','g (/g/)'], 'big', '/bɪg/', '🐘', 'To lớn'],
-        ['big', '/bɪg/', '🐘', 'To lớn', 1, '_ ig', ['b (/b/)','i (/ɪ/)','g (/g/)'], 'pig', '/pɪg/', '🐷', 'Con lợn'],
-        ['pie', '/paɪ/', '🥧', 'Bánh nướng', 0, '_ ie', ['p (/p/)','ie (/aɪ/)'], 'buy', '/baɪ/', '🛒', 'Mua hàng'],
-        ['buy', '/baɪ/', '🛒', 'Mua hàng', 1, '_ uy', ['b (/b/)','uy (/aɪ/)'], 'pie', '/paɪ/', '🥧', 'Bánh nướng'],
-        ['pear', '/peə/', '🍐', 'Quả lê', 0, '_ ear', ['p (/p/)','ear (/eə/)'], 'bear', '/beə/', '🐻', 'Con gấu'],
-        ['bear', '/beə/', '🐻', 'Con gấu', 1, '_ ear', ['b (/b/)','ear (/eə/)'], 'pear', '/peə/', '🍐', 'Quả lê'],
-        ['park', '/pɑːk/', '🏞️', 'Công viên', 0, '_ ark', ['p (/p/)','ar (/ɑː/)','k (/k/)'], 'bark', '/bɑːk/', '🐕', 'Tiếng chó sủa'],
-        ['bee', '/biː/', '🐝', 'Con ong', 1, '_ ee', ['b (/b/)','ee (/iː/)'], 'pea', '/piː/', '🫛', 'Hạt đậu'],
-        ['pen', '/pen/', '🖊️', 'Cây bút', 0, '_ en', ['p (/p/)','e (/e/)','n (/n/)'], 'bag', '/bæg/', '🎒', 'Cặp sách'],
-        ['bag', '/bæg/', '🎒', 'Cặp sách', 1, '_ ag', ['b (/b/)','a (/æ/)','g (/g/)'], 'pen', '/pen/', '🖊️', 'Cây bút']
+        ['sheep', '/ʃiːp/', '🐑', 'Con cừu', 0, 'sh _ _ p', ['sh (/ʃ/)', 'ee (/iː/)', 'p (/p/)']],
+        ['seat', '/siːt/', '💺', 'Chỗ ngồi', 0, 's _ _ t', ['s (/s/)', 'ea (/iː/)', 't (/t/)']],
+        ['green', '/griːn/', '🌿', 'Màu xanh lá', 0, 'gr _ _ n', ['gr (/gr/)', 'ee (/iː/)', 'n (/n/)']],
+        ['meat', '/miːt/', '🥩', 'Miếng thịt', 0, 'm _ _ t', ['m (/m/)', 'ea (/iː/)', 't (/t/)']],
+        ['tree', '/triː/', '🌲', 'Cái cây', 0, 'tr _ _', ['tr (/tr/)', 'ee (/iː/)']],
+        ['ship', '/ʃɪp/', '🚢', 'Con tàu', 1, 'sh _ p', ['sh (/ʃ/)', 'i (/ɪ/)', 'p (/p/)']],
+        ['sit', '/sɪt/', '🧘', 'Ngồi xuống', 1, 's _ t', ['s (/s/)', 'i (/ɪ/)', 't (/t/)']],
+        ['fish', '/fɪʃ/', '🐟', 'Con cá', 1, 'f _ sh', ['f (/f/)', 'i (/ɪ/)', 'sh (/ʃ/)']],
+        ['milk', '/mɪlk/', '🥛', 'Sữa tươi', 1, 'm _ lk', ['m (/m/)', 'i (/ɪ/)', 'lk (/lk/)']],
+        ['six', '/sɪks/', '6️⃣', 'Số 6', 1, 's _ x', ['s (/s/)', 'i (/ɪ/)', 'x (/ks/)']]
       ]
     },
     {
-      id: 12, stage: 2, icon: '/t/ /d/', label: 'Phụ âm đầu lưỡi /t/ & /d/',
-      g0: 'Âm bật hơi /t/', g0Sub: '(Chữ t - Vô thanh)', g1: 'Âm rung họng /d/', g1Sub: '(Chữ d - Hữu thanh)',
+      id: 5, stage: 2, icon: '/uː/ & /ʊ/', label: 'Ngắn & Dài: /uː/ - /ʊ/',
+      g0: 'Ăn âm /uː/', g0Sub: '(Chu môi ngân dài u...)',
+      g1: 'Ăn âm /ʊ/', g1Sub: '(Đọc u ngắn dứt khoát)',
       items: [
-        ['tea', '/tiː/', '🍵', 'Trà xanh', 0, '_ ea', ['t (/t/)','ea (/iː/)'], 'dog', '/dɒg/', '🐶', 'Con chó'],
-        ['ten', '/ten/', '🔟', 'Số 10', 0, '_ en', ['t (/t/)','e (/e/)','n (/n/)'], 'den', '/den/', '🦁', 'Hang thú'],
-        ['tie', '/taɪ/', '👔', 'Cà vạt', 0, '_ ie', ['t (/t/)','ie (/aɪ/)'], 'die', '/daɪ/', '🥀', 'Héo tàn'],
-        ['town', '/taʊn/', '🏘️', 'Thị trấn', 0, '_ own', ['t (/t/)','ow (/aʊ/)','n (/n/)'], 'down', '/daʊn/', '⬇️', 'Phía dưới'],
-        ['two', '/tuː/', '2️⃣', 'Số 2', 0, '_ wo', ['tw (/t/)','o (/uː/)'], 'do', '/duː/', '✅', 'Làm'],
-        ['dog', '/dɒg/', '🐶', 'Con chó', 1, '_ og', ['d (/d/)','o (/ɒ/)','g (/g/)'], 'tea', '/tiː/', '🍵', 'Trà xanh'],
-        ['down', '/daʊn/', '⬇️', 'Phía dưới', 1, '_ own', ['d (/d/)','ow (/aʊ/)','n (/n/)'], 'town', '/taʊn/', '🏘️', 'Thị trấn'],
-        ['day', '/deɪ/', '🌤️', 'Ban ngày', 1, '_ ay', ['d (/d/)','ay (/eɪ/)'], 'toy', '/tɔɪ/', '🧸', 'Đồ chơi'],
-        ['duck', '/dʌk/', '🦆', 'Con vịt', 1, '_ uck', ['d (/d/)','u (/ʌ/)','ck (/k/)'], 'ten', '/ten/', '🔟', 'Số 10'],
-        ['desk', '/desk/', '🪑', 'Bàn học', 1, '_ esk', ['d (/d/)','e (/e/)','sk (/sk/)'], 'tie', '/taɪ/', '👔', 'Cà vạt']
+        ['food', '/fuːd/', '🍜', 'Thức ăn', 0, 'f _ _ d', ['f (/f/)', 'oo (/uː/)', 'd (/d/)']],
+        ['pool', '/puːl/', '🏊', 'Hồ bơi', 0, 'p _ _ l', ['p (/p/)', 'oo (/uː/)', 'l (/l/)']],
+        ['school', '/skuːl/', '🏫', 'Trường học', 0, 'sch _ _ l', ['sch (/sk/)', 'oo (/uː/)', 'l (/l/)']],
+        ['moon', '/muːn/', '🌙', 'Mặt trăng', 0, 'm _ _ n', ['m (/m/)', 'oo (/uː/)', 'n (/n/)']],
+        ['blue', '/bluː/', '🔵', 'Màu xanh dương', 0, 'bl _ _', ['bl (/bl/)', 'ue (/uː/)']],
+        ['foot', '/fʊt/', '🦶', 'Bàn chân', 1, 'f _ _ t', ['f (/f/)', 'oo (/ʊ/)', 't (/t/)']],
+        ['pull', '/pʊl/', '🪢', 'Kéo dây', 1, 'p _ ll', ['p (/p/)', 'u (/ʊ/)', 'll (/l/)']],
+        ['book', '/bʊk/', '📖', 'Quyển sách', 1, 'b _ _ k', ['b (/b/)', 'oo (/ʊ/)', 'k (/k/)']],
+        ['cook', '/kʊk/', '👨‍🍳', 'Đầu bếp', 1, 'c _ _ k', ['c (/k/)', 'oo (/ʊ/)', 'k (/k/)']],
+        ['look', '/lʊk/', '👀', 'Nhìn xem', 1, 'l _ _ k', ['l (/l/)', 'oo (/ʊ/)', 'k (/k/)']]
       ]
     },
     {
-      id: 13, stage: 2, icon: '/k/ /g/', label: 'Phụ âm gốc lưỡi /k/ & /g/',
-      g0: 'Âm bật hơi /k/', g0Sub: '(Chữ c / k)', g1: 'Âm rung họng /g/', g1Sub: '(Chữ g)',
+      id: 6, stage: 2, icon: '/ɑː, ɔː/ & /ʌ, ɒ/', label: '/ɑː, ɔː/ & /ʌ, ɒ/',
+      g0: 'Ăn âm dài /ɑː/, /ɔː/', g0Sub: '(ar, or, oor — Ngân dài)',
+      g1: 'Ăn âm ngắn /ʌ/, /ɒ/', g1Sub: '(u, o — Đọc ngắn gọn)',
       items: [
-        ['coat', '/kəʊt/', '🧥', 'Áo khoác', 0, '_ oat', ['c (/k/)','oa (/əʊ/)','t (/t/)'], 'goat', '/gəʊt/', '🐐', 'Con dê'],
-        ['goat', '/gəʊt/', '🐐', 'Con dê', 1, '_ oat', ['g (/g/)','oa (/əʊ/)','t (/t/)'], 'coat', '/kəʊt/', '🧥', 'Áo khoác'],
-        ['class', '/klɑːs/', '🏫', 'Lớp học', 0, '_ lass', ['cl (/kl/)','a (/ɑː/)','ss (/s/)'], 'glass', '/glɑːs/', '🥛', 'Ly thủy tinh'],
-        ['glass', '/glɑːs/', '🥛', 'Ly thủy tinh', 1, '_ lass', ['gl (/gl/)','a (/ɑː/)','ss (/s/)'], 'class', '/klɑːs/', '🏫', 'Lớp học'],
-        ['key', '/kiː/', '🔑', 'Chìa khóa', 0, '_ ey', ['k (/k/)','ey (/iː/)'], 'game', '/geɪm/', '🎮', 'Trò chơi'],
-        ['game', '/geɪm/', '🎮', 'Trò chơi', 1, '_ ame', ['g (/g/)','a_e (/eɪ/)','m (/m/)'], 'cake', '/keɪk/', '🎂', 'Bánh ngọt'],
-        ['king', '/kɪŋ/', '🤴', 'Nhà vua', 0, '_ ing', ['k (/k/)','i (/ɪ/)','ng (/ŋ/)'], 'gold', '/gəʊld/', '🪙', 'Vàng'],
-        ['gold', '/gəʊld/', '🪙', 'Vàng', 1, '_ old', ['g (/g/)','o (/əʊ/)','ld (/ld/)'], 'cold', '/kəʊld/', '🥶', 'Lạnh'],
-        ['cold', '/kəʊld/', '🥶', 'Lạnh', 0, '_ old', ['c (/k/)','o (/əʊ/)','ld (/ld/)'], 'gold', '/gəʊld/', '🪙', 'Vàng'],
-        ['gift', '/gɪft/', '🎁', 'Món quà', 1, '_ ift', ['g (/g/)','i (/ɪ/)','ft (/ft/)'], 'key', '/kiː/', '🔑', 'Chìa khóa']
+        ['car', '/kɑː/', '🚗', 'Xe ô tô', 0, 'c _ _', ['c (/k/)', 'ar (/ɑː/)']],
+        ['star', '/stɑː/', '⭐', 'Ngôi sao', 0, 'st _ _', ['st (/st/)', 'ar (/ɑː/)']],
+        ['park', '/pɑːk/', '🏞️', 'Công viên', 0, 'p _ _ k', ['p (/p/)', 'ar (/ɑː/)', 'k (/k/)']],
+        ['door', '/dɔː/', '🚪', 'Cánh cửa', 0, 'd _ _ r', ['d (/d/)', 'oor (/ɔː/)']],
+        ['sport', '/spɔːt/', '🏅', 'Thể thao', 0, 'sp _ _ t', ['sp (/sp/)', 'or (/ɔː/)', 't (/t/)']],
+        ['cup', '/kʌp/', '🥤', 'Cái cốc', 1, 'c _ p', ['c (/k/)', 'u (/ʌ/)', 'p (/p/)']],
+        ['sun', '/sʌn/', '☀️', 'Mặt trời', 1, 's _ n', ['s (/s/)', 'u (/ʌ/)', 'n (/n/)']],
+        ['bus', '/bʌs/', '🚌', 'Xe buýt', 1, 'b _ s', ['b (/b/)', 'u (/ʌ/)', 's (/s/)']],
+        ['dog', '/dɒg/', '🐶', 'Con chó', 1, 'd _ g', ['d (/d/)', 'o (/ɒ/)', 'g (/g/)']],
+        ['hot', '/hɒt/', '🔥', 'Nóng', 1, 'h _ t', ['h (/h/)', 'o (/ɒ/)', 't (/t/)']]
       ]
     },
     {
-      id: 14, stage: 2, icon: '/f/ /v/', label: 'Phụ âm răng môi /f/ & /v/',
-      g0: 'Âm thổi hơi /f/', g0Sub: '(Chữ f - Không rung)', g1: 'Âm rung môi /v/', g1Sub: '(Chữ v - Rung họng)',
+      id: 7, stage: 2, icon: '/eɪ/ & /aɪ/', label: 'Nguyên âm đôi /eɪ/ & /aɪ/',
+      g0: 'Ăn âm /eɪ/', g0Sub: '(a_e, ai, ay — Đọc "ây")',
+      g1: 'Ăn âm /aɪ/', g1Sub: '(i_e, y — Đọc "ai")',
       items: [
-        ['fan', '/fæn/', '🪭', 'Cái quạt', 0, '_ an', ['f (/f/)','a (/æ/)','n (/n/)'], 'van', '/væn/', '🚐', 'Xe tải nhỏ'],
-        ['van', '/væn/', '🚐', 'Xe tải nhỏ', 1, '_ an', ['v (/v/)','a (/æ/)','n (/n/)'], 'fan', '/fæn/', '🪭', 'Cái quạt'],
-        ['leaf', '/liːf/', '🍃', 'Chiếc lá', 0, 'lea _', ['l (/l/)','ea (/iː/)','f (/f/)'], 'leave', '/liːv/', '👋', 'Rời đi'],
-        ['leave', '/liːv/', '👋', 'Rời đi', 1, 'lea _ e', ['l (/l/)','ea (/iː/)','ve (/v/)'], 'leaf', '/liːf/', '🍃', 'Chiếc lá'],
-        ['fine', '/faɪn/', '😊', 'Khỏe / Tốt', 0, '_ ine', ['f (/f/)','i_e (/aɪ/)','n (/n/)'], 'vine', '/vaɪn/', '🍇', 'Dây nho'],
-        ['vine', '/vaɪn/', '🍇', 'Dây nho', 1, '_ ine', ['v (/v/)','i_e (/aɪ/)','n (/n/)'], 'fine', '/faɪn/', '😊', 'Khỏe / Tốt'],
-        ['fox', '/fɒks/', '🦊', 'Con cáo', 0, '_ ox', ['f (/f/)','o (/ɒ/)','x (/ks/)'], 'vest', '/vest/', '🦺', 'Áo ghi-lê'],
-        ['vest', '/vest/', '🦺', 'Áo ghi-lê', 1, '_ est', ['v (/v/)','e (/e/)','st (/st/)'], 'fox', '/fɒks/', '🦊', 'Con cáo'],
-        ['face', '/feɪs/', '😊', 'Khuôn mặt', 0, '_ ace', ['f (/f/)','a_e (/eɪ/)','ce (/s/)'], 'vase', '/vɑːz/', '🏺', 'Bình hoa'],
-        ['vase', '/vɑːz/', '🏺', 'Bình hoa', 1, '_ ase', ['v (/v/)','a (/ɑː/)','se (/z/)'], 'face', '/feɪs/', '😊', 'Khuôn mặt']
+        ['cake', '/keɪk/', '🎂', 'Bánh ngọt', 0, 'c _ k e', ['c (/k/)', 'a_e (/eɪ/)', 'k (/k/)']],
+        ['make', '/meɪk/', '🛠️', 'Chế tạo', 0, 'm _ k e', ['m (/m/)', 'a_e (/eɪ/)', 'k (/k/)']],
+        ['rain', '/reɪn/', '🌧️', 'Cơn mưa', 0, 'r _ _ n', ['r (/r/)', 'ai (/eɪ/)', 'n (/n/)']],
+        ['day', '/deɪ/', '🌤️', 'Ban ngày', 0, 'd _ _', ['d (/d/)', 'ay (/eɪ/)']],
+        ['plane', '/pleɪn/', '✈️', 'Máy bay', 0, 'pl _ n e', ['pl (/pl/)', 'a_e (/eɪ/)', 'n (/n/)']],
+        ['bike', '/baɪk/', '🚲', 'Xe đạp', 1, 'b _ k e', ['b (/b/)', 'i_e (/aɪ/)', 'k (/k/)']],
+        ['five', '/faɪv/', '5️⃣', 'Số 5', 1, 'f _ v e', ['f (/f/)', 'i_e (/aɪ/)', 'v (/v/)']],
+        ['kite', '/kaɪt/', '🪁', 'Cánh diều', 1, 'k _ t e', ['k (/k/)', 'i_e (/aɪ/)', 't (/t/)']],
+        ['time', '/taɪm/', '⌚', 'Thời gian', 1, 't _ m e', ['t (/t/)', 'i_e (/aɪ/)', 'm (/m/)']],
+        ['sky', '/skaɪ/', '🌌', 'Bầu trời', 1, 'sk _', ['sk (/sk/)', 'y (/aɪ/)']]
       ]
     },
     {
-      id: 15, stage: 2, icon: '/θ/ /ð/', label: 'Âm Lưỡi giữa răng /θ/ & /ð/',
-      g0: 'Âm thổi lưỡi /θ/', g0Sub: '(th Vô thanh)', g1: 'Âm rung lưỡi /ð/', g1Sub: '(th Hữu thanh)',
+      id: 8, stage: 2, icon: '/əʊ, aʊ, ɔɪ/', label: 'Âm đôi /əʊ/, /aʊ/ & /ɔɪ/',
+      g0: 'Ăn âm /əʊ/', g0Sub: '(o, oa, ow — Đọc "âu")',
+      g1: 'Ăn âm /aʊ/ & /ɔɪ/', g1Sub: '(ou, ow, oy — "ao / oi")',
       items: [
-        ['think', '/θɪŋk/', '🤔', 'Suy nghĩ', 0, '_ _ ink', ['th (/θ/)','i (/ɪ/)','nk (/ŋk/)'], 'this', '/ðɪs/', '👉', 'Cái này'],
-        ['thin', '/θɪn/', '📏', 'Mỏng / Gầy', 0, '_ _ in', ['th (/θ/)','i (/ɪ/)','n (/n/)'], 'that', '/ðæt/', '👉', 'Cái kia'],
-        ['three', '/θriː/', '3️⃣', 'Số 3', 0, '_ _ ree', ['th (/θ/)','r (/r/)','ee (/iː/)'], 'they', '/ðeɪ/', '👥', 'Họ'],
-        ['bath', '/bɑːθ/', '🛁', 'Bồn tắm', 0, 'ba _ _', ['b (/b/)','a (/ɑː/)','th (/θ/)'], 'mother', '/ˈmʌðə/', '👩', 'Mẹ'],
-        ['tooth', '/tuːθ/', '🦷', 'Cái răng', 0, 'too _ _', ['t (/t/)','oo (/uː/)','th (/θ/)'], 'father', '/ˈfɑːðə/', '👨', 'Bố'],
-        ['this', '/ðɪs/', '👉', 'Cái này', 1, '_ _ is', ['th (/ð/)','i (/ɪ/)','s (/s/)'], 'think', '/θɪŋk/', '🤔', 'Suy nghĩ'],
-        ['that', '/ðæt/', '👉', 'Cái kia', 1, '_ _ at', ['th (/ð/)','a (/æ/)','t (/t/)'], 'thin', '/θɪn/', '📏', 'Mỏng / Gầy'],
-        ['they', '/ðeɪ/', '👥', 'Họ', 1, '_ _ ey', ['th (/ð/)','ey (/eɪ/)'], 'three', '/θriː/', '3️⃣', 'Số 3'],
-        ['mother', '/ˈmʌðə/', '👩', 'Mẹ', 1, 'mo _ _ er', ['mo (/mʌ/)','th (/ð/)','er (/ə/)'], 'bath', '/bɑːθ/', '🛁', 'Bồn tắm'],
-        ['father', '/ˈfɑːðə/', '👨', 'Bố', 1, 'fa _ _ er', ['fa (/fɑː/)','th (/ð/)','er (/ə/)'], 'tooth', '/tuːθ/', '🦷', 'Cái răng']
-      ]
-    },
-    {
-      id: 16, stage: 2, icon: '/s/ /z/', label: 'Phụ âm Xát /s/ & /z/',
-      g0: 'Âm xì nhẹ /s/', g0Sub: '(Chữ s / ce)', g1: 'Âm rung /z/', g1Sub: '(Chữ z / se)',
-      items: [
-        ['see', '/siː/', '👀', 'Nhìn thấy', 0, '_ ee', ['s (/s/)','ee (/iː/)'], 'zoo', '/zuː/', '🦁', 'Sở thú'],
-        ['zoo', '/zuː/', '🦁', 'Sở thú', 1, '_ oo', ['z (/z/)','oo (/uː/)'], 'see', '/siː/', '👀', 'Nhìn thấy'],
-        ['sip', '/sɪp/', '🥤', 'Nhấp môi', 0, '_ ip', ['s (/s/)','i (/ɪ/)','p (/p/)'], 'zip', '/zɪp/', '🤐', 'Khóa kéo'],
-        ['zip', '/zɪp/', '🤐', 'Khóa kéo', 1, '_ ip', ['z (/z/)','i (/ɪ/)','p (/p/)'], 'sip', '/sɪp/', '🥤', 'Nhấp môi'],
-        ['rice', '/raɪs/', '🍚', 'Bát cơm', 0, 'ri _ e', ['r (/r/)','i (/aɪ/)','ce (/s/)'], 'rise', '/raɪz/', '🌅', 'Mặt trời mọc'],
-        ['rise', '/raɪz/', '🌅', 'Mặt trời mọc', 1, 'ri _ e', ['r (/r/)','i (/aɪ/)','se (/z/)'], 'rice', '/raɪs/', '🍚', 'Bát cơm'],
-        ['bus', '/bʌs/', '🚌', 'Xe buýt', 0, 'bu _', ['b (/b/)','u (/ʌ/)','s (/s/)'], 'buzz', '/bʌz/', '🐝', 'Tiếng ong kêu'],
-        ['rose', '/rəʊz/', '🌹', 'Hoa hồng', 1, 'ro _ e', ['r (/r/)','o (/əʊ/)','se (/z/)'], 'face', '/feɪs/', '😊', 'Khuôn mặt'],
-        ['nose', '/nəʊz/', '👃', 'Cái mũi', 1, 'no _ e', ['n (/n/)','o (/əʊ/)','se (/z/)'], 'sun', '/sʌn/', '☀️', 'Mặt trời'],
-        ['zebra', '/ˈzebrə/', '🦓', 'Ngựa vằn', 1, '_ ebra', ['z (/z/)','eb (/eb/)','ra (/rə/)'], 'see', '/siː/', '👀', 'Nhìn thấy']
-      ]
-    },
-    {
-      id: 17, stage: 2, icon: '/ʃ/ /ʒ/', label: 'Âm Chu môi /ʃ/ & /ʒ/',
-      g0: 'Chu môi /ʃ/', g0Sub: '(sh / ti - Không rung)', g1: 'Chu môi rung /ʒ/', g1Sub: '(si / s - Rung họng)',
-      items: [
-        ['she', '/ʃiː/', '👧', 'Cô ấy', 0, '_ _ e', ['sh (/ʃ/)','e (/iː/)'], 'vision', '/ˈvɪʒən/', '🔭', 'Tầm nhìn'],
-        ['shoe', '/ʃuː/', '👟', 'Chiếc giày', 0, '_ _ oe', ['sh (/ʃ/)','oe (/uː/)'], 'measure', '/ˈmeʒə/', '📏', 'Đo lường'],
-        ['wash', '/wɒʃ/', '🧼', 'Rửa tay', 0, 'wa _ _', ['w (/w/)','a (/ɒ/)','sh (/ʃ/)'], 'usual', '/ˈjuːʒuəl/', '📅', 'Thường lệ'],
-        ['cash', '/kæʃ/', '💵', 'Tiền mặt', 0, 'ca _ _', ['c (/k/)','a (/æ/)','sh (/ʃ/)'], 'pleasure', '/ˈpleʒə/', '😊', 'Niềm vui'],
-        ['sugar', '/ˈʃʊgə/', '🍬', 'Đường ngọt', 0, '_ ugar', ['s (/ʃ/)','u (/ʊ/)','gar (/gə/)'], 'treasure', '/ˈtreʒə/', '👑', 'Kho báu'],
-        ['nation', '/ˈneɪʃən/', '🏳️', 'Quốc gia', 0, 'na _ _ on', ['na (/neɪ/)','ti (/ʃ/)','on (/ən/)'], 'vision', '/ˈvɪʒən/', '🔭', 'Tầm nhìn'],
-        ['vision', '/ˈvɪʒən/', '🔭', 'Tầm nhìn', 1, 'vi _ _ on', ['vi (/vɪ/)','si (/ʒ/)','on (/ən/)'], 'nation', '/ˈneɪʃən/', '🏳️', 'Quốc gia'],
-        ['measure', '/ˈmeʒə/', '📏', 'Đo lường', 1, 'mea _ ure', ['mea (/me/)','s (/ʒ/)','ure (/ə/)'], 'wash', '/wɒʃ/', '🧼', 'Rửa tay'],
-        ['pleasure', '/ˈpleʒə/', '😊', 'Niềm vui', 1, 'plea _ ure', ['plea (/ple/)','s (/ʒ/)','ure (/ə/)'], 'cash', '/kæʃ/', '💵', 'Tiền mặt'],
-        ['treasure', '/ˈtreʒə/', '👑', 'Kho báu', 1, 'trea _ ure', ['trea (/tre/)','s (/ʒ/)','ure (/ə/)'], 'sugar', '/ˈʃʊgə/', '🍬', 'Đường ngọt']
-      ]
-    },
-    {
-      id: 18, stage: 2, icon: '/tʃ/ /dʒ/', label: 'Âm Tắc xát /tʃ/ & /dʒ/',
-      g0: 'Bật chu môi /tʃ/', g0Sub: '(Chữ ch / tch)', g1: 'Rung chu môi /dʒ/', g1Sub: '(Chữ j / ge)',
-      items: [
-        ['cheap', '/tʃiːp/', '🏷️', 'Giá rẻ', 0, '_ _ eap', ['ch (/tʃ/)','ea (/iː/)','p (/p/)'], 'jeep', '/dʒiːp/', '🚙', 'Xe địa hình'],
-        ['jeep', '/dʒiːp/', '🚙', 'Xe địa hình', 1, '_ eep', ['j (/dʒ/)','ee (/iː/)','p (/p/)'], 'cheap', '/tʃiːp/', '🏷️', 'Giá rẻ'],
-        ['cheese', '/tʃiːz/', '🧀', 'Phô mai', 0, '_ _ eese', ['ch (/tʃ/)','ee (/iː/)','se (/z/)'], 'juice', '/dʒuːs/', '🧃', 'Nước ép'],
-        ['juice', '/dʒuːs/', '🧃', 'Nước ép', 1, '_ uice', ['j (/dʒ/)','ui (/uː/)','ce (/s/)'], 'cheese', '/tʃiːz/', '🧀', 'Phô mai'],
-        ['watch', '/wɒtʃ/', '⌚', 'Đồng hồ', 0, 'wa _ _ _', ['w (/w/)','a (/ɒ/)','tch (/tʃ/)'], 'job', '/dʒɒb/', '💼', 'Công việc'],
-        ['lunch', '/lʌntʃ/', '🍱', 'Bữa trưa', 0, 'lun _ _', ['l (/l/)','un (/ʌn/)','ch (/tʃ/)'], 'page', '/peɪdʒ/', '📄', 'Trang sách'],
-        ['teach', '/tiːtʃ/', '👩‍🏫', 'Dạy học', 0, 'tea _ _', ['t (/t/)','ea (/iː/)','ch (/tʃ/)'], 'bridge', '/brɪdʒ/', '🌉', 'Cây cầu'],
-        ['job', '/dʒɒb/', '💼', 'Công việc', 1, '_ ob', ['j (/dʒ/)','o (/ɒ/)','b (/b/)'], 'watch', '/wɒtʃ/', '⌚', 'Đồng hồ'],
-        ['page', '/peɪdʒ/', '📄', 'Trang sách', 1, 'pa _ _', ['p (/p/)','a (/eɪ/)','ge (/dʒ/)'], 'lunch', '/lʌntʃ/', '🍱', 'Bữa trưa'],
-        ['bridge', '/brɪdʒ/', '🌉', 'Cây cầu', 1, 'bri _ _ _', ['br (/br/)','i (/ɪ/)','dge (/dʒ/)'], 'teach', '/tiːtʃ/', '👩‍🏫', 'Dạy học']
-      ]
-    },
-    {
-      id: 19, stage: 2, icon: '/m, n/ /ŋ/', label: 'Phụ âm Mũi /m, n/ & /ŋ/',
-      g0: 'Mũi trước /m, n/', g0Sub: '(Chữ m / n)', g1: 'Mũi sau /ŋ/', g1Sub: '(Chữ ng / nk)',
-      items: [
-        ['moon', '/muːn/', '🌙', 'Mặt trăng', 0, '_ oon', ['m (/m/)','oo (/uː/)','n (/n/)'], 'sing', '/sɪŋ/', '🎤', 'Ca hát'],
-        ['name', '/neɪm/', '📛', 'Tên gọi', 0, '_ ame', ['n (/n/)','a_e (/eɪ/)','m (/m/)'], 'ring', '/rɪŋ/', '💍', 'Chiếc nhẫn'],
-        ['nine', '/naɪn/', '9️⃣', 'Số 9', 0, '_ ine', ['n (/n/)','i_e (/aɪ/)','n (/n/)'], 'king', '/kɪŋ/', '🤴', 'Nhà vua'],
-        ['rain', '/reɪn/', '🌧️', 'Cơn mưa', 0, 'rai _', ['r (/r/)','ai (/eɪ/)','n (/n/)'], 'song', '/sɒŋ/', '🎵', 'Bài hát'],
-        ['sun', '/sʌn/', '☀️', 'Mặt trời', 0, 'su _', ['s (/s/)','u (/ʌ/)','n (/n/)'], 'long', '/lɒŋ/', '📏', 'Dài'],
-        ['sing', '/sɪŋ/', '🎤', 'Ca hát', 1, 'si _ _', ['s (/s/)','i (/ɪ/)','ng (/ŋ/)'], 'sin', '/sɪn/', '❌', 'Lỗi lầm'],
-        ['ring', '/rɪŋ/', '💍', 'Chiếc nhẫn', 1, 'ri _ _', ['r (/r/)','i (/ɪ/)','ng (/ŋ/)'], 'rain', '/reɪn/', '🌧️', 'Cơn mưa'],
-        ['king', '/kɪŋ/', '🤴', 'Nhà vua', 1, 'ki _ _', ['k (/k/)','i (/ɪ/)','ng (/ŋ/)'], 'nine', '/naɪn/', '9️⃣', 'Số 9'],
-        ['song', '/sɒŋ/', '🎵', 'Bài hát', 1, 'so _ _', ['s (/s/)','o (/ɒ/)','ng (/ŋ/)'], 'sun', '/sʌn/', '☀️', 'Mặt trời'],
-        ['bank', '/bæŋk/', '🏦', 'Ngân hàng', 1, 'ba _ k', ['b (/b/)','a (/æ/)','nk (/ŋk/)'], 'name', '/neɪm/', '📛', 'Tên gọi']
-      ]
-    },
-    {
-      id: 20, stage: 2, icon: '/l/ /r/', label: 'Phụ âm /l/ & /r/',
-      g0: 'Chạm lợi /l/', g0Sub: '(Chữ l / ll)', g1: 'Cong lưỡi /r/', g1Sub: '(Chữ r)',
-      items: [
-        ['light', '/laɪt/', '💡', 'Ánh sáng', 0, '_ ight', ['l (/l/)','igh (/aɪ/)','t (/t/)'], 'right', '/raɪt/', '➡️', 'Bên phải'],
-        ['right', '/raɪt/', '➡️', 'Bên phải', 1, '_ ight', ['r (/r/)','igh (/aɪ/)','t (/t/)'], 'light', '/laɪt/', '💡', 'Ánh sáng'],
-        ['lead', '/liːd/', '🧭', 'Dẫn đường', 0, '_ ead', ['l (/l/)','ea (/iː/)','d (/d/)'], 'read', '/riːd/', '📚', 'Đọc sách'],
-        ['read', '/riːd/', '📚', 'Đọc sách', 1, '_ ead', ['r (/r/)','ea (/iː/)','d (/d/)'], 'lead', '/liːd/', '🧭', 'Dẫn đường'],
-        ['lip', '/lɪp/', '👄', 'Đôi môi', 0, '_ ip', ['l (/l/)','i (/ɪ/)','p (/p/)'], 'red', '/red/', '🍎', 'Màu đỏ'],
-        ['bell', '/bel/', '🔔', 'Quả chuông', 0, 'be _ _', ['b (/b/)','e (/e/)','ll (/l/)'], 'room', '/ruːm/', '🚪', 'Căn phòng'],
-        ['hill', '/hɪl/', '⛰️', 'Ngọn đồi', 0, 'hi _ _', ['h (/h/)','i (/ɪ/)','ll (/l/)'], 'river', '/ˈrɪvə/', '🏞️', 'Dòng sông'],
-        ['room', '/ruːm/', '🚪', 'Căn phòng', 1, '_ oom', ['r (/r/)','oo (/uː/)','m (/m/)'], 'bell', '/bel/', '🔔', 'Quả chuông'],
-        ['river', '/ˈrɪvə/', '🏞️', 'Dòng sông', 1, '_ iver', ['r (/r/)','i (/ɪ/)','ver (/və/)'], 'hill', '/hɪl/', '⛰️', 'Ngọn đồi'],
-        ['rose', '/rəʊz/', '🌹', 'Hoa hồng', 1, '_ ose', ['r (/r/)','o (/əʊ/)','se (/z/)'], 'lip', '/lɪp/', '👄', 'Đôi môi']
+        ['go', '/gəʊ/', '🟢', 'Đi', 0, 'g _', ['g (/g/)', 'o (/əʊ/)']],
+        ['boat', '/bəʊt/', '⛵', 'Con thuyền', 0, 'b _ _ t', ['b (/b/)', 'oa (/əʊ/)', 't (/t/)']],
+        ['home', '/həʊm/', '🏡', 'Tổ ấm', 0, 'h _ m e', ['h (/h/)', 'o_e (/əʊ/)', 'm (/m/)']],
+        ['snow', '/snəʊ/', '❄️', 'Tuyết rơi', 0, 'sn _ _', ['sn (/sn/)', 'ow (/əʊ/)']],
+        ['road', '/rəʊd/', '🛣️', 'Con đường', 0, 'r _ _ d', ['r (/r/)', 'oa (/əʊ/)', 'd (/d/)']],
+        ['house', '/haʊs/', '🏠', 'Ngôi nhà', 1, 'h _ _ se', ['h (/h/)', 'ou (/aʊ/)', 'se (/s/)']],
+        ['cow', '/kaʊ/', '🐄', 'Bò sữa', 1, 'c _ _', ['c (/k/)', 'ow (/aʊ/)']],
+        ['mouse', '/maʊs/', '🐭', 'Con chuột', 1, 'm _ _ se', ['m (/m/)', 'ou (/aʊ/)', 'se (/s/)']],
+        ['boy', '/bɔɪ/', '👦', 'Cậu bé', 1, 'b _ _', ['b (/b/)', 'oy (/ɔɪ/)']],
+        ['toy', '/tɔɪ/', '🧸', 'Đồ chơi', 1, 't _ _', ['t (/t/)', 'oy (/ɔɪ/)']]
       ]
     },
 
-    // CHẶNG 3 (ẢI 21 - 30): BÁN NGUYÊN ÂM, ÂM CÂM, ÂM ĐUÔI & TRỌNG ÂM
+    // ---------------- CHẶNG 3: LÀM CHỦ ÂM ĐUÔI (ENDING SOUNDS) ----------------
     {
-      id: 21, stage: 3, icon: '/w/ /j/', label: 'Bán nguyên âm /w/ & /j/',
-      g0: 'Tròn môi /w/', g0Sub: '(Chữ w / wh)', g1: 'Mặt lưỡi /j/', g1Sub: '(Chữ y / u)',
+      id: 9, stage: 3, icon: 'Đuôi /s, z, t, d/', label: 'Âm đuôi /s, z, t, d/',
+      g0: 'Đuôi Xát /s/, /z/', g0Sub: '(Xì hơi cuối từ: s, ce, se)',
+      g1: 'Đuôi Bật /t/, /d/', g1Sub: '(Bật đầu lưỡi cuối từ: t, d)',
       items: [
-        ['wet', '/wet/', '💧', 'Ẩm ướt', 0, '_ et', ['w (/w/)','e (/e/)','t (/t/)'], 'yes', '/jes/', '👍', 'Đồng ý'],
-        ['win', '/wɪn/', '🏆', 'Chiến thắng', 0, '_ in', ['w (/w/)','i (/ɪ/)','n (/n/)'], 'you', '/juː/', '🫵', 'Bạn'],
-        ['west', '/west/', '🧭', 'Phía Tây', 0, '_ est', ['w (/w/)','e (/e/)','st (/st/)'], 'year', '/jɪə/', '📅', 'Năm'],
-        ['white', '/waɪt/', '⚪', 'Màu trắng', 0, '_ _ ite', ['wh (/w/)','i_e (/aɪ/)','t (/t/)'], 'young', '/jʌŋ/', '🧒', 'Trẻ trung'],
-        ['window', '/ˈwɪndəʊ/', '🪟', 'Cửa sổ', 0, '_ indow', ['w (/w/)','in (/ɪn/)','dow (/dəʊ/)'], 'yellow', '/ˈjeləʊ/', '🟡', 'Màu vàng'],
-        ['yes', '/jes/', '👍', 'Đồng ý', 1, '_ es', ['y (/j/)','e (/e/)','s (/s/)'], 'wet', '/wet/', '💧', 'Ẩm ướt'],
-        ['you', '/juː/', '🫵', 'Bạn', 1, '_ ou', ['y (/j/)','ou (/uː/)'], 'win', '/wɪn/', '🏆', 'Chiến thắng'],
-        ['year', '/jɪə/', '📅', 'Năm', 1, '_ ear', ['y (/j/)','ear (/ɪə/)'], 'west', '/west/', '🧭', 'Phía Tây'],
-        ['young', '/jʌŋ/', '🧒', 'Trẻ trung', 1, '_ oung', ['y (/j/)','ou (/ʌ/)','ng (/ŋ/)'], 'white', '/waɪt/', '⚪', 'Màu trắng'],
-        ['yellow', '/ˈjeləʊ/', '🟡', 'Màu vàng', 1, '_ ellow', ['y (/j/)','el (/el/)','low (/ləʊ/)'], 'window', '/ˈwɪndəʊ/', '🪟', 'Cửa sổ']
+        ['nice', '/naɪs/', '😊', 'Tốt đẹp', 0, 'ni _ _', ['n (/n/)', 'i (/aɪ/)', 'ce (/s/)']],
+        ['bus', '/bʌs/', '🚌', 'Xe buýt', 0, 'bu _', ['b (/b/)', 'u (/ʌ/)', 's (/s/)']],
+        ['rose', '/rəʊz/', '🌹', 'Hoa hồng', 0, 'ro _ _', ['r (/r/)', 'o (/əʊ/)', 'se (/z/)']],
+        ['rice', '/raɪs/', '🍚', 'Bát cơm', 0, 'ri _ _', ['r (/r/)', 'i (/aɪ/)', 'ce (/s/)']],
+        ['nose', '/nəʊz/', '👃', 'Cái mũi', 0, 'no _ _', ['n (/n/)', 'o (/əʊ/)', 'se (/z/)']],
+        ['hat', '/hæt/', '👒', 'Chiếc mũ', 1, 'ha _', ['h (/h/)', 'a (/æ/)', 't (/t/)']],
+        ['bed', '/bed/', '🛏️', 'Cái giường', 1, 'be _', ['b (/b/)', 'e (/e/)', 'd (/d/)']],
+        ['cat', '/kæt/', '🐱', 'Con mèo', 1, 'ca _', ['c (/k/)', 'a (/æ/)', 't (/t/)']],
+        ['food', '/fuːd/', '🍜', 'Thức ăn', 1, 'foo _', ['f (/f/)', 'oo (/uː/)', 'd (/d/)']],
+        ['seat', '/siːt/', '💺', 'Chỗ ngồi', 1, 'sea _', ['s (/s/)', 'ea (/iː/)', 't (/t/)']]
       ]
     },
     {
-      id: 22, stage: 3, icon: '/h/ & Âm câm', label: 'Âm /h/ & Chữ Câm',
-      g0: 'Có đọc âm /h/', g0Sub: '(Thở hơi nhẹ /h/)', g1: 'Chữ Câm (Silent)', g1Sub: '(Không đọc chữ đầu/giữa)',
+      id: 10, stage: 3, icon: 'Đuôi /k, g, f, v/', label: 'Âm đuôi /k, g, f, v/',
+      g0: 'Đuôi /k/ & /g/', g0Sub: '(Bật cuống họng: k, ck, g)',
+      g1: 'Đuôi /f/ & /v/', g1Sub: '(Răng chạm môi: f, fe, ve)',
       items: [
-        ['hat', '/hæt/', '👒', 'Chiếc mũ', 0, '_ at', ['h (/h/)','a (/æ/)','t (/t/)'], 'hour', '/aʊə/', '⏳', 'Giờ đồng hồ'],
-        ['home', '/həʊm/', '🏠', 'Ngôi nhà', 0, '_ ome', ['h (/h/)','o_e (/əʊ/)','m (/m/)'], 'honest', '/ˈɒnɪst/', '🤝', 'Trung thực'],
-        ['high', '/haɪ/', '🏔️', 'Cao', 0, '_ igh', ['h (/h/)','igh (/aɪ/)'], 'knee', '/niː/', '🦵', 'Đầu gối'],
-        ['hand', '/hænd/', '✋', 'Bàn tay', 0, '_ and', ['h (/h/)','a (/æ/)','nd (/nd/)'], 'knife', '/naɪf/', '🔪', 'Con dao'],
-        ['horse', '/hɔːs/', '🐎', 'Con ngựa', 0, '_ orse', ['h (/h/)','or (/ɔː/)','se (/s/)'], 'write', '/raɪt/', '✍️', 'Viết chữ'],
-        ['knee', '/niː/', '🦵', 'Đầu gối (k câm)', 1, '_ nee', ['kn (/n/)','ee (/iː/)'], 'key', '/kiː/', '🔑', 'Chìa khóa'],
-        ['knife', '/naɪf/', '🔪', 'Con dao (k câm)', 1, '_ nife', ['kn (/n/)','i_e (/aɪ/)','f (/f/)'], 'hand', '/hænd/', '✋', 'Bàn tay'],
-        ['write', '/raɪt/', '✍️', 'Viết chữ (w câm)', 1, '_ rite', ['wr (/r/)','i_e (/aɪ/)','t (/t/)'], 'white', '/waɪt/', '⚪', 'Màu trắng'],
-        ['hour', '/aʊə/', '⏳', 'Giờ (h câm)', 1, '_ our', ['hou (/aʊ/)','r (/ə/)'], 'hat', '/hæt/', '👒', 'Chiếc mũ'],
-        ['listen', '/ˈlɪsən/', '👂', 'Lắng nghe (t câm)', 1, 'lis _ en', ['li (/lɪ/)','s (/s/)','ten (/ən/)'], 'home', '/həʊm/', '🏠', 'Ngôi nhà']
+        ['like', '/laɪk/', '👍', 'Thích', 0, 'li _ _', ['l (/l/)', 'i (/aɪ/)', 'ke (/k/)']],
+        ['book', '/bʊk/', '📖', 'Quyển sách', 0, 'boo _', ['b (/b/)', 'oo (/ʊ/)', 'k (/k/)']],
+        ['bag', '/bæg/', '🎒', 'Cặp sách', 0, 'ba _', ['b (/b/)', 'a (/æ/)', 'g (/g/)']],
+        ['cake', '/keɪk/', '🎂', 'Bánh ngọt', 0, 'ca _ _', ['c (/k/)', 'a (/eɪ/)', 'ke (/k/)']],
+        ['pig', '/pɪg/', '🐷', 'Con lợn', 0, 'pi _', ['p (/p/)', 'i (/ɪ/)', 'g (/g/)']],
+        ['life', '/laɪf/', '🌱', 'Cuộc sống', 1, 'li _ _', ['l (/l/)', 'i (/aɪ/)', 'fe (/f/)']],
+        ['five', '/faɪv/', '5️⃣', 'Số 5', 1, 'fi _ _', ['f (/f/)', 'i (/aɪ/)', 've (/v/)']],
+        ['leaf', '/liːf/', '🍃', 'Chiếc lá', 1, 'lea _', ['l (/l/)', 'ea (/iː/)', 'f (/f/)']],
+        ['love', '/lʌv/', '❤️', 'Yêu thương', 1, 'lo _ _', ['l (/l/)', 'o (/ʌ/)', 've (/v/)']],
+        ['roof', '/ruːf/', '🏠', 'Mái nhà', 1, 'roo _', ['r (/r/)', 'oo (/uː/)', 'f (/f/)']]
+      ]
+    },
+
+    // ---------------- CHẶNG 4: CHINH PHỤC ÂM KHÓ ----------------
+    {
+      id: 11, stage: 4, icon: '/ʃ/ & /s/', label: 'Âm khó: /ʃ/ (sh) & /s/',
+      g0: 'Ăn âm /ʃ/ (sh)', g0Sub: '(Chu tròn môi mạnh)',
+      g1: 'Ăn âm /s/ (s)', g1Sub: '(Khép răng xì nhẹ)',
+      items: [
+        ['she', '/ʃiː/', '👧', 'Cô ấy', 0, '_ _ e', ['sh (/ʃ/)', 'e (/iː/)']],
+        ['ship', '/ʃɪp/', '🚢', 'Con tàu', 0, '_ _ ip', ['sh (/ʃ/)', 'i (/ɪ/)', 'p (/p/)']],
+        ['fish', '/fɪʃ/', '🐟', 'Con cá', 0, 'fi _ _', ['f (/f/)', 'i (/ɪ/)', 'sh (/ʃ/)']],
+        ['shop', '/ʃɒp/', '🏪', 'Cửa hàng', 0, '_ _ op', ['sh (/ʃ/)', 'o (/ɒ/)', 'p (/p/)']],
+        ['shoe', '/ʃuː/', '👟', 'Chiếc giày', 0, '_ _ oe', ['sh (/ʃ/)', 'oe (/uː/)']],
+        ['see', '/siː/', '👀', 'Nhìn thấy', 1, '_ ee', ['s (/s/)', 'ee (/iː/)']],
+        ['sit', '/sɪt/', '🧘', 'Ngồi xuống', 1, '_ it', ['s (/s/)', 'i (/ɪ/)', 't (/t/)']],
+        ['sun', '/sʌn/', '☀️', 'Mặt trời', 1, '_ un', ['s (/s/)', 'u (/ʌ/)', 'n (/n/)']],
+        ['sea', '/siː/', '🌊', 'Biển cả', 1, '_ ea', ['s (/s/)', 'ea (/iː/)']],
+        ['six', '/sɪks/', '6️⃣', 'Số 6', 1, '_ ix', ['s (/s/)', 'i (/ɪ/)', 'x (/ks/)']]
       ]
     },
     {
-      id: 23, stage: 3, icon: '-s (/s/ /z/)', label: 'Đuôi -S đọc là /s/ hay /z/',
-      g0: 'Đuôi -s đọc /s/', g0Sub: '(Sau p, t, k, f)', g1: 'Đuôi -s đọc /z/', g1Sub: '(Sau âm rung)',
+      id: 12, stage: 4, icon: '/tʃ/ & /dʒ/', label: 'Âm khó: /tʃ/ & /dʒ/',
+      g0: 'Ăn âm /tʃ/ (ch)', g0Sub: '(Chu môi bật hơi ch)',
+      g1: 'Ăn âm /dʒ/ (j, ge)', g1Sub: '(Chu môi rung họng dʒ)',
       items: [
-        ['books', '/bʊks/', '📚', 'Những quyển sách', 0, 'book _', ['b (/b/)','ook (/ʊk/)','s (/s/)'], 'bags', '/bægz/', '🎒', 'Những chiếc cặp'],
-        ['cats', '/kæts/', '🐱', 'Những con mèo', 0, 'cat _', ['c (/k/)','at (/æt/)','s (/s/)'], 'dogs', '/dɒgz/', '🐶', 'Những con chó'],
-        ['maps', '/mæps/', '🗺️', 'Những tấm bản đồ', 0, 'map _', ['m (/m/)','ap (/æp/)','s (/s/)'], 'pens', '/penz/', '🖊️', 'Những cây bút'],
-        ['cups', '/kʌps/', '🥤', 'Những cái cốc', 0, 'cup _', ['c (/k/)','up (/ʌp/)','s (/s/)'], 'days', '/deɪz/', '📅', 'Những ngày'],
-        ['hats', '/hæts/', '👒', 'Những chiếc mũ', 0, 'hat _', ['h (/h/)','at (/æt/)','s (/s/)'], 'boys', '/bɔɪz/', '👦', 'Những cậu bé'],
-        ['dogs', '/dɒgz/', '🐶', 'Những con chó', 1, 'dog _', ['d (/d/)','og (/ɒg/)','s (/z/)'], 'cats', '/kæts/', '🐱', 'Những con mèo'],
-        ['bags', '/bægz/', '🎒', 'Những chiếc cặp', 1, 'bag _', ['b (/b/)','ag (/æg/)','s (/z/)'], 'books', '/bʊks/', '📚', 'Những quyển sách'],
-        ['pens', '/penz/', '🖊️', 'Những cây bút', 1, 'pen _', ['p (/p/)','en (/en/)','s (/z/)'], 'maps', '/mæps/', '🗺️', 'Những tấm bản đồ'],
-        ['days', '/deɪz/', '📅', 'Những ngày', 1, 'day _', ['d (/d/)','ay (/eɪ/)','s (/z/)'], 'cups', '/kʌps/', '🥤', 'Những cái cốc'],
-        ['boys', '/bɔɪz/', '👦', 'Những cậu bé', 1, 'boy _', ['b (/b/)','oy (/ɔɪ/)','s (/z/)'], 'hats', '/hæts/', '👒', 'Những chiếc mũ']
+        ['chair', '/tʃeə/', '🪑', 'Cái ghế', 0, '_ _ air', ['ch (/tʃ/)', 'air (/eə/)']],
+        ['watch', '/wɒtʃ/', '⌚', 'Đồng hồ', 0, 'wa _ _ _', ['w (/w/)', 'a (/ɒ/)', 'tch (/tʃ/)']],
+        ['chicken', '/ˈtʃɪkɪn/', '🐔', 'Con gà', 0, '_ _ icken', ['ch (/tʃ/)', 'i (/ɪ/)', 'cken (/kɪn/)']],
+        ['cheese', '/tʃiːz/', '🧀', 'Phô mai', 0, '_ _ eese', ['ch (/tʃ/)', 'ee (/iː/)', 'se (/z/)']],
+        ['lunch', '/lʌntʃ/', '🍱', 'Bữa trưa', 0, 'lun _ _', ['l (/l/)', 'un (/ʌn/)', 'ch (/tʃ/)']],
+        ['jump', '/dʒʌmp/', '🦘', 'Nhảy lên', 1, '_ ump', ['j (/dʒ/)', 'u (/ʌ/)', 'mp (/mp/)']],
+        ['orange', '/ˈɒrɪndʒ/', '🍊', 'Quả cam', 1, 'oran _ _', ['o (/ɒ/)', 'ran (/rɪn/)', 'ge (/dʒ/)']],
+        ['job', '/dʒɒb/', '💼', 'Công việc', 1, '_ ob', ['j (/dʒ/)', 'o (/ɒ/)', 'b (/b/)']],
+        ['juice', '/dʒuːs/', '🧃', 'Nước ép', 1, '_ uice', ['j (/dʒ/)', 'ui (/uː/)', 'ce (/s/)']],
+        ['page', '/peɪdʒ/', '📄', 'Trang sách', 1, 'pa _ _', ['p (/p/)', 'a (/eɪ/)', 'ge (/dʒ/)']]
       ]
     },
     {
-      id: 24, stage: 3, icon: '-es (/ɪz/)', label: 'Đuôi -ES đọc là /ɪz/',
-      g0: 'Đuôi đọc /ɪz/', g0Sub: '(Sau s, sh, ch, x)', g1: 'Đuôi đọc /s, z/', g1Sub: '(Không thêm âm tiết)',
+      id: 13, stage: 4, icon: '/θ/ & /ð/', label: 'Âm khó: /θ/ & /ð/ (th)',
+      g0: 'Ăn âm /θ/ (Vô thanh)', g0Sub: '(Đặt lưỡi giữa răng thổi hơi)',
+      g1: 'Ăn âm /ð/ (Hữu thanh)', g1Sub: '(Đặt lưỡi giữa răng rung họng)',
       items: [
-        ['buses', '/ˈbʌsɪz/', '🚌', 'Những xe buýt', 0, 'bus _ _', ['bu (/bʌ/)','s (/s/)','es (/ɪz/)'], 'bags', '/bægz/', '🎒', 'Những chiếc cặp'],
-        ['boxes', '/ˈbɒksɪz/', '📦', 'Những cái hộp', 0, 'box _ _', ['bo (/bɒ/)','x (/ks/)','es (/ɪz/)'], 'books', '/bʊks/', '📚', 'Những quyển sách'],
-        ['watches', '/ˈwɒtʃɪz/', '⌚', 'Những đồng hồ', 0, 'watch _ _', ['wa (/wɒ/)','tch (/tʃ/)','es (/ɪz/)'], 'cats', '/kæts/', '🐱', 'Những con mèo'],
-        ['dishes', '/ˈdɪʃɪz/', '🍽️', 'Những cái đĩa', 0, 'dish _ _', ['di (/dɪ/)','sh (/ʃ/)','es (/ɪz/)'], 'dogs', '/dɒgz/', '🐶', 'Những con chó'],
-        ['classes', '/ˈklɑːsɪz/', '🏫', 'Những lớp học', 0, 'class _ _', ['cla (/klɑː/)','ss (/s/)','es (/ɪz/)'], 'pens', '/penz/', '🖊️', 'Những cây bút'],
-        ['roses', '/ˈrəʊzɪz/', '🌹', 'Những bông hồng', 0, 'ros _ _', ['ro (/rəʊ/)','s (/z/)','es (/ɪz/)'], 'days', '/deɪz/', '📅', 'Những ngày'],
-        ['books', '/bʊks/', '📚', 'Những quyển sách', 1, 'book _', ['b (/b/)','ook (/ʊk/)','s (/s/)'], 'boxes', '/ˈbɒksɪz/', '📦', 'Những cái hộp'],
-        ['dogs', '/dɒgz/', '🐶', 'Những con chó', 1, 'dog _', ['d (/d/)','og (/ɒg/)','s (/z/)'], 'dishes', '/ˈdɪʃɪz/', '🍽️', 'Những cái đĩa'],
-        ['cats', '/kæts/', '🐱', 'Những con mèo', 1, 'cat _', ['c (/k/)','at (/æt/)','s (/s/)'], 'watches', '/ˈwɒtʃɪz/', '⌚', 'Những đồng hồ'],
-        ['days', '/deɪz/', '📅', 'Những ngày', 1, 'day _', ['d (/d/)','ay (/eɪ/)','s (/z/)'], 'roses', '/ˈrəʊzɪz/', '🌹', 'Những bông hồng']
+        ['three', '/θriː/', '3️⃣', 'Số 3', 0, '_ _ ree', ['th (/θ/)', 'r (/r/)', 'ee (/iː/)']],
+        ['think', '/θɪŋk/', '🤔', 'Suy nghĩ', 0, '_ _ ink', ['th (/θ/)', 'i (/ɪ/)', 'nk (/ŋk/)']],
+        ['bath', '/bɑːθ/', '🛁', 'Bồn tắm', 0, 'ba _ _', ['b (/b/)', 'a (/ɑː/)', 'th (/θ/)']],
+        ['thin', '/θɪn/', '📏', 'Mỏng / Gầy', 0, '_ _ in', ['th (/θ/)', 'i (/ɪ/)', 'n (/n/)']],
+        ['tooth', '/tuːθ/', '🦷', 'Cái răng', 0, 'too _ _', ['t (/t/)', 'oo (/uː/)', 'th (/θ/)']],
+        ['this', '/ðɪs/', '👉', 'Cái này', 1, '_ _ is', ['th (/ð/)', 'i (/ɪ/)', 's (/s/)']],
+        ['mother', '/ˈmʌðə/', '👩', 'Mẹ', 1, 'mo _ _ er', ['mo (/mʌ/)', 'th (/ð/)', 'er (/ə/)']],
+        ['that', '/ðæt/', '👉', 'Cái kia', 1, '_ _ at', ['th (/ð/)', 'a (/æ/)', 't (/t/)']],
+        ['they', '/ðeɪ/', '👥', 'Họ', 1, '_ _ ey', ['th (/ð/)', 'ey (/eɪ/)']],
+        ['father', '/ˈfɑːðə/', '👨', 'Bố', 1, 'fa _ _ er', ['fa (/fɑː/)', 'th (/ð/)', 'er (/ə/)']]
       ]
     },
     {
-      id: 25, stage: 3, icon: '-ed (/t/ /d/)', label: 'Đuôi -ED đọc /t/ & /d/',
-      g0: 'Đuôi -ed đọc /t/', g0Sub: '(Sau k, p, sh, ch)', g1: 'Đuôi -ed đọc /d/', g1Sub: '(Sau âm rung)',
+      id: 14, stage: 4, icon: '/r, l/ & /w/', label: 'Âm khó: /r/, /l/ & /w/',
+      g0: 'Ăn âm lưỡi /r/, /l/', g0Sub: '(Cuộn lưỡi r / Chạm lợi l)',
+      g1: 'Ăn âm môi /w/', g1Sub: '(Chu tròn môi w, wh)',
       items: [
-        ['looked', '/lʊkt/', '👀', 'Đã nhìn', 0, 'look _ _', ['l (/l/)','ook (/ʊk/)','ed (/t/)'], 'played', '/pleɪd/', '⚽', 'Đã chơi'],
-        ['washed', '/wɒʃt/', '🧼', 'Đã rửa', 0, 'wash _ _', ['wa (/wɒ/)','sh (/ʃ/)','ed (/t/)'], 'cleaned', '/kliːnd/', '🧹', 'Đã dọn sạch'],
-        ['helped', '/helpt/', '🤝', 'Đã giúp đỡ', 0, 'help _ _', ['he (/he/)','lp (/lp/)','ed (/t/)'], 'called', '/kɔːld/', '📞', 'Đã gọi'],
-        ['cooked', '/kʊkt/', '🍳', 'Đã nấu ăn', 0, 'cook _ _', ['c (/k/)','ook (/ʊk/)','ed (/t/)'], 'loved', '/lʌvd/', '❤️', 'Đã yêu quý'],
-        ['watched', '/wɒtʃt/', '📺', 'Đã xem', 0, 'watch _ _', ['wa (/wɒ/)','tch (/tʃ/)','ed (/t/)'], 'opened', '/ˈəʊpənd/', '🚪', 'Đã mở'],
-        ['played', '/pleɪd/', '⚽', 'Đã chơi', 1, 'play _ _', ['pl (/pl/)','ay (/eɪ/)','ed (/d/)'], 'looked', '/lʊkt/', '👀', 'Đã nhìn'],
-        ['cleaned', '/kliːnd/', '🧹', 'Đã dọn sạch', 1, 'clean _ _', ['cl (/kl/)','ean (/iːn/)','ed (/d/)'], 'washed', '/wɒʃt/', '🧼', 'Đã rửa'],
-        ['called', '/kɔːld/', '📞', 'Đã gọi', 1, 'call _ _', ['c (/k/)','all (/ɔːl/)','ed (/d/)'], 'helped', '/helpt/', '🤝', 'Đã giúp đỡ'],
-        ['loved', '/lʌvd/', '❤️', 'Đã yêu quý', 1, 'lov _ _', ['l (/l/)','ov (/ʌv/)','ed (/d/)'], 'cooked', '/kʊkt/', '🍳', 'Đã nấu ăn'],
-        ['opened', '/ˈəʊpənd/', '🚪', 'Đã mở', 1, 'open _ _', ['o (/əʊ/)','pen (/pən/)','ed (/d/)'], 'watched', '/wɒtʃt/', '📺', 'Đã xem']
-      ]
-    },
-    {
-      id: 26, stage: 3, icon: '-ed (/ɪd/)', label: 'Đuôi -ED đọc là /ɪd/',
-      g0: 'Đuôi -ed đọc /ɪd/', g0Sub: '(Sau chữ t và d)', g1: 'Đuôi -ed đọc /t, d/', g1Sub: '(Sau các âm khác)',
-      items: [
-        ['wanted', '/ˈwɒntɪd/', '🎁', 'Đã muốn', 0, 'want _ _', ['wan (/wɒn/)','t (/t/)','ed (/ɪd/)'], 'looked', '/lʊkt/', '👀', 'Đã nhìn'],
-        ['needed', '/ˈniːdɪd/', '📌', 'Đã cần', 0, 'need _ _', ['nee (/niː/)','d (/d/)','ed (/ɪd/)'], 'played', '/pleɪd/', '⚽', 'Đã chơi'],
-        ['started', '/ˈstɑːtɪd/', '🏁', 'Đã bắt đầu', 0, 'start _ _', ['star (/stɑː/)','t (/t/)','ed (/ɪd/)'], 'washed', '/wɒʃt/', '🧼', 'Đã rửa'],
-        ['waited', '/ˈweɪtɪd/', '⏳', 'Đã chờ đợi', 0, 'wait _ _', ['wai (/weɪ/)','t (/t/)','ed (/ɪd/)'], 'cleaned', '/kliːnd/', '🧹', 'Đã dọn'],
-        ['visited', '/ˈvɪzɪtɪd/', '🏛️', 'Đã thăm', 0, 'visit _ _', ['vi (/vɪ/)','sit (/zɪt/)','ed (/ɪd/)'], 'called', '/kɔːld/', '📞', 'Đã gọi'],
-        ['ended', '/ˈendɪd/', '🎬', 'Đã kết thúc', 0, 'end _ _', ['en (/en/)','d (/d/)','ed (/ɪd/)'], 'helped', '/helpt/', '🤝', 'Đã giúp'],
-        ['looked', '/lʊkt/', '👀', 'Đã nhìn', 1, 'look _ _', ['l (/l/)','ook (/ʊk/)','ed (/t/)'], 'wanted', '/ˈwɒntɪd/', '🎁', 'Đã muốn'],
-        ['played', '/pleɪd/', '⚽', 'Đã chơi', 1, 'play _ _', ['pl (/pl/)','ay (/eɪ/)','ed (/d/)'], 'needed', '/ˈniːdɪd/', '📌', 'Đã cần'],
-        ['washed', '/wɒʃt/', '🧼', 'Đã rửa', 1, 'wash _ _', ['wa (/wɒ/)','sh (/ʃ/)','ed (/t/)'], 'started', '/ˈstɑːtɪd/', '🏁', 'Đã bắt đầu'],
-        ['cleaned', '/kliːnd/', '🧹', 'Đã dọn sạch', 1, 'clean _ _', ['cl (/kl/)','ean (/iːn/)','ed (/d/)'], 'waited', '/ˈweɪtɪd/', '⏳', 'Đã chờ đợi']
-      ]
-    },
-    {
-      id: 27, stage: 3, icon: 'bl/cl vs br/cr', label: 'Tổ hợp Phụ âm /l/ & /r/',
-      g0: 'Ghép với /l/', g0Sub: '(bl, cl, fl, gl, pl)', g1: 'Ghép với /r/', g1Sub: '(br, cr, dr, fr, tr)',
-      items: [
-        ['black', '/blæk/', '⚫', 'Màu đen', 0, '_ _ ack', ['bl (/bl/)','a (/æ/)','ck (/k/)'], 'bread', '/bred/', '🍞', 'Bánh mì'],
-        ['clock', '/klɒk/', '⏰', 'Đồng hồ', 0, '_ _ ock', ['cl (/kl/)','o (/ɒ/)','ck (/k/)'], 'cry', '/kraɪ/', '😢', 'Khóc'],
-        ['fly', '/flaɪ/', '🦋', 'Bay lượn', 0, '_ _ y', ['fl (/fl/)','y (/aɪ/)'], 'free', '/friː/', '🕊️', 'Tự do'],
-        ['glass', '/glɑːs/', '🥛', 'Ly nước', 0, '_ _ ass', ['gl (/gl/)','a (/ɑː/)','ss (/s/)'], 'grass', '/grɑːs/', '🌿', 'Bãi cỏ'],
-        ['play', '/pleɪ/', '🎮', 'Chơi đùa', 0, '_ _ ay', ['pl (/pl/)','ay (/eɪ/)'], 'train', '/treɪn/', '🚆', 'Tàu hỏa'],
-        ['bread', '/bred/', '🍞', 'Bánh mì', 1, '_ _ ead', ['br (/br/)','ea (/e/)','d (/d/)'], 'black', '/blæk/', '⚫', 'Màu đen'],
-        ['cry', '/kraɪ/', '😢', 'Khóc', 1, '_ _ y', ['cr (/kr/)','y (/aɪ/)'], 'clock', '/klɒk/', '⏰', 'Đồng hồ'],
-        ['free', '/friː/', '🕊️', 'Tự do', 1, '_ _ ee', ['fr (/fr/)','ee (/iː/)'], 'fly', '/flaɪ/', '🦋', 'Bay lượn'],
-        ['grass', '/grɑːs/', '🌿', 'Bãi cỏ', 1, '_ _ ass', ['gr (/gr/)','a (/ɑː/)','ss (/s/)'], 'glass', '/glɑːs/', '🥛', 'Ly nước'],
-        ['train', '/treɪn/', '🚆', 'Tàu hỏa', 1, '_ _ ain', ['tr (/tr/)','ai (/eɪ/)','n (/n/)'], 'play', '/pleɪ/', '🎮', 'Chơi đùa']
-      ]
-    },
-    {
-      id: 28, stage: 3, icon: 'sp/st vs sm/sn', label: 'Tổ hợp Phụ âm với /s/',
-      g0: 'Nhóm /sp, st, sk/', g0Sub: '(s + p / t / k)', g1: 'Nhóm /sm, sn, sw/', g1Sub: '(s + m / n / w)',
-      items: [
-        ['speak', '/spiːk/', '🗣️', 'Nói tiếng Anh', 0, '_ _ eak', ['sp (/sp/)','ea (/iː/)','k (/k/)'], 'smile', '/smaɪl/', '😊', 'Mỉm cười'],
-        ['stop', '/stɒp/', '🛑', 'Dừng lại', 0, '_ _ op', ['st (/st/)','o (/ɒ/)','p (/p/)'], 'small', '/smɔːl/', '🐜', 'Nhỏ bé'],
-        ['star', '/stɑː/', '⭐', 'Ngôi sao', 0, '_ _ ar', ['st (/st/)','ar (/ɑː/)'], 'snake', '/sneɪk/', '🐍', 'Con rắn'],
-        ['sky', '/skaɪ/', '🌌', 'Bầu trời', 0, '_ _ y', ['sk (/sk/)','y (/aɪ/)'], 'snow', '/snəʊ/', '❄️', 'Tuyết'],
-        ['skate', '/skeɪt/', '⛸️', 'Trượt băng', 0, '_ _ ate', ['sk (/sk/)','a_e (/eɪ/)','t (/t/)'], 'sweet', '/swiːt/', '🍬', 'Ngọt ngào'],
-        ['smile', '/smaɪl/', '😊', 'Mỉm cười', 1, '_ _ ile', ['sm (/sm/)','i_e (/aɪ/)','l (/l/)'], 'speak', '/spiːk/', '🗣️', 'Nói tiếng Anh'],
-        ['small', '/smɔːl/', '🐜', 'Nhỏ bé', 1, '_ _ all', ['sm (/sm/)','a (/ɔː/)','ll (/l/)'], 'stop', '/stɒp/', '🛑', 'Dừng lại'],
-        ['snake', '/sneɪk/', '🐍', 'Con rắn', 1, '_ _ ake', ['sn (/sn/)','a_e (/eɪ/)','k (/k/)'], 'star', '/stɑː/', '⭐', 'Ngôi sao'],
-        ['snow', '/snəʊ/', '❄️', 'Tuyết', 1, '_ _ ow', ['sn (/sn/)','ow (/əʊ/)'], 'sky', '/skaɪ/', '🌌', 'Bầu trời'],
-        ['sweet', '/swiːt/', '🍬', 'Ngọt ngào', 1, '_ _ eet', ['sw (/sw/)','ee (/iː/)','t (/t/)'], 'skate', '/skeɪt/', '⛸️', 'Trượt băng']
-      ]
-    },
-    {
-      id: 29, stage: 3, icon: 'ˈStress 1 & 2', label: 'Trọng âm Từ 2 Âm tiết',
-      g0: 'Nhấn Âm tiết 1', g0Sub: '(ˈO o — Cao - Thấp)', g1: 'Nhấn Âm tiết 2', g1Sub: '(o ˈO — Thấp - Cao)',
-      items: [
-        ['happy', '/ˈhæpi/', '😄', 'Hạnh phúc', 0, 'ˈha _ py', ['hap (/ˈhæp/)','py (/i/)'], 'begin', '/bɪˈgɪn/', '▶️', 'Bắt đầu'],
-        ['money', '/ˈmʌni/', '💰', 'Tiền bạc', 0, 'ˈmo _ ey', ['mo (/ˈmʌ/)','ney (/ni/)'], 'forget', '/fəˈget/', '🤔', 'Quên'],
-        ['table', '/ˈteɪbəl/', '🪑', 'Cái bàn', 0, 'ˈta _ le', ['ta (/ˈteɪ/)','ble (/bəl/)'], 'enjoy', '/ɪnˈdʒɔɪ/', '🥳', 'Tận hưởng'],
-        ['summer', '/ˈsʌmə/', '🏖️', 'Mùa hè', 0, 'ˈsum _ er', ['sum (/ˈsʌm/)','mer (/ə/)'], 'relax', '/rɪˈlæks/', '😌', 'Thư giãn'],
-        ['morning', '/ˈmɔːnɪŋ/', '🌅', 'Buổi sáng', 0, 'ˈmor _ ing', ['mor (/ˈmɔː/)','ning (/nɪŋ/)'], 'arrive', '/əˈraɪv/', '🏁', 'Đến nơi'],
-        ['begin', '/bɪˈgɪn/', '▶️', 'Bắt đầu', 1, 'be ˈ_ in', ['be (/bɪ/)','gin (/ˈgɪn/)'], 'happy', '/ˈhæpi/', '😄', 'Hạnh phúc'],
-        ['forget', '/fəˈget/', '🤔', 'Quên', 1, 'for ˈ_ et', ['for (/fə/)','get (/ˈget/)'], 'money', '/ˈmʌni/', '💰', 'Tiền bạc'],
-        ['enjoy', '/ɪnˈdʒɔɪ/', '🥳', 'Tận hưởng', 1, 'en ˈ_ oy', ['en (/ɪn/)','joy (/ˈdʒɔɪ/)'], 'table', '/ˈteɪbəl/', '🪑', 'Cái bàn'],
-        ['relax', '/rɪˈlæks/', '😌', 'Thư giãn', 1, 're ˈ_ ax', ['re (/rɪ/)','lax (/ˈlæks/)'], 'summer', '/ˈsʌmə/', '🏖️', 'Mùa hè'],
-        ['arrive', '/əˈraɪv/', '🏁', 'Đến nơi', 1, 'ar ˈ_ ive', ['ar (/ə/)','rive (/ˈraɪv/)'], 'morning', '/ˈmɔːnɪŋ/', '🌅', 'Buổi sáng']
-      ]
-    },
-    {
-      id: 30, stage: 3, icon: 'Master IPA', label: 'Giao tiếp Thực chiến IPA',
-      g0: 'Nhấn Âm tiết 1', g0Sub: '(ˈO o — Từ quen thuộc)', g1: 'Nhấn Âm tiết 2', g1Sub: '(o ˈO — Từ giao tiếp)',
-      items: [
-        ['welcome', '/ˈwelkəm/', '🤗', 'Chào mừng', 0, 'ˈwel _ ome', ['wel (/ˈwel/)','come (/kəm/)'], 'hello', '/həˈləʊ/', '👋', 'Xin chào'],
-        ['coffee', '/ˈkɒfi/', '☕', 'Cà phê', 0, 'ˈcof _ ee', ['cof (/ˈkɒf/)','fee (/i/)'], 'hotel', '/həʊˈtel/', '🏨', 'Khách sạn'],
-        ['airport', '/ˈeəpɔːt/', '🛫', 'Sân bay', 0, 'ˈair _ ort', ['air (/ˈeə/)','port (/pɔːt/)'], 'today', '/təˈdeɪ/', '📅', 'Hôm nay'],
-        ['weather', '/ˈweðə/', '⛅', 'Thời tiết', 0, 'ˈwea _ her', ['wea (/ˈwe/)','ther (/ðə/)'], 'tonight', '/təˈnaɪt/', '🌃', 'Tối nay'],
-        ['english', '/ˈɪŋglɪʃ/', '🇬🇧', 'Tiếng Anh', 0, 'ˈeng _ ish', ['eng (/ˈɪŋg/)','lish (/lɪʃ/)'], 'success', '/səkˈses/', '🏆', 'Thành công'],
-        ['hello', '/həˈləʊ/', '👋', 'Xin chào', 1, 'he ˈ_ lo', ['he (/hə/)','llo (/ˈləʊ/)'], 'welcome', '/ˈwelkəm/', '🤗', 'Chào mừng'],
-        ['hotel', '/həʊˈtel/', '🏨', 'Khách sạn', 1, 'ho ˈ_ el', ['ho (/həʊ/)','tel (/ˈtel/)'], 'coffee', '/ˈkɒfi/', '☕', 'Cà phê'],
-        ['today', '/təˈdeɪ/', '📅', 'Hôm nay', 1, 'to ˈ_ ay', ['to (/tə/)','day (/ˈdeɪ/)'], 'airport', '/ˈeəpɔːt/', '🛫', 'Sân bay'],
-        ['tonight', '/təˈnaɪt/', '🌃', 'Tối nay', 1, 'to ˈ_ ight', ['to (/tə/)','night (/ˈnaɪt/)'], 'weather', '/ˈweðə/', '⛅', 'Thời tiết'],
-        ['success', '/səkˈses/', '🏆', 'Thành công', 1, 'suc ˈ_ ess', ['suc (/sək/)','cess (/ˈses/)'], 'english', '/ˈɪŋglɪʃ/', '🇬🇧', 'Tiếng Anh']
+        ['red', '/red/', '🍎', 'Màu đỏ', 0, '_ ed', ['r (/r/)', 'e (/e/)', 'd (/d/)']],
+        ['lion', '/ˈlaɪən/', '🦁', 'Sư tử', 0, '_ ion', ['l (/l/)', 'i (/aɪ/)', 'on (/ən/)']],
+        ['milk', '/mɪlk/', '🥛', 'Sữa tươi', 0, 'mi _ k', ['m (/m/)', 'i (/ɪ/)', 'lk (/lk/)']],
+        ['rain', '/reɪn/', '🌧️', 'Cơn mưa', 0, '_ ain', ['r (/r/)', 'ai (/eɪ/)', 'n (/n/)']],
+        ['light', '/laɪt/', '💡', 'Ánh sáng', 0, '_ ight', ['l (/l/)', 'igh (/aɪ/)', 't (/t/)']],
+        ['water', '/ˈwɔːtə/', '💧', 'Nước uống', 1, '_ ater', ['w (/w/)', 'a (/ɔː/)', 'ter (/tə/)']],
+        ['window', '/ˈwɪndəʊ/', '🪟', 'Cửa sổ', 1, '_ indow', ['w (/w/)', 'in (/ɪn/)', 'dow (/dəʊ/)']],
+        ['wet', '/wet/', '💦', 'Ẩm ướt', 1, '_ et', ['w (/w/)', 'e (/e/)', 't (/t/)']],
+        ['win', '/wɪn/', '🏆', 'Chiến thắng', 1, '_ in', ['w (/w/)', 'i (/ɪ/)', 'n (/n/)']],
+        ['white', '/waɪt/', '⚪', 'Màu trắng', 1, '_ _ ite', ['wh (/w/)', 'i_e (/aɪ/)', 't (/t/)']]
       ]
     }
   ];
 
-  // Chuẩn hóa dữ liệu 30 Level
-  const LEVELS = RAW_LEVELS.map(lv => ({
+  const LEVELS = RAW_14_LEVELS.map(lv => ({
     id: lv.id,
     stage: lv.stage,
     icon: lv.icon,
@@ -1803,20 +1726,15 @@
       vi: arr[3],
       groupIdx: arr[4],
       masked: arr[5],
-      phonics: arr[6],
-      pairWord: arr[7],
-      pairIpa: arr[8],
-      pairEmo: arr[9],
-      pairVi: arr[10]
+      phonics: arr[6]
     }))
   }));
 
   // =========================================================================
-  // 3. QUẢN LÝ TRẠNG THÁI, LƯU TIẾN ĐỘ & ÂM THANH
+  // 3. QUẢN LÝ TRẠNG THÁI, LƯU TIẾN ĐỘ & ÂM THANH GAME
   // =========================================================================
-  let currentTab = 'map'; // 'map' | 'chart' | 'exercise'
-  let chartSubMode = 'vowels'; // 'vowels' | 'consonants'
-  let currentSheetWord = 'hot';
+  let currentMainTab = 'map'; // 'map' | 'chart' | 'game'
+  let currentSheetWord = 'sheep';
 
   let currentLevelId = 1;
   let currentStarMode = 1; // 1 | 2 | 3
@@ -1828,7 +1746,7 @@
 
   function loadProgress() {
     try {
-      const raw = localStorage.getItem('english_ipa_30_progress_v1');
+      const raw = localStorage.getItem('ipa_edtech_14lv_v2');
       if (raw) {
         const parsed = JSON.parse(raw);
         LEVELS.forEach(lv => {
@@ -1840,16 +1758,17 @@
 
   function saveProgress() {
     try {
-      localStorage.setItem('english_ipa_30_progress_v1', JSON.stringify(progress));
+      localStorage.setItem('ipa_edtech_14lv_v2', JSON.stringify(progress));
     } catch (e) {}
     updateTotalStarsUI();
   }
 
   function updateTotalStarsUI() {
     let total = 0;
+    const maxStars = LEVELS.length * 3;
     Object.values(progress).forEach(arr => arr.forEach(v => { if (v) total++; }));
-    const el = document.getElementById('total-stars-pill');
-    if (el) el.textContent = `⭐ ${total}/90`;
+    const pill = document.getElementById('total-stars-pill');
+    if (pill) pill.textContent = `⭐ ${total}/${maxStars}`;
   }
 
   function isLevelUnlocked(lvId) {
@@ -1875,7 +1794,7 @@
     return copy;
   }
 
-  // Phát âm từ tiếng Anh qua Web Speech API
+  // Phát âm tiếng Anh chuẩn qua Web SpeechSynthesis
   function speakWord(text, rate = 0.85) {
     if (!text) return;
     try {
@@ -1892,9 +1811,9 @@
     } catch (e) {}
   }
 
-  // Hiệu ứng âm thanh Ting-Ting / Báo sai / AI bắt từ
+  // Hiệu ứng âm thanh Game (Ăn ngon, Báo sai, Bắn chưởng, Chiến thắng)
   let audioCtx = null;
-  function playFeedbackSound(type) {
+  function playGameSfx(type) {
     try {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const now = audioCtx.currentTime;
@@ -1903,7 +1822,7 @@
       osc.connect(gain);
       gain.connect(audioCtx.destination);
 
-      if (type === true || type === 'win') {
+      if (type === 'ok' || type === 'win') {
         osc.type = 'sine';
         osc.frequency.setValueAtTime(587.33, now);
         osc.frequency.setValueAtTime(880, now + 0.1);
@@ -1911,18 +1830,26 @@
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
         osc.start(now);
         osc.stop(now + 0.32);
+      } else if (type === 'attack') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(620, now);
+        osc.frequency.exponentialRampToValueAtTime(140, now + 0.35);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
+        osc.start(now);
+        osc.stop(now + 0.36);
       } else if (type === 'ai') {
         osc.type = 'sine';
         osc.frequency.setValueAtTime(440, now);
         osc.frequency.setValueAtTime(523.25, now + 0.08);
-        gain.gain.setValueAtTime(0.11, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
         osc.start(now);
-        osc.stop(now + 0.22);
+        osc.stop(now + 0.2);
       } else {
         osc.type = 'triangle';
-        osc.frequency.setValueAtTime(220, now);
-        osc.frequency.setValueAtTime(165, now + 0.12);
+        osc.frequency.setValueAtTime(210, now);
+        osc.frequency.setValueAtTime(150, now + 0.14);
         gain.gain.setValueAtTime(0.18, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
         osc.start(now);
@@ -1932,62 +1859,64 @@
   }
 
   // =========================================================================
-  // 4. ĐIỀU HƯỚNG 2 TAB CHÍNH & MÀN HÌNH BÀI TẬP
+  // 4. ĐIỀU HƯỚNG 2 TAB ĐIỆN THOẠI & MÀN HÌNH CHƠI GAME
   // =========================================================================
-  function switchTab(tab) {
-    const content = document.getElementById('app-content');
-    if (currentTab === 'map' && content) {
-      lastMapScroll = content.scrollTop;
+  function switchMainTab(tab) {
+    const vp = document.getElementById('app-viewport');
+    if (currentMainTab === 'map' && vp) {
+      lastMapScroll = vp.scrollTop;
     }
-    stopAllActiveTimers();
-    currentTab = tab;
-    document.getElementById('tab-btn-map').classList.toggle('active', tab === 'map');
-    document.getElementById('tab-btn-chart').classList.toggle('active', tab === 'chart');
+    stopAllGameTimers();
+    currentMainTab = tab;
+    document.getElementById('nav-btn-map').classList.toggle('active', tab === 'map');
+    document.getElementById('nav-btn-chart').classList.toggle('active', tab === 'chart');
     renderApp();
   }
 
   function renderApp() {
     const header = document.getElementById('app-header');
     const bottomNav = document.getElementById('bottom-nav');
-    const content = document.getElementById('app-content');
+    const vp = document.getElementById('app-viewport');
 
-    if (currentTab === 'exercise') {
+    if (currentMainTab === 'game') {
       header.classList.add('hidden');
       bottomNav.classList.add('hidden');
-      content.classList.add('no-scroll');
-      renderExerciseScreen();
+      vp.classList.add('no-scroll');
+      renderGameScreen();
     } else {
       header.classList.remove('hidden');
       bottomNav.classList.remove('hidden');
-      content.classList.remove('no-scroll');
-      if (currentTab === 'map') renderMapTab();
+      vp.classList.remove('no-scroll');
+      if (currentMainTab === 'map') renderMapTab();
       else renderChartTab();
     }
   }
 
-  // ------------------- TAB 1: BẢN ĐỒ HỌC (CANDY SAGA + MASCOT) -------------------
+  // ------------------- TAB 1: BẢN ĐỒ HỌC (4 CHẶNG TỪ DỄ ĐẾN KHÓ) -------------------
   function renderMapTab() {
-    const content = document.getElementById('app-content');
+    const vp = document.getElementById('app-viewport');
     const positions = ['pos-center', 'pos-right', 'pos-center', 'pos-left'];
     const mascotLvId = unlockAll ? currentLevelId : getHighestUnlockedLevel();
 
     let html = `
-      <div class="map-toolbar">
-        <span style="font-size:13px;font-weight:900;color:#115e59;">🦊 Con đường 30 Level IPA</span>
-        <button class="sync-mini-btn" onclick="toggleUnlockAll()">
-          ${unlockAll ? '🔒 Đang mở 30 ải' : '🔓 Mở thử 30 ải'}
+      <div class="map-subbar">
+        <span style="font-size:13px;font-weight:900;color:#115e59;">🦊 Lộ trình 14 Level từ Dễ đến Khó</span>
+        <button class="sync-btn" onclick="toggleUnlockAll()">
+          ${unlockAll ? '🔒 Đang mở hết' : '🔓 Mở thử 14 ải'}
         </button>
       </div>
-      <div class="saga-map-body">
+      <div class="saga-map">
     `;
 
     LEVELS.forEach((lv, index) => {
       if (lv.id === 1) {
-        html += `<div class="stage-title-pill"><span>Chặng 1: 20 Nguyên Âm Đơn & Đôi (Level 1 – 10)</span></div>`;
+        html += `<div class="stage-banner"><span>🌱 Chặng 1: Khởi Động Dễ Dàng (Từ 3 chữ cái CVC)</span></div>`;
+      } else if (lv.id === 4) {
+        html += `<div class="stage-banner"><span>🌊 Chặng 2: Phân Biệt Ngắn - Dài & Nguyên Âm Đôi</span></div>`;
+      } else if (lv.id === 9) {
+        html += `<div class="stage-banner"><span>🎯 Chặng 3: Làm Chủ Âm Đuôi (Ending Sounds)</span></div>`;
       } else if (lv.id === 11) {
-        html += `<div class="stage-title-pill"><span>Chặng 2: 24 Phụ Âm IPA (Level 11 – 20)</span></div>`;
-      } else if (lv.id === 21) {
-        html += `<div class="stage-title-pill"><span>Chặng 3: Âm Đuôi, Tổ Hợp & Trọng Âm (Level 21 – 30)</span></div>`;
+        html += `<div class="stage-banner"><span>🔥 Chặng 4: Chinh Phục Âm Khó</span></div>`;
       }
 
       const unlocked = isLevelUnlocked(lv.id);
@@ -1999,21 +1928,21 @@
       ).join('');
 
       const mascotHtml = (lv.id === mascotLvId) ? `
-        <div class="mascot-avatar">
-          <div class="mascot-emoji">🦊</div>
+        <div class="mascot-box">
+          <div class="mascot-emo">🦊</div>
           <div class="mascot-tag">Học ở đây!</div>
         </div>
       ` : '';
 
       html += `
         <div class="saga-row ${posClass}" id="map-node-${lv.id}">
-          <div class="level-node-box touch-card" onclick="openLevel(${lv.id})">
+          <div class="level-node touch-item" onclick="enterLevel(${lv.id})">
             <div class="level-circle ${unlocked ? '' : 'locked'}">
-              <div class="lv-top-txt">LEVEL ${lv.id}</div>
-              <div class="lv-main-ipa">(${lv.icon})</div>
-              <div class="lv-sub-txt">${lv.label}</div>
+              <div class="lv-num">LEVEL ${lv.id}</div>
+              <div class="lv-ipa">${lv.icon}</div>
+              <div class="lv-desc">${lv.label}</div>
             </div>
-            <div class="lv-stars-bar">${starIcons}</div>
+            <div class="lv-stars">${starIcons}</div>
             ${mascotHtml}
           </div>
         </div>
@@ -2021,50 +1950,40 @@
     });
 
     html += `</div>`;
-    content.innerHTML = html;
+    vp.innerHTML = html;
 
     requestAnimationFrame(() => {
       const targetNode = document.getElementById(`map-node-${currentLevelId}`);
       if (targetNode && currentLevelId > 1) {
         targetNode.scrollIntoView({ block: 'center', behavior: 'instant' });
       } else {
-        content.scrollTop = lastMapScroll;
+        vp.scrollTop = lastMapScroll;
       }
     });
   }
 
   function toggleUnlockAll() {
-    const content = document.getElementById('app-content');
-    if (content) lastMapScroll = content.scrollTop;
+    const vp = document.getElementById('app-viewport');
+    if (vp) lastMapScroll = vp.scrollTop;
     unlockAll = !unlockAll;
     renderMapTab();
   }
 
-  // ------------------- TAB 2: BẢNG ÂM IPA & BOTTOM SHEET 60% -------------------
+  // ------------------- TAB 2: BẢNG ÂM IPA (3 MỤC) & BOTTOM SHEET 60% -------------------
   function renderChartTab() {
-    const content = document.getElementById('app-content');
-    const groups = chartSubMode === 'vowels' ? IPA_VOWELS_GROUPS : IPA_CONSONANTS_GROUPS;
-
+    const vp = document.getElementById('app-viewport');
     let html = `
-      <div class="chart-page">
-        <div class="chart-switch-bar">
-          <button class="chart-switch-btn ${chartSubMode === 'vowels' ? 'active' : ''}" onclick="switchChartSub('vowels')">
-            20 Nguyên âm (Vowels)
-          </button>
-          <button class="chart-switch-btn ${chartSubMode === 'consonants' ? 'active' : ''}" onclick="switchChartSub('consonants')">
-            24 Phụ âm (Consonants)
-          </button>
-        </div>
-        <div style="font-size:12px;color:#64748b;font-weight:700;margin-bottom:8px;text-align:center;">
-          👆 Chạm vào ô âm bất kỳ để bật Khung Khẩu Hình & Nghe mẫu!
+      <div class="chart-wrap">
+        <div class="chart-guide-banner">
+          👆 Chạm vào bất kỳ ô âm nào để bật Khung Khẩu Hình & Nghe phát âm!
         </div>
     `;
 
-    groups.forEach(grp => {
-      html += `<div class="kid-group-title">${grp.title}</div><div class="ipa-grid-4">`;
-      grp.items.forEach(item => {
+    IPA_CHART_SECTIONS.forEach(sec => {
+      html += `<div class="ipa-sec-header">${sec.title}</div><div class="ipa-grid-4">`;
+      sec.items.forEach(item => {
         html += `
-          <button class="ipa-cell-btn" onclick='openIpaSheet(${JSON.stringify(item)}, "${grp.title}")'>
+          <button class="ipa-cell" onclick='openIpaSheet(${JSON.stringify(item)}, "${sec.title}")'>
             <span class="c-sym">${item.sym}</span>
             <span class="c-word">${item.word}</span>
             <span class="c-emo">${item.emo}</span>
@@ -2075,17 +1994,12 @@
     });
 
     html += `</div>`;
-    content.innerHTML = html;
+    vp.innerHTML = html;
   }
 
-  function switchChartSub(mode) {
-    chartSubMode = mode;
-    renderChartTab();
-  }
-
-  function openIpaSheet(item, groupTitle) {
+  function openIpaSheet(item, sectionTitle) {
     currentSheetWord = item.word;
-    document.getElementById('sheet-group-tag').textContent = groupTitle;
+    document.getElementById('sheet-group-tag').textContent = sectionTitle;
     document.getElementById('sheet-sym').textContent = item.sym;
     document.getElementById('sheet-word').textContent = `${item.word} ${item.ipa} (${item.vi}) ${item.emo}`;
     document.getElementById('sheet-emo').textContent = item.emo;
@@ -2098,56 +2012,57 @@
     document.getElementById('ipa-bottom-sheet').classList.remove('open');
   }
 
-  function speakSheetWord() {
+  function speakSheetSample() {
     speakWord(currentSheetWord, 0.85);
   }
 
   // =========================================================================
-  // 5. LOGIC 3 BÀI TẬP (3 SAO) — QUY TẮC NO-SCROLL
+  // 5. KHUNG MÀN HÌNH CHƠI GAME 3 SAO (100dvh NO-SCROLL)
   // =========================================================================
-  let exQueue = [];
-  let exIndex = 0;
-  let isTransitioning = false;
+  let gameQueue = [];
+  let gameIdx = 0;
+  let isBusyAnim = false;
 
-  // Trạng thái Sao 2: ĐẤU TRƯỜNG ÂM THANH (BẠN vs AI)
+  // Biến cho Sao 2 (Đấu trường AI)
   let arenaState = 'pick'; // 'pick' | 'countdown' | 'playing' | 'ended'
-  let playerTeam = 0; // 0 | 1
-  let aiTeam = 1; // 1 | 0
-  let playerScore = 0;
-  let aiScore = 0;
-  let arenaTimeLeft = 45;
-  let arenaBoard = []; // 12 ô trên bàn cờ 3x4
-  let arenaPoolG0 = [];
-  let arenaPoolG1 = [];
-  let isPlayerStunned = false;
-  let stunTimerId = null;
-  let arenaCountdownTimerId = null;
-  let arenaClockIntervalId = null;
-  let arenaAiIntervalId = null;
+  let playerFaction = 0;
+  let aiFaction = 1;
+  let playerPts = 0;
+  let aiPts = 0;
+  let arenaSec = 45;
+  let arenaBoard = [];
+  let poolG0 = [];
+  let poolG1 = [];
+  let isStunned = false;
+  let stunTimeoutId = null;
+  let countdownIntervalId = null;
+  let clockIntervalId = null;
+  let aiIntervalId = null;
 
-  // Trạng thái Sao 3: Bước A (Ghép chữ Phonics) -> Bước B (Đọc Micro)
-  let s3SubStep = 'phonics'; // 'phonics' | 'mic'
-  let s3Slots = [];
-  let s3Pool = [];
-  let activeRecognition = null;
-  let isMicListening = false;
+  // Biến cho Sao 3 (Thần chú phá khiên)
+  let bossPhase = 'phonics'; // 'phonics' | 'mic'
+  let bossSlots = [];
+  let bossPool = [];
+  let activeSpeechRec = null;
+  let isMicRecording = false;
 
-  function stopAllActiveTimers() {
-    stopActiveMicRecognition();
-    if (stunTimerId) { clearTimeout(stunTimerId); stunTimerId = null; }
-    if (arenaCountdownTimerId) { clearInterval(arenaCountdownTimerId); arenaCountdownTimerId = null; }
-    if (arenaClockIntervalId) { clearInterval(arenaClockIntervalId); arenaClockIntervalId = null; }
-    if (arenaAiIntervalId) { clearInterval(arenaAiIntervalId); arenaAiIntervalId = null; }
-    isPlayerStunned = false;
+  function stopAllGameTimers() {
+    stopMicRec();
+    if (stunTimeoutId) { clearTimeout(stunTimeoutId); stunTimeoutId = null; }
+    if (countdownIntervalId) { clearInterval(countdownIntervalId); countdownIntervalId = null; }
+    if (clockIntervalId) { clearInterval(clockIntervalId); clockIntervalId = null; }
+    if (aiIntervalId) { clearInterval(aiIntervalId); aiIntervalId = null; }
+    isStunned = false;
+    isBusyAnim = false;
   }
 
-  function openLevel(lvId) {
+  function enterLevel(lvId) {
     if (!isLevelUnlocked(lvId)) {
-      alert('Bé hãy hoàn thành 3 Sao ⭐⭐⭐ ở Level trước (hoặc bấm "🔓 Mở thử 30 ải") nhé!');
+      alert('Bé hãy hoàn thành đủ 3 Sao ⭐⭐⭐ ở Level trước (hoặc bấm "🔓 Mở thử 14 ải") nhé!');
       return;
     }
-    const content = document.getElementById('app-content');
-    if (content) lastMapScroll = content.scrollTop;
+    const vp = document.getElementById('app-viewport');
+    if (vp) lastMapScroll = vp.scrollTop;
 
     currentLevelId = lvId;
     const stars = progress[lvId];
@@ -2156,873 +2071,888 @@
     else if (!stars[2]) currentStarMode = 3;
     else currentStarMode = 1;
 
-    startStarExercise(currentStarMode);
-    currentTab = 'exercise';
+    initStarGame(currentStarMode);
+    currentMainTab = 'game';
     renderApp();
   }
 
-  function exitToMap() {
-    stopAllActiveTimers();
-    currentTab = 'map';
+  function backToMap() {
+    stopAllGameTimers();
+    currentMainTab = 'map';
     renderApp();
   }
 
-  function switchStarMode(mode) {
-    stopAllActiveTimers();
+  function switchStarGame(mode) {
+    stopAllGameTimers();
     currentStarMode = mode;
-    startStarExercise(mode);
-    renderExerciseScreen();
+    initStarGame(mode);
+    renderGameScreen();
   }
 
-  function startStarExercise(mode) {
-    stopAllActiveTimers();
+  function initStarGame(mode) {
+    stopAllGameTimers();
     const lv = LEVELS.find(x => x.id === currentLevelId);
-    exQueue = shuffleArray(lv.items);
-    exIndex = 0;
-    isTransitioning = false;
+    gameQueue = shuffleArray(lv.items);
+    gameIdx = 0;
+    isBusyAnim = false;
 
     if (mode === 2) {
-      initArenaData(lv);
-    } else {
-      prepareCurrentQuestion();
+      setupStar2Arena(lv);
+    } else if (mode === 3) {
+      setupStar3Question();
     }
   }
 
-  function prepareCurrentQuestion() {
-    const q = exQueue[exIndex];
-    if (!q) return;
-
-    if (currentStarMode === 3) {
-      s3SubStep = 'phonics';
-      s3Slots = q.phonics.map(() => null);
-
-      const baseTiles = q.phonics.map(raw => {
-        const sp = raw.split(' ');
-        return { letter: sp[0], ipa: sp.slice(1).join(' ') };
-      });
-
-      const distractorsPool = [
-        { letter: 's', ipa: '(/s/)' },
-        { letter: 'sh', ipa: '(/ʃ/)' },
-        { letter: 'i', ipa: '(/ɪ/)' },
-        { letter: 'ee', ipa: '(/iː/)' },
-        { letter: 'a', ipa: '(/æ/)' },
-        { letter: 'oo', ipa: '(/uː/)' },
-        { letter: 'th', ipa: '(/θ/)' }
-      ];
-      shuffleArray(distractorsPool).forEach(d => {
-        if (baseTiles.length < q.phonics.length + 2 && !baseTiles.some(b => b.letter === d.letter)) {
-          baseTiles.push(d);
-        }
-      });
-
-      s3Pool = shuffleArray(baseTiles).map((t, i) => ({
-        id: i,
-        letter: t.letter,
-        ipa: t.ipa,
-        used: false
-      }));
-    }
-  }
-
-  // ------------------- VẼ MÀN HÌNH BÀI TẬP -------------------
-  function renderExerciseScreen() {
-    const content = document.getElementById('app-content');
+  function renderGameScreen() {
+    const vp = document.getElementById('app-viewport');
     const lv = LEVELS.find(x => x.id === currentLevelId);
     const stars = progress[currentLevelId];
 
-    if (currentStarMode === 2) {
-      // Giao diện riêng cho ⭐⭐ SAO 2: ĐẤU TRƯỜNG ÂM THANH (BẠN vs AI)
-      content.innerHTML = `
-        <div class="exercise-screen">
-          <div class="ex-top-bar">
-            <button class="btn-back-map" onclick="exitToMap()">⬅ Bản đồ</button>
-            <div class="ex-progress-wrap">
-              <div class="ex-progress-text">⚔️ Đấu Trường Level ${lv.id} (${lv.icon})</div>
-              <div class="ex-progress-bar">
-                <div class="ex-progress-fill" style="width:100%;background:linear-gradient(90deg,#16a34a,#f97316);"></div>
-              </div>
-            </div>
-            <div class="ex-star-group">
-              <button class="ex-star-btn ${stars[0] ? 'done' : ''}" onclick="switchStarMode(1)">⭐ 1</button>
-              <button class="ex-star-btn active" onclick="switchStarMode(2)">⭐ 2</button>
-              <button class="ex-star-btn ${stars[2] ? 'done' : ''}" onclick="switchStarMode(3)">⭐ 3</button>
+    const progLabel = currentStarMode === 2
+      ? `⚔️ Đấu Trường Level ${lv.id}`
+      : `Level ${lv.id} · Câu ${gameIdx + 1}/${gameQueue.length}`;
+
+    const progPct = currentStarMode === 2
+      ? 100
+      : Math.round(((gameIdx + 1) / gameQueue.length) * 100);
+
+    vp.innerHTML = `
+      <div class="game-screen">
+        <!-- TOP BAR (10% CHIỀU CAO) -->
+        <div class="game-topbar">
+          <button class="btn-back" onclick="backToMap()">⬅ Bản đồ</button>
+          <div class="top-prog-wrap">
+            <div class="top-prog-txt" id="top-prog-txt">${progLabel}</div>
+            <div class="top-prog-bar">
+              <div class="top-prog-fill" id="top-prog-fill" style="width:${progPct}%"></div>
             </div>
           </div>
-          <div class="arena-wrapper" id="arena-wrapper"></div>
-        </div>
-      `;
-      renderStar2Arena(lv);
-      return;
-    }
-
-    // Giao diện cho ⭐ SAO 1 & ⭐⭐⭐ SAO 3 (10% / 45% / 45%)
-    const q = exQueue[exIndex];
-    const pct = Math.round(((exIndex + 1) / exQueue.length) * 100);
-
-    content.innerHTML = `
-      <div class="exercise-screen">
-        <!-- 1. TOP BAR (10% CHIỀU CAO) -->
-        <div class="ex-top-bar">
-          <button class="btn-back-map" onclick="exitToMap()">⬅ Bản đồ</button>
-          <div class="ex-progress-wrap">
-            <div class="ex-progress-text">Level ${lv.id} · Câu ${exIndex + 1}/${exQueue.length}</div>
-            <div class="ex-progress-bar">
-              <div class="ex-progress-fill" style="width:${pct}%"></div>
-            </div>
-          </div>
-          <div class="ex-star-group">
-            <button class="ex-star-btn ${currentStarMode === 1 ? 'active' : (stars[0] ? 'done' : '')}" onclick="switchStarMode(1)">⭐ 1</button>
-            <button class="ex-star-btn ${currentStarMode === 2 ? 'active' : (stars[1] ? 'done' : '')}" onclick="switchStarMode(2)">⭐ 2</button>
-            <button class="ex-star-btn ${currentStarMode === 3 ? 'active' : (stars[2] ? 'done' : '')}" onclick="switchStarMode(3)">⭐ 3</button>
+          <div class="star-switch-group">
+            <button class="star-switch-btn ${currentStarMode === 1 ? 'active' : (stars[0] ? 'done' : '')}" onclick="switchStarGame(1)">⭐ 1</button>
+            <button class="star-switch-btn ${currentStarMode === 2 ? 'active' : (stars[1] ? 'done' : '')}" onclick="switchStarGame(2)">⭐ 2</button>
+            <button class="star-switch-btn ${currentStarMode === 3 ? 'active' : (stars[2] ? 'done' : '')}" onclick="switchStarGame(3)">⭐ 3</button>
           </div>
         </div>
 
-        <!-- 2. KHU VỰC ĐỀ BÀI (45% CHIỀU CAO - Ở GIỮA) -->
-        <div class="ex-prompt-zone" id="ex-prompt-zone"></div>
-
-        <!-- 3. KHU VỰC TRẢ LỜI (45% CHIỀU CAO - NỬA DƯỚI) -->
-        <div class="ex-answer-zone" id="ex-answer-zone"></div>
+        <!-- 90% CHIỀU CAO CHO MINI-GAME -->
+        <div class="game-stage-90" id="game-stage-90"></div>
       </div>
     `;
 
-    if (currentStarMode === 1) renderStar1Content(lv, q);
-    else if (currentStarMode === 3) renderStar3Content(lv, q);
+    const stageEl = document.getElementById('game-stage-90');
+    if (currentStarMode === 1) renderStar1Monsters(stageEl, lv);
+    else if (currentStarMode === 2) renderStar2Arena(stageEl, lv);
+    else renderStar3Boss(stageEl, lv);
+  }
+
+  // =========================================================================
+  // ⭐ SAO 1: GAME "QUÁI VẬT KÉN ĂN" (HUNGRY MONSTERS)
+  // =========================================================================
+  let touchStartX = 0;
+
+  function renderStar1Monsters(container, lv) {
+    const q = gameQueue[gameIdx];
+
+    container.innerHTML = `
+      <div class="monster-game-wrap">
+        <div class="mg-header-banner">
+          ⭐ Sao 1: Quái Vật Kén Ăn — Chạm hoặc Vuốt đĩa thức ăn cho đúng Quái vật!
+        </div>
+
+        <!-- ĐĨA THỨC ĂN Ở GIỮA MÀN HÌNH -->
+        <div class="food-plate-area">
+          <div class="food-plate" id="food-plate"
+               ontouchstart="onPlateTouchStart(event)"
+               ontouchend="onPlateTouchEnd(event)">
+            <div class="plate-emo">${q.emo}</div>
+            <div class="plate-vi">${q.vi}</div>
+            <div class="plate-word" id="plate-word">${q.masked}</div>
+            <div class="plate-ipa" id="plate-ipa">🎧 Nghe và đút cho Quái vật nhé!</div>
+          </div>
+
+          <div class="plate-audio-row">
+            <button class="pill-audio-btn" onclick="speakWord('${q.word}', 0.85)">🔊 Nghe chuẩn</button>
+            <button class="pill-audio-btn slow" onclick="speakWord('${q.word}', 0.55)">🐢 Nghe chậm</button>
+          </div>
+        </div>
+
+        <!-- 2 CHÚ QUÁI VẬT ĐÁNG YÊU Ở ĐÁY MÀN HÌNH -->
+        <div class="monsters-pit">
+          <!-- Quái vật Trái (Màu Xanh) -->
+          <div class="monster-card left-green touch-item" id="monster-0" onclick="feedMonster(0)">
+            <div class="monster-bubble" id="bubble-0">Nhom nhom! Ngon quá! 😋</div>
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div class="monster-avatar">🦖</div>
+              <div class="monster-mouth-hole"></div>
+            </div>
+            <div class="monster-sign">
+              <span class="sign-main">${lv.g0}</span>
+              <span class="sign-sub">${lv.g0Sub}</span>
+            </div>
+          </div>
+
+          <!-- Quái vật Phải (Màu Cam) -->
+          <div class="monster-card right-orange touch-item" id="monster-1" onclick="feedMonster(1)">
+            <div class="monster-bubble" id="bubble-1">Nhom nhom! Ngon quá! 😋</div>
+            <div style="display:flex;flex-direction:column;align-items:center;">
+              <div class="monster-avatar">👾</div>
+              <div class="monster-mouth-hole"></div>
+            </div>
+            <div class="monster-sign">
+              <span class="sign-main">${lv.g1}</span>
+              <span class="sign-sub">${lv.g1Sub}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
 
     setTimeout(() => speakWord(q.word, 0.85), 160);
   }
 
-  // =========================================================================
-  // ⭐ SAO 1: NGHE & PHÂN LOẠI ÂM (2 NÚT BẤM TO ĐẠI DIỆN 2 NHÓM ÂM)
-  // =========================================================================
-  function renderStar1Content(lv, q) {
-    const promptZone = document.getElementById('ex-prompt-zone');
-    const answerZone = document.getElementById('ex-answer-zone');
-
-    promptZone.innerHTML = `
-      <div class="ex-mode-title">⭐ Sao 1: Nghe & Phân loại âm</div>
-      <div class="ex-emoji-pic">${q.emo}</div>
-      <div class="ex-word-box">
-        <div class="ex-masked-word" id="s1-masked-word">${q.masked}</div>
-        <div class="ex-meaning-vi">${q.vi}</div>
-        <div class="ex-ipa-reveal" id="s1-ipa-reveal">?</div>
-      </div>
-      <div class="pill-audio-row">
-        <button class="pill-btn" onclick="speakWord('${q.word}', 0.85)">🔊 Nghe chuẩn</button>
-        <button class="pill-btn slow" onclick="speakWord('${q.word}', 0.55)">🐢 Nghe chậm</button>
-      </div>
-    `;
-
-    answerZone.innerHTML = `
-      <div class="s1-two-buttons">
-        <button class="big-sound-btn" id="s1-btn-0" onclick="pickStar1Group(0)">
-          <span>${lv.g0}</span>
-          <span class="sub-hint">${lv.g0Sub}</span>
-        </button>
-        <button class="big-sound-btn" id="s1-btn-1" onclick="pickStar1Group(1)">
-          <span>${lv.g1}</span>
-          <span class="sub-hint">${lv.g1Sub}</span>
-        </button>
-      </div>
-    `;
+  function onPlateTouchStart(e) {
+    if (e.touches && e.touches[0]) {
+      touchStartX = e.touches[0].clientX;
+    }
   }
 
-  function pickStar1Group(chosenGroup) {
-    if (isTransitioning) return;
-    const q = exQueue[exIndex];
-    const btn = document.getElementById(`s1-btn-${chosenGroup}`);
+  function onPlateTouchEnd(e) {
+    if (!e.changedTouches || !e.changedTouches[0]) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (dx < -40) feedMonster(0);
+    else if (dx > 40) feedMonster(1);
+  }
 
-    if (chosenGroup === q.groupIdx) {
-      isTransitioning = true;
-      if (btn) btn.classList.add('correct-hit');
+  function feedMonster(monsterIdx) {
+    if (isBusyAnim) return;
+    const q = gameQueue[gameIdx];
+    const plate = document.getElementById('food-plate');
+    const wordEl = document.getElementById('plate-word');
+    const ipaEl = document.getElementById('plate-ipa');
+    const monsterEl = document.getElementById(`monster-${monsterIdx}`);
+    const bubbleEl = document.getElementById(`bubble-${monsterIdx}`);
 
-      const wordEl = document.getElementById('s1-masked-word');
-      const ipaEl = document.getElementById('s1-ipa-reveal');
-      if (wordEl) wordEl.innerHTML = `<span class="filled-highlight">${q.word}</span>`;
+    if (monsterIdx === q.groupIdx) {
+      // ĐÚNG: Hiện từ đầy đủ + IPA, đĩa bay vào miệng Quái vật
+      isBusyAnim = true;
+      if (wordEl) wordEl.innerHTML = `<span class="filled-ok">${q.word}</span>`;
       if (ipaEl) ipaEl.textContent = `${q.ipa} ✓ Chính xác!`;
 
-      playFeedbackSound(true);
+      if (bubbleEl) {
+        bubbleEl.textContent = 'Nhom nhom! Ngon quá! 😋';
+        bubbleEl.classList.add('show');
+      }
+      if (monsterEl) monsterEl.classList.add('happy-jump');
+      if (plate) {
+        setTimeout(() => {
+          plate.classList.add(monsterIdx === 0 ? 'fly-left' : 'fly-right');
+        }, 220);
+      }
+
+      playGameSfx('ok');
       speakWord(q.word, 0.85);
 
-      setTimeout(() => advanceToNextQuestion(), 1000);
+      setTimeout(() => nextQuestionOrFinishStar(), 1000);
     } else {
-      playFeedbackSound(false);
-      if (btn) {
-        btn.classList.add('wrong-hit');
-        setTimeout(() => btn.classList.remove('wrong-hit'), 350);
+      // SAI: Quái vật lắc đầu phun trả lại
+      playGameSfx('err');
+      if (plate) {
+        plate.classList.remove('spit-shake');
+        void plate.offsetWidth;
+        plate.classList.add('spit-shake');
       }
+      if (monsterEl) {
+        monsterEl.classList.remove('yuck-shake');
+        void monsterEl.offsetWidth;
+        monsterEl.classList.add('yuck-shake');
+      }
+      if (bubbleEl) {
+        bubbleEl.textContent = 'Ọe! Sai âm rồi! 🤢';
+        bubbleEl.classList.add('show');
+        setTimeout(() => bubbleEl.classList.remove('show'), 1200);
+      }
+      if (ipaEl) ipaEl.textContent = '❌ Ọe! Sai âm rồi, nghe kỹ lại nhé!';
       speakWord(q.word, 0.65);
     }
   }
 
   // =========================================================================
-  // ⭐⭐ SAO 2: MINI-GAME "ĐẤU TRƯỜNG ÂM THANH (BẠN vs AI)"
+  // ⭐⭐ SAO 2: GAME "ĐẤU TRƯỜNG ÂM THANH — BẠN vs AI" (SPEED BATTLE)
   // =========================================================================
-  function initArenaData(lv) {
+  function setupStar2Arena(lv) {
     arenaState = 'pick';
-    playerScore = 0;
-    aiScore = 0;
-    arenaTimeLeft = 45;
-    isPlayerStunned = false;
+    playerPts = 0;
+    aiPts = 0;
+    arenaSec = 45;
+    isStunned = false;
 
-    // Thu thập kho từ vựng của Phe 0 và Phe 1 trong Level hiện tại
-    const mapG0 = new Map();
-    const mapG1 = new Map();
-
-    lv.items.forEach(it => {
-      if (it.groupIdx === 0) {
-        mapG0.set(it.word, { word: it.word, ipa: it.ipa, emo: it.emo, groupIdx: 0 });
-        mapG1.set(it.pairWord, { word: it.pairWord, ipa: it.pairIpa, emo: it.pairEmo, groupIdx: 1 });
-      } else {
-        mapG1.set(it.word, { word: it.word, ipa: it.ipa, emo: it.emo, groupIdx: 1 });
-        mapG0.set(it.pairWord, { word: it.pairWord, ipa: it.pairIpa, emo: it.pairEmo, groupIdx: 0 });
-      }
-    });
-
-    arenaPoolG0 = Array.from(mapG0.values());
-    arenaPoolG1 = Array.from(mapG1.values());
-    buildInitialBoard12();
+    poolG0 = lv.items.filter(x => x.groupIdx === 0);
+    poolG1 = lv.items.filter(x => x.groupIdx === 1);
+    buildBoard12();
   }
 
-  // Khởi tạo bàn cờ 12 thẻ (3 cột x 4 hàng) với tỉ lệ 50/50 (6 thẻ Phe 0 + 6 thẻ Phe 1)
-  function buildInitialBoard12() {
-    const cards = [];
+  function buildBoard12() {
+    const list = [];
     for (let i = 0; i < 6; i++) {
-      const item0 = arenaPoolG0[i % arenaPoolG0.length];
-      cards.push({ ...item0, busy: false });
-      const item1 = arenaPoolG1[i % arenaPoolG1.length];
-      cards.push({ ...item1, busy: false });
+      list.push({ ...poolG0[i % poolG0.length], busy: false });
+      list.push({ ...poolG1[i % poolG1.length], busy: false });
     }
-    arenaBoard = shuffleArray(cards);
+    arenaBoard = shuffleArray(list);
   }
 
-  // Lấy một thẻ mới thay thế vào ô vừa bị bắt, giữ cân bằng 50/50 trên bàn cờ
-  function spawnReplacementCard() {
-    let count0 = 0;
-    let count1 = 0;
+  function spawnNewArenaCard() {
+    let c0 = 0;
+    let c1 = 0;
     arenaBoard.forEach(c => {
       if (c && !c.busy) {
-        if (c.groupIdx === 0) count0++;
-        else count1++;
+        if (c.groupIdx === 0) c0++;
+        else c1++;
       }
     });
-
-    const targetGroup = count0 <= count1 ? 0 : 1;
-    const pool = targetGroup === 0 ? arenaPoolG0 : arenaPoolG1;
-    const picked = pool[Math.floor(Math.random() * pool.length)];
-    return { ...picked, busy: false };
+    const pickGrp = c0 <= c1 ? 0 : 1;
+    const src = pickGrp === 0 ? poolG0 : poolG1;
+    const item = src[Math.floor(Math.random() * src.length)];
+    return { ...item, busy: false };
   }
 
-  function renderStar2Arena(lv) {
-    const wrap = document.getElementById('arena-wrapper');
-    if (!wrap) return;
+  function renderStar2Arena(container, lv) {
+    const youName = playerFaction === 0 ? lv.g0 : lv.g1;
+    const aiName = aiFaction === 0 ? lv.g0 : lv.g1;
+    const ex0 = poolG0.slice(0, 3).map(x => x.word).join(', ');
+    const ex1 = poolG1.slice(0, 3).map(x => x.word).join(', ');
 
-    const youLabel = playerTeam === 0 ? lv.g0 : lv.g1;
-    const aiLabel = aiTeam === 0 ? lv.g0 : lv.g1;
-    const samples0 = arenaPoolG0.slice(0, 3).map(x => x.word).join(', ');
-    const samples1 = arenaPoolG1.slice(0, 3).map(x => x.word).join(', ');
+    container.innerHTML = `
+      <div class="arena-wrap" id="arena-wrap">
+        <!-- THANH TỈ SỐ & KÉO CO -->
+        <div class="arena-hud">
+          <div class="hud-row">
+            <div class="fighter-tag you">
+              <span class="f-label" id="hud-you-label">👧 Bạn (${youName})</span>
+              <span class="f-pts" id="hud-you-pts">0</span>
+            </div>
+            <div class="arena-clock" id="arena-clock">⏱️ 45s</div>
+            <div class="fighter-tag ai">
+              <span class="f-label" id="hud-ai-label">🤖 AI (${aiName})</span>
+              <span class="f-pts" id="hud-ai-pts">0</span>
+            </div>
+          </div>
+          <div class="tug-bar">
+            <div class="tug-you" id="tug-you" style="width:50%"></div>
+            <div class="tug-ai"></div>
+            <div class="tug-pin"></div>
+          </div>
+        </div>
 
-    // Tính phần trăm thanh kéo co (Tug-of-war)
-    const diff = playerScore - aiScore;
-    const youPct = Math.max(12, Math.min(88, 50 + diff * 5));
+        <div class="arena-banner" id="arena-banner">
+          🎯 Chạm vào các thẻ thuộc phe của Bạn! (Bấm 🔊 góc thẻ để nghe thử)
+        </div>
 
-    let overlayHtml = '';
-    if (arenaState === 'pick') {
-      overlayHtml = `
+        <!-- BÀN CỜ CHỮ 12 Ô (GRID 3x4) -->
+        <div class="arena-grid-12" id="arena-grid-12">
+          ${arenaBoard.map((c, idx) => `
+            <div class="arena-card" id="acard-${idx}" onclick="tapArenaCard(${idx})">
+              <button class="mini-spk" onclick="listenArenaCard(event, ${idx})">🔊</button>
+              <div class="a-emo" id="aemo-${idx}">${c.emo}</div>
+              <div class="a-word" id="aword-${idx}">${c.word}</div>
+              <div class="a-ipa" id="aipa-${idx}">${c.ipa}</div>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- POPUP CHỌN PHE TRƯỚC KHI VÀO TRẬN -->
         <div class="arena-overlay" id="arena-overlay">
-          <div class="arena-modal-card">
+          <div class="arena-dialog">
             <div style="font-size:12px;font-weight:900;color:#0d9488;text-transform:uppercase;">
-              ⚔️ ĐẤU TRƯỜNG ÂM THANH (BẠN vs AI)
+              ⭐⭐ SAO 2: ĐẤU TRƯỜNG ÂM THANH (BẠN vs AI)
             </div>
             <h3 style="font-size:20px;font-weight:900;color:#0f172a;">
-              Chọn Phe Âm Thanh Của Bé!
+              Bé Chọn Phe Âm Nào?
             </h3>
             <p style="font-size:12.5px;color:#64748b;font-weight:700;">
-              Bắt thật nhanh các từ thuộc phe của mình trước khi Máy AI bắt hết nhé! (45 giây · Ai đạt 15 điểm trước sẽ thắng)
+              Ai đạt <b>15 điểm</b> trước hoặc nhiều điểm hơn sau <b>45 giây</b> sẽ chiến thắng!
             </p>
 
-            <button class="team-pick-btn" onclick="selectArenaTeam(0)">
-              <span class="team-pick-title">🛡️ Đội ${lv.g0} ${lv.g0Sub}</span>
-              <span class="team-pick-samples">Từ mẫu: ${samples0}</span>
+            <button class="faction-btn" onclick="pickArenaFaction(0)">
+              <span style="font-size:17px;font-weight:900;">🛡️ Phe ${lv.g0.replace('Ăn ', '')} ${lv.g0Sub}</span>
+              <span style="font-size:12px;font-weight:700;">Từ mẫu: ${ex0}</span>
             </button>
 
-            <button class="team-pick-btn alt" onclick="selectArenaTeam(1)">
-              <span class="team-pick-title">⚔️ Đội ${lv.g1} ${lv.g1Sub}</span>
-              <span class="team-pick-samples">Từ mẫu: ${samples1}</span>
+            <button class="faction-btn alt" onclick="pickArenaFaction(1)">
+              <span style="font-size:17px;font-weight:900;">⚔️ Phe ${lv.g1.replace('Ăn ', '')} ${lv.g1Sub}</span>
+              <span style="font-size:12px;font-weight:700;">Từ mẫu: ${ex1}</span>
             </button>
           </div>
         </div>
-      `;
-    }
-
-    wrap.innerHTML = `
-      <!-- THANH TỈ SỐ & THỜI GIAN + THANH KÉO CO -->
-      <div class="arena-hud">
-        <div class="hud-score-row">
-          <div class="fighter-box you">
-            <div class="f-name" id="hud-you-name">👧 Bạn (${youLabel})</div>
-            <div class="f-score" id="hud-you-score">${playerScore} điểm</div>
-          </div>
-          <div class="timer-center-box" id="hud-timer">⏱️ ${arenaTimeLeft}s</div>
-          <div class="fighter-box ai">
-            <div class="f-name" id="hud-ai-name">🤖 Máy AI (${aiLabel})</div>
-            <div class="f-score" id="hud-ai-score">${aiScore} điểm</div>
-          </div>
-        </div>
-
-        <div class="tug-bar-outer">
-          <div class="tug-fill-you" id="tug-fill-you" style="width:${youPct}%"></div>
-          <div class="tug-fill-ai"></div>
-          <div class="tug-center-pin"></div>
-        </div>
-      </div>
-
-      <!-- DẢI THÔNG BÁO TRẠNG THÁI -->
-      <div class="arena-status-strip" id="arena-status-strip">
-        🎯 Tìm và chạm vào các từ thuộc <b>${youLabel}</b>! (Bấm 🔊 góc thẻ để nghe thử)
-      </div>
-
-      <!-- BÀN CỜ CHỮ 12 THẺ (GRID 3 CỘT x 4 HÀNG) -->
-      <div class="arena-grid-12" id="arena-grid-12">
-        ${arenaBoard.map((card, idx) => renderSingleArenaCardHTML(card, idx)).join('')}
-      </div>
-
-      ${overlayHtml}
-    `;
-  }
-
-  function renderSingleArenaCardHTML(card, idx) {
-    return `
-      <div class="arena-word-card" id="arena-card-${idx}" onclick="clickArenaCard(${idx})">
-        <button class="card-speaker-mini" onclick="previewArenaCardAudio(event, ${idx})" title="Nghe thử">🔊</button>
-        <div class="card-emo" id="arena-emo-${idx}">${card.emo}</div>
-        <div class="card-word" id="arena-word-${idx}">${card.word}</div>
-        <div class="card-ipa-pop" id="arena-ipa-${idx}">${card.ipa}</div>
       </div>
     `;
   }
 
-  function updateSingleArenaCardDOM(idx) {
-    const card = arenaBoard[idx];
-    const cardEl = document.getElementById(`arena-card-${idx}`);
-    if (!card || !cardEl) return;
-
-    cardEl.className = 'arena-word-card';
-    document.getElementById(`arena-emo-${idx}`).textContent = card.emo;
-    document.getElementById(`arena-word-${idx}`).textContent = card.word;
-    document.getElementById(`arena-ipa-${idx}`).textContent = card.ipa;
+  function listenArenaCard(e, idx) {
+    e.stopPropagation();
+    const c = arenaBoard[idx];
+    if (c) speakWord(c.word, 0.85);
   }
 
-  function previewArenaCardAudio(event, idx) {
-    event.stopPropagation();
-    const card = arenaBoard[idx];
-    if (!card) return;
-    speakWord(card.word, 0.85);
+  function refreshArenaCardDOM(idx) {
+    const c = arenaBoard[idx];
+    const el = document.getElementById(`acard-${idx}`);
+    if (!c || !el) return;
+    el.className = 'arena-card';
+    document.getElementById(`aemo-${idx}`).textContent = c.emo;
+    document.getElementById(`aword-${idx}`).textContent = c.word;
+    document.getElementById(`aipa-${idx}`).textContent = c.ipa;
   }
 
-  // Khi học sinh chọn Phe -> Đếm ngược 3, 2, 1... Bắt đầu!
-  function selectArenaTeam(chosenTeamIdx) {
+  function pickArenaFaction(fIdx) {
     const lv = LEVELS.find(x => x.id === currentLevelId);
-    playerTeam = chosenTeamIdx;
-    aiTeam = 1 - chosenTeamIdx;
+    playerFaction = fIdx;
+    aiFaction = 1 - fIdx;
     arenaState = 'countdown';
 
-    const youLabel = playerTeam === 0 ? lv.g0 : lv.g1;
-    const aiLabel = aiTeam === 0 ? lv.g0 : lv.g1;
+    const youName = (playerFaction === 0 ? lv.g0 : lv.g1).replace('Ăn ', '');
+    const aiName = (aiFaction === 0 ? lv.g0 : lv.g1).replace('Ăn ', '');
 
-    document.getElementById('hud-you-name').textContent = `👧 Bạn (${youLabel})`;
-    document.getElementById('hud-ai-name').textContent = `🤖 Máy AI (${aiLabel})`;
-    document.getElementById('arena-status-strip').innerHTML =
-      `🎯 Hãy bắt các từ thuộc <b>${youLabel}</b>! (Bấm 🔊 trên thẻ để nghe thử)`;
+    document.getElementById('hud-you-label').textContent = `👧 Bạn (${youName})`;
+    document.getElementById('hud-ai-label').textContent = `🤖 AI (${aiName})`;
+    document.getElementById('arena-banner').innerHTML =
+      `🎯 Hãy bắt các thẻ thuộc <b>${youName}</b>! (Bấm 🔊 góc thẻ để nghe thử)`;
 
-    const overlay = document.getElementById('arena-overlay');
-    let count = 3;
-    overlay.innerHTML = `
-      <div class="arena-modal-card">
+    const ov = document.getElementById('arena-overlay');
+    let cnt = 3;
+    ov.innerHTML = `
+      <div class="arena-dialog">
         <div style="font-size:14px;font-weight:900;color:#0f766e;">
-          👧 Bạn: <b>${youLabel}</b> &nbsp;vs&nbsp; 🤖 AI: <b>${aiLabel}</b>
+          👧 Bạn: <b>${youName}</b> &nbsp;vs&nbsp; 🤖 AI: <b>${aiName}</b>
         </div>
-        <div class="countdown-number" id="countdown-num">3</div>
-        <div style="font-size:13px;font-weight:800;color:#64748b;">Chuẩn bị tinh thần nhé...</div>
+        <div class="countdown-big" id="cd-num">3</div>
+        <div style="font-size:13px;font-weight:800;color:#64748b;">Sẵn sàng bắt từ nhé...</div>
       </div>
     `;
 
-    playFeedbackSound(true);
-    arenaCountdownTimerId = setInterval(() => {
-      count--;
-      const numEl = document.getElementById('countdown-num');
-      if (count > 0) {
+    playGameSfx('ok');
+    countdownIntervalId = setInterval(() => {
+      cnt--;
+      const numEl = document.getElementById('cd-num');
+      if (cnt > 0) {
         if (numEl) {
-          numEl.textContent = count;
+          numEl.textContent = cnt;
           numEl.style.animation = 'none';
           void numEl.offsetWidth;
-          numEl.style.animation = 'popScale 0.5s ease';
+          numEl.style.animation = 'popScale 0.45s ease';
         }
-        playFeedbackSound(true);
-      } else if (count === 0) {
+        playGameSfx('ok');
+      } else if (cnt === 0) {
         if (numEl) {
           numEl.textContent = 'BẮT ĐẦU!';
-          numEl.style.fontSize = '38px';
+          numEl.style.fontSize = '36px';
         }
-        playFeedbackSound('win');
+        playGameSfx('win');
       } else {
-        clearInterval(arenaCountdownTimerId);
-        arenaCountdownTimerId = null;
-        if (overlay) overlay.remove();
-        startArenaBattle();
+        clearInterval(countdownIntervalId);
+        countdownIntervalId = null;
+        if (ov) ov.remove();
+        beginArenaMatch();
       }
-    }, 750);
+    }, 700);
   }
 
-  function startArenaBattle() {
+  function beginArenaMatch() {
     arenaState = 'playing';
-    playerScore = 0;
-    aiScore = 0;
-    arenaTimeLeft = 45;
-    updateArenaHudDOM();
+    playerPts = 0;
+    aiPts = 0;
+    arenaSec = 45;
+    updateArenaScoreDOM();
 
-    // Đồng hồ đếm ngược 45 giây
-    arenaClockIntervalId = setInterval(() => {
+    clockIntervalId = setInterval(() => {
       if (arenaState !== 'playing') return;
-      arenaTimeLeft--;
-      const timerEl = document.getElementById('hud-timer');
-      if (timerEl) {
-        timerEl.textContent = `⏱️ ${arenaTimeLeft}s`;
-        if (arenaTimeLeft <= 10) timerEl.classList.add('urgent');
+      arenaSec--;
+      const clk = document.getElementById('arena-clock');
+      if (clk) {
+        clk.textContent = `⏱️ ${arenaSec}s`;
+        if (arenaSec <= 10) clk.classList.add('urgent');
       }
-      if (arenaTimeLeft <= 0) {
-        finishArenaBattle();
-      }
+      if (arenaSec <= 0) endArenaMatch();
     }, 1000);
 
-    // Hành động tự động của AI cứ mỗi 3.5 giây
-    arenaAiIntervalId = setInterval(() => {
+    // Robot AI tự động ăn thẻ mỗi 3.5 giây
+    aiIntervalId = setInterval(() => {
       if (arenaState !== 'playing') return;
-      triggerAiMove();
+      aiEatCard();
     }, 3500);
   }
 
-  function updateArenaHudDOM() {
-    const youScoreEl = document.getElementById('hud-you-score');
-    const aiScoreEl = document.getElementById('hud-ai-score');
-    const tugYouEl = document.getElementById('tug-fill-you');
-
-    if (youScoreEl) youScoreEl.textContent = `${playerScore} điểm`;
-    if (aiScoreEl) aiScoreEl.textContent = `${aiScore} điểm`;
-
-    const diff = playerScore - aiScore;
-    const youPct = Math.max(10, Math.min(90, 50 + diff * 5));
-    if (tugYouEl) tugYouEl.style.width = `${youPct}%`;
+  function updateArenaScoreDOM() {
+    const yEl = document.getElementById('hud-you-pts');
+    const aEl = document.getElementById('hud-ai-pts');
+    const tugEl = document.getElementById('tug-you');
+    if (yEl) yEl.textContent = playerPts;
+    if (aEl) aEl.textContent = aiPts;
+    const diff = playerPts - aiPts;
+    const pct = Math.max(10, Math.min(90, 50 + diff * 5));
+    if (tugEl) tugEl.style.width = `${pct}%`;
   }
 
-  // Khi Người chơi chạm vào 1 thẻ trên bàn cờ
-  function clickArenaCard(idx) {
-    if (arenaState !== 'playing' || isPlayerStunned) return;
+  function tapArenaCard(idx) {
+    if (arenaState !== 'playing' || isStunned) return;
     const card = arenaBoard[idx];
     if (!card || card.busy) return;
 
     const lv = LEVELS.find(x => x.id === currentLevelId);
-    const cardEl = document.getElementById(`arena-card-${idx}`);
-    const statusStrip = document.getElementById('arena-status-strip');
+    const cardEl = document.getElementById(`acard-${idx}`);
+    const banner = document.getElementById('arena-banner');
     const gridEl = document.getElementById('arena-grid-12');
 
-    if (card.groupIdx === playerTeam) {
-      // ĐÚNG âm của phe mình
+    if (card.groupIdx === playerFaction) {
+      // ĐÚNG
       card.busy = true;
-      playerScore++;
-      updateArenaHudDOM();
+      playerPts++;
+      updateArenaScoreDOM();
 
-      if (cardEl) cardEl.classList.add('player-captured');
-      if (statusStrip) {
-        statusStrip.classList.remove('stun-alert');
-        statusStrip.innerHTML = `✅ Tuyệt vời! <b>${card.word} ${card.ipa}</b> (+1 điểm cho Bạn)`;
+      if (cardEl) cardEl.classList.add('you-win');
+      if (banner) {
+        banner.classList.remove('stun');
+        banner.innerHTML = `✅ Chuẩn xác! <b>${card.word} ${card.ipa}</b> (+1 điểm cho Bạn)`;
       }
 
-      playFeedbackSound(true);
+      playGameSfx('ok');
       speakWord(card.word, 0.85);
 
-      if (playerScore >= 15) {
-        setTimeout(() => finishArenaBattle(), 650);
+      if (playerPts >= 15) {
+        setTimeout(() => endArenaMatch(), 600);
         return;
       }
 
       setTimeout(() => {
         if (arenaState !== 'playing') return;
-        arenaBoard[idx] = spawnReplacementCard();
-        updateSingleArenaCardDOM(idx);
+        arenaBoard[idx] = spawnNewArenaCard();
+        refreshArenaCardDOM(idx);
       }, 800);
     } else {
-      // SAI (Chạm nhầm vào từ thuộc phe AI) -> Phạt choáng 1.5 giây
-      const aiSoundName = aiTeam === 0 ? lv.g0 : lv.g1;
-      isPlayerStunned = true;
-
+      // NHẦM SANG PHE AI -> Đóng băng 1.5 giây
+      isStunned = true;
       if (cardEl) {
-        cardEl.classList.add('wrong-shake');
-        setTimeout(() => cardEl.classList.remove('wrong-shake'), 380);
+        cardEl.classList.add('err-flash');
+        setTimeout(() => cardEl.classList.remove('err-flash'), 380);
       }
-      if (gridEl) gridEl.classList.add('stun-locked');
-      if (statusStrip) {
-        statusStrip.classList.add('stun-alert');
-        statusStrip.innerHTML = `⚡ Nhầm rồi! <b>"${card.word}" (${card.ipa})</b> là ${aiSoundName}! (Choáng 1.5s)`;
+      if (gridEl) gridEl.classList.add('frozen');
+      if (banner) {
+        banner.classList.add('stun');
+        banner.innerHTML = `⚡ Nhầm rồi! <b>"${card.word}" (${card.ipa})</b> là âm của AI! (Choáng 1.5s)`;
       }
 
-      playFeedbackSound(false);
+      playGameSfx('err');
       speakWord(card.word, 0.75);
 
-      if (stunTimerId) clearTimeout(stunTimerId);
-      stunTimerId = setTimeout(() => {
-        isPlayerStunned = false;
-        if (gridEl) gridEl.classList.remove('stun-locked');
-        if (statusStrip && arenaState === 'playing') {
-          const youLabel = playerTeam === 0 ? lv.g0 : lv.g1;
-          statusStrip.classList.remove('stun-alert');
-          statusStrip.innerHTML = `🎯 Tiếp tục nào! Hãy bắt từ thuộc <b>${youLabel}</b>!`;
+      if (stunTimeoutId) clearTimeout(stunTimeoutId);
+      stunTimeoutId = setTimeout(() => {
+        isStunned = false;
+        if (gridEl) gridEl.classList.remove('frozen');
+        if (banner && arenaState === 'playing') {
+          const youName = (playerFaction === 0 ? lv.g0 : lv.g1).replace('Ăn ', '');
+          banner.classList.remove('stun');
+          banner.innerHTML = `🎯 Hết choáng rồi! Hãy tìm từ thuộc <b>${youName}</b>!`;
         }
       }, 1500);
     }
   }
 
-  // Hành động tự động của AI mỗi 3.5 giây
-  function triggerAiMove() {
+  function aiEatCard() {
     if (arenaState !== 'playing') return;
-
-    // Tìm tất cả các thẻ thuộc phe AI hiện đang rảnh trên bàn cờ
-    const candidateIndices = [];
+    const candidates = [];
     arenaBoard.forEach((c, i) => {
-      if (c && !c.busy && c.groupIdx === aiTeam) {
-        candidateIndices.push(i);
-      }
+      if (c && !c.busy && c.groupIdx === aiFaction) candidates.push(i);
     });
+    if (candidates.length === 0) return;
 
-    if (candidateIndices.length === 0) return;
-    const pickedIdx = candidateIndices[Math.floor(Math.random() * candidateIndices.length)];
-    const card = arenaBoard[pickedIdx];
+    const pickIdx = candidates[Math.floor(Math.random() * candidates.length)];
+    const card = arenaBoard[pickIdx];
     card.busy = true;
+    aiPts++;
+    updateArenaScoreDOM();
 
-    aiScore++;
-    updateArenaHudDOM();
-
-    const cardEl = document.getElementById(`arena-card-${pickedIdx}`);
-    const statusStrip = document.getElementById('arena-status-strip');
-
-    if (cardEl) cardEl.classList.add('ai-captured');
-    if (statusStrip && !isPlayerStunned) {
-      statusStrip.innerHTML = `🤖 Máy AI vừa bắt <b>${card.word} ${card.ipa}</b> (+1 điểm cho AI)`;
+    const cardEl = document.getElementById(`acard-${pickIdx}`);
+    const banner = document.getElementById('arena-banner');
+    if (cardEl) cardEl.classList.add('ai-win');
+    if (banner && !isStunned) {
+      banner.innerHTML = `🤖 Robot AI vừa ăn <b>${card.word} ${card.ipa}</b> (+1 điểm cho AI)`;
     }
 
-    playFeedbackSound('ai');
+    playGameSfx('ai');
     speakWord(card.word, 0.9);
 
-    if (aiScore >= 15) {
-      setTimeout(() => finishArenaBattle(), 650);
+    if (aiPts >= 15) {
+      setTimeout(() => endArenaMatch(), 600);
       return;
     }
 
     setTimeout(() => {
       if (arenaState !== 'playing') return;
-      arenaBoard[pickedIdx] = spawnReplacementCard();
-      updateSingleArenaCardDOM(pickedIdx);
+      arenaBoard[pickIdx] = spawnNewArenaCard();
+      refreshArenaCardDOM(pickIdx);
     }, 800);
   }
 
-  // Kết thúc trận đấu & Hiện Bảng Tổng Kết
-  function finishArenaBattle() {
+  function endArenaMatch() {
     if (arenaState === 'ended') return;
     arenaState = 'ended';
-    stopAllActiveTimers();
+    stopAllGameTimers();
 
-    const isVictory = playerScore > aiScore;
-    if (isVictory) {
+    const won = playerPts > aiPts;
+    if (won) {
       progress[currentLevelId][1] = true;
       saveProgress();
-      playFeedbackSound('win');
+      playGameSfx('win');
     } else {
-      playFeedbackSound(false);
+      playGameSfx('err');
     }
 
-    const wrap = document.getElementById('arena-wrapper');
+    const wrap = document.getElementById('arena-wrap');
     if (!wrap) return;
 
-    const resultOverlay = document.createElement('div');
-    resultOverlay.className = 'arena-overlay';
-    resultOverlay.innerHTML = `
-      <div class="arena-modal-card">
-        <div style="font-size:48px;line-height:1;">
-          ${isVictory ? '🏆' : '💪'}
-        </div>
-        <h3 style="font-size:21px;font-weight:900;color:${isVictory ? '#15803d' : '#b91c1c'};">
-          ${isVictory ? 'CHIẾN THẮNG TUYỆT VỜI!' : 'SUÝT THẮNG RỒI!'}
+    const ov = document.createElement('div');
+    ov.className = 'arena-overlay';
+    ov.innerHTML = `
+      <div class="arena-dialog">
+        <div style="font-size:46px;">${won ? '🏆' : '💪'}</div>
+        <h3 style="font-size:21px;font-weight:900;color:${won ? '#15803d' : '#b91c1c'};">
+          ${won ? 'BẠN ĐÃ CHIẾN THẮNG AI!' : 'CỐ LÊN! THỬ LẠI NHÉ!'}
         </h3>
-        <p style="font-size:13px;color:#475569;font-weight:700;">
-          ${isVictory
-            ? 'Bé đã đánh bại Máy AI và giành được Sao thứ 2 ⭐⭐!'
-            : 'Bé hãy nghe kỹ âm hoặc bấm nút 🔊 trên thẻ để thắng AI ở trận sau nhé!'}
+        <p style="font-size:12.5px;color:#475569;font-weight:700;">
+          ${won
+            ? 'Xuất sắc! Bé đã mở khóa Sao thứ 2 ⭐⭐!'
+            : 'Mẹo nhỏ: Bấm nút 🔊 góc trên mỗi thẻ để nghe thử trước khi chọn nhé!'}
         </p>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
           <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:14px;padding:10px;">
             <div style="font-size:11.5px;font-weight:800;color:#166534;">👧 Điểm của Bạn</div>
-            <div style="font-size:26px;font-weight:900;color:#14532d;">${playerScore}</div>
+            <div style="font-size:26px;font-weight:900;color:#14532d;">${playerPts}</div>
           </div>
-          <div style="background:#fff7ed;border:2px solid #fdba74;border-radius:14px;padding:10px;">
-            <div style="font-size:11.5px;font-weight:800;color:#9a3412;">🤖 Điểm Máy AI</div>
-            <div style="font-size:26px;font-weight:900;color:#7c2d12;">${aiScore}</div>
+          <div style="background:#faf5ff;border:2px solid #d8b4fe;border-radius:14px;padding:10px;">
+            <div style="font-size:11.5px;font-weight:800;color:#581c87;">🤖 Điểm Robot AI</div>
+            <div style="font-size:26px;font-weight:900;color:#581c87;">${aiPts}</div>
           </div>
         </div>
 
         <div style="display:flex;gap:8px;margin-top:4px;">
-          <button class="pill-btn slow" onclick="switchStarMode(2)">
-            🔄 Đấu lại
-          </button>
-          ${isVictory ? `
-            <button class="pill-btn" onclick="switchStarMode(3)">
-              Qua Sao 3 ⭐⭐⭐ ➔
-            </button>
-          ` : ''}
+          <button class="pill-audio-btn slow" onclick="switchStarGame(2)">🔄 Đấu lại</button>
+          ${won ? `<button class="pill-audio-btn" onclick="switchStarGame(3)">Qua Sao 3 ⭐⭐⭐ ➔</button>` : ''}
         </div>
       </div>
     `;
-    wrap.appendChild(resultOverlay);
+    wrap.appendChild(ov);
   }
 
   // =========================================================================
-  // ⭐⭐⭐ SAO 3: BƯỚC A (GHÉP CHỮ PHONICS) + BƯỚC B (THỬ THÁCH MICRO)
+  // ⭐⭐⭐ SAO 3: GAME "THẦN CHÚ PHÁ KHIÊN" (PHONICS & VOICE ATTACK)
   // =========================================================================
-  function renderStar3Content(lv, q) {
-    const promptZone = document.getElementById('ex-prompt-zone');
+  function setupStar3Question() {
+    const q = gameQueue[gameIdx];
+    if (!q) return;
+    bossPhase = 'phonics';
+    bossSlots = q.phonics.map(() => null);
 
-    promptZone.innerHTML = `
-      <div class="ex-mode-title">⭐⭐⭐ Sao 3: Ghép chữ & Luyện đọc Micro</div>
-      <div class="ex-emoji-pic">${q.emo}</div>
-      <div class="ex-word-box">
-        <div class="ex-meaning-vi" style="font-size:17px;color:#0f172a;">${q.vi} (${q.ipa})</div>
-        <div class="phonics-slots-row" id="s3-slots-row" style="margin-top:6px;"></div>
-      </div>
-      <div class="pill-audio-row">
-        <button class="pill-btn" onclick="speakWord('${q.word}', 0.85)">🔊 Nghe chuẩn</button>
-        <button class="pill-btn slow" onclick="speakWord('${q.word}', 0.55)">🐢 Nghe chậm</button>
+    const baseTiles = q.phonics.map(raw => {
+      const sp = raw.split(' ');
+      return { letter: sp[0], ipa: sp.slice(1).join(' ') };
+    });
+
+    const distractors = [
+      { letter: 's', ipa: '(/s/)' },
+      { letter: 'sh', ipa: '(/ʃ/)' },
+      { letter: 'i', ipa: '(/ɪ/)' },
+      { letter: 'ee', ipa: '(/iː/)' },
+      { letter: 'a', ipa: '(/æ/)' },
+      { letter: 'oo', ipa: '(/uː/)' },
+      { letter: 'th', ipa: '(/θ/)' }
+    ];
+    shuffleArray(distractors).forEach(d => {
+      if (baseTiles.length < q.phonics.length + 2 && !baseTiles.some(b => b.letter === d.letter)) {
+        baseTiles.push(d);
+      }
+    });
+
+    bossPool = shuffleArray(baseTiles).map((t, idx) => ({
+      id: idx,
+      letter: t.letter,
+      ipa: t.ipa,
+      used: false
+    }));
+  }
+
+  function renderStar3Boss(container, lv) {
+    const q = gameQueue[gameIdx];
+    const hpLeft = gameQueue.length - gameIdx;
+    const hpPct = Math.round((hpLeft / gameQueue.length) * 100);
+
+    container.innerHTML = `
+      <div class="boss-game-wrap">
+        <!-- HIỆU ỨNG CẦU LỬA BẮN LÊN BOSS -->
+        <div class="fireball-projectile" id="fireball-proj">🔥⚡</div>
+
+        <!-- NỬA TRÊN: BOSS KHIÊN BĂNG (10/10 HP) -->
+        <div class="boss-arena-top">
+          <div class="boss-hp-header">
+            <span class="boss-name-tag">🛡️ Khiên Băng Boss</span>
+            <div class="boss-hp-bar-outer">
+              <div class="boss-hp-bar-fill" id="boss-hp-fill" style="width:${hpPct}%"></div>
+            </div>
+            <span class="boss-hp-txt" id="boss-hp-txt">${hpLeft}/10 HP</span>
+          </div>
+
+          <div class="boss-shield-card" id="boss-shield-card">
+            <div class="shield-emo">${q.emo}</div>
+            <div class="shield-info">
+              <div class="shield-vi">${q.vi}</div>
+              <div class="shield-ipa">${q.ipa}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <button class="sync-btn" onclick="speakWord('${q.word}', 0.85)">🔊 Nghe</button>
+              <button class="sync-btn" onclick="speakWord('${q.word}', 0.55)">🐢 Chậm</button>
+            </div>
+          </div>
+
+          <!-- Ô TRỐNG NẠP ĐẠN CHỮ CÁI -->
+          <div class="spell-slots-row" id="boss-slots-row"></div>
+        </div>
+
+        <!-- NỬA DƯỚI: PHA 1 (NẠP ĐẠN) & PHA 2 (HÔ THẦN CHÚ MICRO) -->
+        <div class="boss-arena-bottom" id="boss-arena-bottom"></div>
       </div>
     `;
 
-    updateStar3BottomZone();
+    updateStar3BossDOM();
+    setTimeout(() => speakWord(q.word, 0.85), 160);
   }
 
-  function updateStar3BottomZone() {
-    const q = exQueue[exIndex];
-    const slotsRow = document.getElementById('s3-slots-row');
-    const answerZone = document.getElementById('ex-answer-zone');
-    if (!slotsRow || !answerZone) return;
+  function updateStar3BossDOM() {
+    const q = gameQueue[gameIdx];
+    const slotsRow = document.getElementById('boss-slots-row');
+    const bottomEl = document.getElementById('boss-arena-bottom');
+    if (!slotsRow || !bottomEl) return;
 
-    slotsRow.innerHTML = s3Slots.map((slotObj, sIdx) => {
-      if (slotObj) {
-        const okCls = s3SubStep === 'mic' ? 'phonics-slot filled ok-green' : 'phonics-slot filled';
-        return `<button class="${okCls}" onclick="removeStar3Slot(${sIdx})">${slotObj.letter}</button>`;
+    slotsRow.innerHTML = bossSlots.map((s, sIdx) => {
+      if (s) {
+        const cls = bossPhase === 'mic' ? 'spell-slot filled charged' : 'spell-slot filled';
+        return `<button class="${cls}" onclick="removeBossSlot(${sIdx})">${s.letter}</button>`;
       }
-      return `<div class="phonics-slot">?</div>`;
+      return `<div class="spell-slot">?</div>`;
     }).join('');
 
-    if (s3SubStep === 'phonics') {
-      answerZone.innerHTML = `
-        <div style="text-align:center;font-size:12.5px;font-weight:800;color:#64748b;">
-          Bước A: Chạm vào các chữ cái để ghép thành từ <b>"${q.word}"</b>
+    if (bossPhase === 'phonics') {
+      bottomEl.innerHTML = `
+        <div style="font-size:12.5px;font-weight:900;color:#0f766e;text-align:center;">
+          ⚡ Pha 1 (Nạp đạn): Chạm các chữ cái để ghép thành từ <b>"${q.word}"</b>
         </div>
-        <div class="phonics-pool-grid">
-          ${s3Pool.map((tile, pIdx) => `
-            <button class="phonics-tile-btn ${tile.used ? 'used' : ''}" onclick="pickStar3Tile(${pIdx})">
-              <span>${tile.letter}</span>
-              <span class="tile-ipa">${tile.ipa}</span>
+        <div class="phonics-tiles-box">
+          ${bossPool.map((t, pIdx) => `
+            <button class="phonics-tile ${t.used ? 'used' : ''}" onclick="pickBossTile(${pIdx})">
+              <span>${t.letter}</span>
+              <span class="t-ipa">${t.ipa}</span>
             </button>
           `).join('')}
         </div>
+        <div style="font-size:11px;color:#94a3b8;font-weight:700;">
+          (Chạm vào ô chữ đã điền ở trên nếu muốn gỡ ra)
+        </div>
       `;
     } else {
-      answerZone.innerHTML = `
-        <div class="mic-challenge-box">
-          <div class="mic-status-txt" id="mic-status-txt">
-            🎙️ Bấm vào Micro và đọc to: <span style="font-size:20px;color:#0d9488;">${q.word}</span>
+      bottomEl.innerHTML = `
+        <div class="spell-mic-zone">
+          <div style="font-size:14px;font-weight:900;color:#0f172a;" id="boss-mic-status">
+            🔥 Đạn đã nạp đầy! Hãy bấm Micro và đọc to để bắn vỡ khiên Boss:
           </div>
-          <button class="mic-big-btn" id="mic-big-btn" onclick="startMicChallenge()">
-            🎤
+
+          <button class="giant-mic-btn" id="giant-mic-btn" onclick="triggerVoiceSpell()">
+            <span>🎤 HÔ THẦN CHÚ: "${q.word.toUpperCase()}"</span>
           </button>
-          <button class="skip-mic-btn" onclick="skipMicChallenge()">
-            [Bỏ qua câu nói này ➔]
+
+          <button class="normal-shot-btn" onclick="fireSpellAttack(true)">
+            [⚡ Bắn thường (Bỏ qua Micro)]
           </button>
         </div>
       `;
     }
   }
 
-  function pickStar3Tile(pIdx) {
-    if (isTransitioning || s3SubStep !== 'phonics') return;
-    const tile = s3Pool[pIdx];
+  function pickBossTile(pIdx) {
+    if (isBusyAnim || bossPhase !== 'phonics') return;
+    const tile = bossPool[pIdx];
     if (!tile || tile.used) return;
-    const emptyIdx = s3Slots.findIndex(x => x === null);
+    const emptyIdx = bossSlots.findIndex(x => x === null);
     if (emptyIdx === -1) return;
 
     tile.used = true;
-    s3Slots[emptyIdx] = tile;
-    updateStar3BottomZone();
+    bossSlots[emptyIdx] = tile;
+    updateStar3BossDOM();
 
-    if (s3Slots.every(x => x !== null)) {
-      const q = exQueue[exIndex];
-      const expectedLetters = q.phonics.map(raw => raw.split(' ')[0]);
-      const isCorrect = s3Slots.every((s, idx) => s.letter === expectedLetters[idx]);
+    if (bossSlots.every(x => x !== null)) {
+      const q = gameQueue[gameIdx];
+      const expected = q.phonics.map(raw => raw.split(' ')[0]);
+      const ok = bossSlots.every((s, idx) => s.letter === expected[idx]);
 
-      if (isCorrect) {
-        playFeedbackSound(true);
+      if (ok) {
+        playGameSfx('ok');
         speakWord(q.word, 0.85);
-        s3SubStep = 'mic';
-        updateStar3BottomZone();
+        bossPhase = 'mic';
+        updateStar3BossDOM();
       } else {
-        playFeedbackSound(false);
+        playGameSfx('err');
       }
     }
   }
 
-  function removeStar3Slot(sIdx) {
-    if (isTransitioning || s3SubStep !== 'phonics') return;
-    const slotObj = s3Slots[sIdx];
-    if (!slotObj) return;
-    slotObj.used = false;
-    s3Slots[sIdx] = null;
-    updateStar3BottomZone();
+  function removeBossSlot(sIdx) {
+    if (isBusyAnim || bossPhase !== 'phonics') return;
+    const s = bossSlots[sIdx];
+    if (!s) return;
+    s.used = false;
+    bossSlots[sIdx] = null;
+    updateStar3BossDOM();
   }
 
-  // ------------------- BƯỚC B: THU ÂM GIỌNG ĐỌC (WEB SPEECH API) -------------------
-  function stopActiveMicRecognition() {
-    isMicListening = false;
-    if (activeRecognition) {
-      try { activeRecognition.abort(); } catch (e) {}
-      activeRecognition = null;
+  function stopMicRec() {
+    isMicRecording = false;
+    if (activeSpeechRec) {
+      try { activeSpeechRec.abort(); } catch (e) {}
+      activeSpeechRec = null;
     }
   }
 
-  function startMicChallenge() {
-    if (isTransitioning) return;
-    const q = exQueue[exIndex];
+  function triggerVoiceSpell() {
+    if (isBusyAnim) return;
+    const q = gameQueue[gameIdx];
     const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const statusEl = document.getElementById('mic-status-txt');
-    const micBtn = document.getElementById('mic-big-btn');
+    const statusEl = document.getElementById('boss-mic-status');
+    const micBtn = document.getElementById('giant-mic-btn');
 
     if (!SpeechRec) {
-      if (statusEl) {
-        statusEl.innerHTML = `⚠️ Trình duyệt này chưa hỗ trợ thu âm Micro. Đang chuyển câu...`;
-      }
-      setTimeout(() => skipMicChallenge(), 900);
+      if (statusEl) statusEl.innerHTML = `⚡ Thiết bị không có Micro, tự động kích hoạt chưởng!`;
+      setTimeout(() => fireSpellAttack(true), 600);
       return;
     }
 
-    if (isMicListening) {
-      stopActiveMicRecognition();
+    if (isMicRecording) {
+      stopMicRec();
       if (micBtn) micBtn.classList.remove('listening');
-      if (statusEl) statusEl.innerHTML = `🎙️ Bấm vào Micro và đọc to: <b>${q.word}</b>`;
+      if (statusEl) statusEl.innerHTML = `🎤 Bấm vào nút cam để hô thần chú: <b>"${q.word.toUpperCase()}"</b>`;
       return;
     }
 
     try {
-      stopActiveMicRecognition();
+      stopMicRec();
       const rec = new SpeechRec();
-      activeRecognition = rec;
+      activeSpeechRec = rec;
       rec.lang = 'en-US';
       rec.interimResults = false;
       rec.maxAlternatives = 3;
 
-      isMicListening = true;
+      isMicRecording = true;
       if (micBtn) micBtn.classList.add('listening');
-      if (statusEl) statusEl.innerHTML = `👂 Đang lắng nghe bé đọc từ <b>"${q.word}"</b>...`;
+      if (statusEl) statusEl.innerHTML = `👂 Đang thu âm... Bé hãy đọc to: <b>"${q.word.toUpperCase()}"</b>!`;
 
       rec.onresult = (event) => {
-        isMicListening = false;
+        isMicRecording = false;
         if (micBtn) micBtn.classList.remove('listening');
 
-        const transcripts = [];
+        const heard = [];
         for (let i = 0; i < event.results[0].length; i++) {
-          transcripts.push(event.results[0][i].transcript.toLowerCase().trim());
+          heard.push(event.results[0][i].transcript.toLowerCase().trim());
         }
-
         const target = q.word.toLowerCase().trim();
-        const matched = transcripts.some(t =>
-          t.includes(target) || target.includes(t) || t.slice(0, 2) === target.slice(0, 2)
+        const isMatch = heard.some(h =>
+          h.includes(target) || target.includes(h) || h.slice(0, 2) === target.slice(0, 2)
         );
 
-        if (matched) {
-          completeMicSuccess(q.word);
+        if (isMatch) {
+          fireSpellAttack(false);
         } else {
-          playFeedbackSound(false);
+          playGameSfx('err');
           if (statusEl) {
-            statusEl.innerHTML = `🔄 Máy nghe thấy <b>"${transcripts[0]}"</b>. Bé bấm Micro đọc lại <b>"${q.word}"</b> nhé!`;
+            statusEl.innerHTML = `🔄 Nghe thấy <b>"${heard[0]}"</b>. Bé bấm đọc lại <b>"${q.word}"</b> hoặc bấm Bắn thường nhé!`;
           }
           speakWord(q.word, 0.8);
         }
       };
 
       rec.onerror = () => {
-        isMicListening = false;
+        isMicRecording = false;
         if (micBtn) micBtn.classList.remove('listening');
         if (statusEl) {
-          statusEl.innerHTML = `💡 Chưa nghe rõ, bé bấm lại Micro hoặc bấm nút Bỏ qua bên dưới nhé!`;
+          statusEl.innerHTML = `💡 Chưa nghe rõ, bé bấm lại Micro hoặc chọn [⚡ Bắn thường] bên dưới nhé!`;
         }
       };
 
       rec.onend = () => {
-        isMicListening = false;
+        isMicRecording = false;
         if (micBtn) micBtn.classList.remove('listening');
       };
 
       rec.start();
     } catch (e) {
-      skipMicChallenge();
+      fireSpellAttack(true);
     }
   }
 
-  function completeMicSuccess(word) {
-    if (isTransitioning) return;
-    isTransitioning = true;
-    stopActiveMicRecognition();
+  function fireSpellAttack(isNormalShot) {
+    if (isBusyAnim) return;
+    isBusyAnim = true;
+    stopMicRec();
 
-    const statusEl = document.getElementById('mic-status-txt');
-    const micBtn = document.getElementById('mic-big-btn');
+    const q = gameQueue[gameIdx];
+    const statusEl = document.getElementById('boss-mic-status');
+    const micBtn = document.getElementById('giant-mic-btn');
+    const proj = document.getElementById('fireball-proj');
+    const shieldCard = document.getElementById('boss-shield-card');
+    const hpFill = document.getElementById('boss-hp-fill');
+    const hpTxt = document.getElementById('boss-hp-txt');
+
     if (statusEl) {
-      statusEl.innerHTML = `<span style="color:#16a34a;font-size:17px;">Phát âm chuẩn lắm! 🎉</span>`;
+      statusEl.innerHTML = `<span style="color:#16a34a;font-size:16px;">Chuẩn xác! Đòn tấn công tuyệt vời! 🔥</span>`;
     }
     if (micBtn) {
       micBtn.classList.remove('listening');
-      micBtn.classList.add('mic-success');
-      micBtn.textContent = '✓';
+      micBtn.classList.add('cast-ok');
+      micBtn.innerHTML = `<span>🔥 ĐÃ PHÁ KHIÊN: "${q.word.toUpperCase()}"!</span>`;
     }
 
-    playFeedbackSound(true);
-    speakWord(word, 0.85);
-    setTimeout(() => advanceToNextQuestion(), 1000);
-  }
+    // Bắn cầu lửa lên Boss
+    if (proj) proj.classList.add('shoot');
+    playGameSfx('attack');
+    speakWord(q.word, 0.85);
 
-  function skipMicChallenge() {
-    if (isTransitioning) return;
-    isTransitioning = true;
-    stopActiveMicRecognition();
-    playFeedbackSound(true);
-    setTimeout(() => advanceToNextQuestion(), 400);
+    setTimeout(() => {
+      if (shieldCard) shieldCard.classList.add('hit-explosion');
+      const newHp = Math.max(0, gameQueue.length - (gameIdx + 1));
+      const newPct = Math.round((newHp / gameQueue.length) * 100);
+      if (hpFill) hpFill.style.width = `${newPct}%`;
+      if (hpTxt) hpTxt.textContent = `${newHp}/10 HP`;
+    }, 360);
+
+    setTimeout(() => nextQuestionOrFinishStar(), 1050);
   }
 
   // ------------------- CHUYỂN CÂU TIẾP THEO (SAO 1 & SAO 3) -------------------
-  function advanceToNextQuestion() {
-    stopActiveMicRecognition();
-    if (exIndex + 1 < exQueue.length) {
-      exIndex++;
-      isTransitioning = false;
-      prepareCurrentQuestion();
-      renderExerciseScreen();
+  function nextQuestionOrFinishStar() {
+    stopMicRec();
+    if (gameIdx + 1 < gameQueue.length) {
+      gameIdx++;
+      isBusyAnim = false;
+      if (currentStarMode === 3) setupStar3Question();
+      renderGameScreen();
     } else {
+      // Đạt Sao hiện tại
       progress[currentLevelId][currentStarMode - 1] = true;
       saveProgress();
-      isTransitioning = false;
+      isBusyAnim = false;
 
       if (currentStarMode < 3) {
         currentStarMode++;
-        startStarExercise(currentStarMode);
-        renderExerciseScreen();
+        initStarGame(currentStarMode);
+        renderGameScreen();
       } else {
-        currentTab = 'map';
+        // Hoàn thành cả 3 Sao -> Quay ra Bản đồ học đúng tại vị trí Level vừa qua
+        currentMainTab = 'map';
         renderApp();
       }
     }
@@ -3032,7 +2962,7 @@
   // 6. MÃ CHUYỂN MÁY (ĐỒNG BỘ TIẾN ĐỘ)
   // =========================================================================
   function openSyncModal() {
-    const encoded = 'ENG-' + btoa(encodeURIComponent(JSON.stringify(progress)));
+    const encoded = 'IPA-' + btoa(encodeURIComponent(JSON.stringify(progress)));
     document.getElementById('export-code-input').value = encoded;
     document.getElementById('sync-modal').classList.add('open');
   }
@@ -3050,8 +2980,8 @@
 
   function applySyncCode() {
     const raw = document.getElementById('import-code-input').value.trim();
-    if (!raw.startsWith('ENG-')) {
-      alert('Mã không hợp lệ (phải bắt đầu bằng ENG-)!');
+    if (!raw.startsWith('IPA-')) {
+      alert('Mã không hợp lệ (phải bắt đầu bằng IPA-)!');
       return;
     }
     try {
